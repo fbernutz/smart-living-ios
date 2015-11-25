@@ -1,0 +1,604 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3F0547DC1BFF31E30061B3F0 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DB1BFF31E30061B3F0 /* Home.swift */; };
+		3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */; };
+		3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */; };
+		3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */; };
+		3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */; };
+		3F0547EB1BFF622D0061B3F0 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547EA1BFF622D0061B3F0 /* LightView.swift */; };
+		3F073B431BE8972E00698BDC /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F073B421BE8972E00698BDC /* NotificationCenter.framework */; };
+		3F073B461BE8972E00698BDC /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F073B451BE8972E00698BDC /* TodayViewController.swift */; };
+		3F073B491BE8972E00698BDC /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F073B471BE8972E00698BDC /* MainInterface.storyboard */; };
+		3F073B4D1BE8972E00698BDC /* Smart Living Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3F073B401BE8972E00698BDC /* Smart Living Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */; };
+		3F3566D61BF3830D0050B78C /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3566D51BF3830D0050B78C /* HomeKit.framework */; };
+		3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */; };
+		3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */; };
+		3F3DB8221BBE750800854DE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8201BBE750800854DE5 /* Main.storyboard */; };
+		3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */; };
+		3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8261BBE750800854DE5 /* Assets.xcassets */; };
+		3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */; };
+		3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */; };
+		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
+		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
+		3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105B91BE2B5A000E381F6 /* CustomButton.swift */; };
+		3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BB1BE2B77300E381F6 /* Colours.swift */; };
+		3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BD1BE2C45500E381F6 /* BeaconController.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3F073B4B1BE8972E00698BDC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3F3DB8111BBE750800854DE5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3F073B3F1BE8972E00698BDC;
+			remoteInfo = "Smart Living Widget";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3F073B511BE8972E00698BDC /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3F073B4D1BE8972E00698BDC /* Smart Living Widget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3F0547DB1BFF31E30061B3F0 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHelper.swift; sourceTree = "<group>"; };
+		3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Light.otf"; path = "Ikaros Sans/Ikaros Light.otf"; sourceTree = "<group>"; };
+		3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Regular.otf"; path = "Ikaros Sans/Ikaros Regular.otf"; sourceTree = "<group>"; };
+		3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		3F0547EA1BFF622D0061B3F0 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
+		3F073B401BE8972E00698BDC /* Smart Living Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Smart Living Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F073B421BE8972E00698BDC /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		3F073B451BE8972E00698BDC /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		3F073B481BE8972E00698BDC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		3F073B4A1BE8972E00698BDC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitController.swift; sourceTree = "<group>"; };
+		3F3566D41BF3830C0050B78C /* BA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BA.entitlements; sourceTree = "<group>"; };
+		3F3566D51BF3830D0050B78C /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
+		3F3DB8191BBE750800854DE5 /* BA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
+		3F3DB8211BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3F3DB8241BBE750800854DE5 /* BA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BA.xcdatamodel; sourceTree = "<group>"; };
+		3F3DB8261BBE750800854DE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3F3DB8291BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3F3DB82B1BBE750800854DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
+		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
+		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
+		3FE105B91BE2B5A000E381F6 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		3FE105BB1BE2B77300E381F6 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		3FE105BD1BE2C45500E381F6 /* BeaconController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconController.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3F073B3D1BE8972E00698BDC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F073B431BE8972E00698BDC /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F3DB8161BBE750800854DE5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F3566D61BF3830D0050B78C /* HomeKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F0547DA1BFF31BE0061B3F0 /* Modell */ = {
+			isa = PBXGroup;
+			children = (
+				3F0547DB1BFF31E30061B3F0 /* Home.swift */,
+				3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */,
+			);
+			name = Modell;
+			sourceTree = "<group>";
+		};
+		3F0547DD1BFF32840061B3F0 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */,
+				3FE105BD1BE2C45500E381F6 /* BeaconController.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		3F0547E01BFF55690061B3F0 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */,
+				3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */,
+			);
+			name = Font;
+			sourceTree = "<group>";
+		};
+		3F0547E91BFF62110061B3F0 /* AccessoryViews */ = {
+			isa = PBXGroup;
+			children = (
+				3F0547EA1BFF622D0061B3F0 /* LightView.swift */,
+			);
+			name = AccessoryViews;
+			sourceTree = "<group>";
+		};
+		3F073B411BE8972E00698BDC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F3566D51BF3830D0050B78C /* HomeKit.framework */,
+				3F073B421BE8972E00698BDC /* NotificationCenter.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F073B441BE8972E00698BDC /* Smart Living Widget */ = {
+			isa = PBXGroup;
+			children = (
+				3F073B451BE8972E00698BDC /* TodayViewController.swift */,
+				3F073B471BE8972E00698BDC /* MainInterface.storyboard */,
+				3F073B4A1BE8972E00698BDC /* Info.plist */,
+			);
+			name = "Smart Living Widget";
+			path = "../Smart Living Widget";
+			sourceTree = "<group>";
+		};
+		3F0BACF11BF080A800AF65A5 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				3F0547E91BFF62110061B3F0 /* AccessoryViews */,
+				3F84427D1BF9F53400C04B5C /* IntroViewController.swift */,
+				3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */,
+				3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		3F0BACF21BF080BB00AF65A5 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		3F0BACF31BF080C600AF65A5 /* Design */ = {
+			isa = PBXGroup;
+			children = (
+				3F0547E01BFF55690061B3F0 /* Font */,
+				3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */,
+				3FE105B91BE2B5A000E381F6 /* CustomButton.swift */,
+				3FE105BB1BE2B77300E381F6 /* Colours.swift */,
+			);
+			name = Design;
+			sourceTree = "<group>";
+		};
+		3F3DB8101BBE750800854DE5 = {
+			isa = PBXGroup;
+			children = (
+				3F3DB81B1BBE750800854DE5 /* BA */,
+				3F073B411BE8972E00698BDC /* Frameworks */,
+				3F3DB81A1BBE750800854DE5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3F3DB81A1BBE750800854DE5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F3DB8191BBE750800854DE5 /* BA.app */,
+				3F073B401BE8972E00698BDC /* Smart Living Widget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F3DB81B1BBE750800854DE5 /* BA */ = {
+			isa = PBXGroup;
+			children = (
+				3F3566D41BF3830C0050B78C /* BA.entitlements */,
+				3F0BACF31BF080C600AF65A5 /* Design */,
+				3F0547DD1BFF32840061B3F0 /* Services */,
+				3F0547DA1BFF31BE0061B3F0 /* Modell */,
+				3F0BACF21BF080BB00AF65A5 /* Controller */,
+				3F0BACF11BF080A800AF65A5 /* ViewController */,
+				3F3DB8201BBE750800854DE5 /* Main.storyboard */,
+				3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */,
+				3F073B441BE8972E00698BDC /* Smart Living Widget */,
+				3F3DB8311BBE752800854DE5 /* Supporting Files */,
+			);
+			path = BA;
+			sourceTree = "<group>";
+		};
+		3F3DB8311BBE752800854DE5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3F3DB8261BBE750800854DE5 /* Assets.xcassets */,
+				3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */,
+				3F3DB82B1BBE750800854DE5 /* Info.plist */,
+				3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3F073B3F1BE8972E00698BDC /* Smart Living Widget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F073B501BE8972E00698BDC /* Build configuration list for PBXNativeTarget "Smart Living Widget" */;
+			buildPhases = (
+				3F073B3C1BE8972E00698BDC /* Sources */,
+				3F073B3D1BE8972E00698BDC /* Frameworks */,
+				3F073B3E1BE8972E00698BDC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Smart Living Widget";
+			productName = "Smart Living Widget";
+			productReference = 3F073B401BE8972E00698BDC /* Smart Living Widget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		3F3DB8181BBE750800854DE5 /* BA */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F3DB82E1BBE750800854DE5 /* Build configuration list for PBXNativeTarget "BA" */;
+			buildPhases = (
+				3F3DB8151BBE750800854DE5 /* Sources */,
+				3F3DB8161BBE750800854DE5 /* Frameworks */,
+				3F3DB8171BBE750800854DE5 /* Resources */,
+				3F073B511BE8972E00698BDC /* Embed App Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3F073B4C1BE8972E00698BDC /* PBXTargetDependency */,
+			);
+			name = BA;
+			productName = BA;
+			productReference = 3F3DB8191BBE750800854DE5 /* BA.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F3DB8111BBE750800854DE5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Felizia Bernutz";
+				TargetAttributes = {
+					3F073B3F1BE8972E00698BDC = {
+						CreatedOnToolsVersion = 7.1;
+					};
+					3F3DB8181BBE750800854DE5 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = FCNMCC2Y82;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.HomeKit = {
+								enabled = 1;
+							};
+						};
+					};
+				};
+			};
+			buildConfigurationList = 3F3DB8141BBE750800854DE5 /* Build configuration list for PBXProject "BA" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3F3DB8101BBE750800854DE5;
+			productRefGroup = 3F3DB81A1BBE750800854DE5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3F3DB8181BBE750800854DE5 /* BA */,
+				3F073B3F1BE8972E00698BDC /* Smart Living Widget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3F073B3E1BE8972E00698BDC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F073B491BE8972E00698BDC /* MainInterface.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F3DB8171BBE750800854DE5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */,
+				3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */,
+				3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */,
+				3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */,
+				3F3DB8221BBE750800854DE5 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F073B3C1BE8972E00698BDC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F073B461BE8972E00698BDC /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3F3DB8151BBE750800854DE5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */,
+				3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */,
+				3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */,
+				3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */,
+				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
+				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
+				3F0547DC1BFF31E30061B3F0 /* Home.swift in Sources */,
+				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
+				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
+				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
+				3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */,
+				3F0547EB1BFF622D0061B3F0 /* LightView.swift in Sources */,
+				3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */,
+				3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3F073B4C1BE8972E00698BDC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3F073B3F1BE8972E00698BDC /* Smart Living Widget */;
+			targetProxy = 3F073B4B1BE8972E00698BDC /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3F073B471BE8972E00698BDC /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3F073B481BE8972E00698BDC /* Base */,
+			);
+			name = MainInterface.storyboard;
+			sourceTree = "<group>";
+		};
+		3F3DB8201BBE750800854DE5 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3F3DB8211BBE750800854DE5 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3F3DB8291BBE750800854DE5 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3F073B4E1BE8972E00698BDC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Smart Living Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "adorsys.BA.Smart-Living-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3F073B4F1BE8972E00698BDC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = "Smart Living Widget/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "adorsys.BA.Smart-Living-Widget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		3F3DB82C1BBE750800854DE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3F3DB82D1BBE750800854DE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3F3DB82F1BBE750800854DE5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BA/BA.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = BA/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adorsys.BA;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Debug;
+		};
+		3F3DB8301BBE750800854DE5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = BA/BA.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
+				INFOPLIST_FILE = BA/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = adorsys.BA;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3F073B501BE8972E00698BDC /* Build configuration list for PBXNativeTarget "Smart Living Widget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F073B4E1BE8972E00698BDC /* Debug */,
+				3F073B4F1BE8972E00698BDC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F3DB8141BBE750800854DE5 /* Build configuration list for PBXProject "BA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F3DB82C1BBE750800854DE5 /* Debug */,
+				3F3DB82D1BBE750800854DE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F3DB82E1BBE750800854DE5 /* Build configuration list for PBXNativeTarget "BA" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F3DB82F1BBE750800854DE5 /* Debug */,
+				3F3DB8301BBE750800854DE5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3F3DB8241BBE750800854DE5 /* BA.xcdatamodel */,
+			);
+			currentVersion = 3F3DB8241BBE750800854DE5 /* BA.xcdatamodel */;
+			path = BA.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 3F3DB8111BBE750800854DE5 /* Project object */;
+}
