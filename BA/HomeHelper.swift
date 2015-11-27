@@ -7,31 +7,31 @@
 //
 
 import Foundation
+import HomeKit
 
-class HomeHelper {
-    //Conversion from Home to HMHome etc.
-    //kennt beide KLassen
-    //localHome und homekithome 
+class HomeHelper: NSObject, HMHomeManagerDelegate {
     
-    //func (localHome) ..?
-    //beim neuanlegen, geb ich den namen mit, der helper muss die id zurückgeben
-    //homeManager gib alle homkithomes -> die umwandeln -> id und namen in eigene klasse
+    var localHomes : [Home]?
+    var homeKitController : HomeKitController?
     
-    //durch alle homes laufen: homes.map{...localhome(name,id)} -> erstellt dann für jedes ein localhome -> auch rooms mitgeben
-    //das selbe dann für rooms und accessories
-    //rooms und home mit id verbunden -> uniqueidentifier pro home und room usw.
-    
-    
-    
-    //lokal: home room 3 accessory characteristics (übernehmen von homekit)
-    
-    var home : Home?
-    
-    
-    func setup(){
-        
-        
+    override init() {
+        super.init()
     }
     
+    
+    
+    // MARK: - Conversions from localHomes to homeKitHomes and vice versa
+    
+    func serviceToLocal(homeKitHomes: [HMHome]) -> [Home]? {
+        localHomes = []
+        for home in homeKitHomes {
+            localHomes?.append(Home(id: home.uniqueIdentifier, name: home.name, primary: home.primary))
+        }
+        return localHomes
+    }
+    
+    func localToService(localHome: Home) {
+        homeKitController?.addHome(localHome.name!)
+    }
     
 }

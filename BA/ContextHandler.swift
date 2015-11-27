@@ -11,14 +11,12 @@ import HomeKit
 
 class ContextHandler: NSObject, HMHomeManagerDelegate {
     
-    //    Views -> VC (mit weak reference zu CH) -> ContextHandler (strong reference zu Services) -> Services
-    //    ContextHandler: speichert Daten, ist immer erreichbar, besitzt auch den HomeManager(), locationManager()...
-    //    AppDelegate legt den ContextHandler an
-    //    über Notifications -> willBecomeActive usw.
+    // TODO: Speichern der ID vom aktuellen Home und Room usw.
+    var homeID : NSUUID?
+    var roomID : NSUUID?
     
-    var homeKitController = HomeKitController()
+    var homeKitController : HomeKitController?
     var homeKitHomeNames : [String]?
-    var notifObserverTokens : [NSObjectProtocol]?
     
     var homeKitHomes : [HMHome]? {
         didSet {
@@ -26,6 +24,11 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
             for elem in homeKitHomes! {
                 homeKitHomeNames!.append(elem.name)
             }
+        }
+    }
+    
+    var localHomes : [Home]? {
+        didSet {
             
         }
     }
@@ -33,32 +36,47 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     override init() {
         super.init()
         
-        prepareObservers()
+        if homeKitController == nil {
+            homeKitController = HomeKitController()
+        }
+        
+        homeID = homeKitController!.retrieveHomeWithID()
+        roomID = homeKitController!.retrieveRoomWithID()
     }
     
-    //speichern vom der id vom aktuellen home und room usw.
-    //vc fragt nach accessories -> leitet weiter an ch -> gib accessories von homekit für home id und room id  -> ch bekommt accessories (name,id und enums )
-
-    //retrieve accessories
-    
-    
-    func loadHomeKitData() {
-        homeKitController.setupHomeController()
+    // such den Namen für die gespeicherte homeID
+    func retrieveHome(forID : NSUUID?) -> String? {
         
+        //VERSION1
+        if let locals = localHomes {
+            for homes in locals {
+                if homes.id == forID {
+                    return homes.name
+                }
+            }
+        }
+        
+        
+        //VERSION2
+        //        let homeName = homeKitController.homeHelper.localHomes?[0].name
+        
+        
+        //VERSION3
+        //        if localHomes != nil {
+        //            let homeName = localHomes![0].name
+        //            return homeName!
+        //        } else {
+        //            return nil
+        //        }
+        
+        return nil
     }
     
-    func prepareObservers() {
-        
-        notifObserverTokens = []
-        
-        let notifCenter = NSNotificationCenter.defaultCenter()
-        
-        notifObserverTokens?.append(notifCenter.addObserverForName(UIApplicationDidBecomeActiveNotification, object: nil, queue: NSOperationQueue.mainQueue())
-            { [ weak self] (notif) -> Void in
-                
-                self?.loadHomeKitData()
-                
-            })
-    }
+    
+    //    func retrieveAccessories() {
+    //        //gib alle Accessories für das Home>Room aus
+    //        //homeID: NSUUID?, roomID: NSUUID?
+    //
+    //    }
     
 }

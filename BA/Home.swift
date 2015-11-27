@@ -9,42 +9,48 @@
 import Foundation
 
 public class Home: NSObject {
+    var id : NSUUID?
     var name : String?
     var primary : Bool?
-    var id : NSUUID?
     
-//    var accessories : rooms.accessories?
+    init(id: NSUUID?, name: String?, primary: Bool?) {
+        self.id = id
+        self.name = name
+        self.primary = primary
+    }
     
+    func getIDForName(name: String?) -> NSUUID? {
+        
+        return id
+    }
 }
 
 public class Room: NSObject {
-    var name : String?
     var id : NSUUID?
+    var name : String?
     
-//    var icon : 
-//    var categoryName : String? 
-    
-//    var accessories : [Accessory]?
-
+    init(id: NSUUID?, name: String?) {
+        self.id = id
+        self.name = name
+    }
 }
 
 public class Accessory : NSObject {
-    var id : Int?
+    var id : NSUUID?
     var name : String?
+    var type : String?
     
-//    var icon : 
-//    var categoryName : String?
-    
-    var characteristics : [Characteristic]?
-
+    init(id: NSUUID?, name: String?, type: String?) {
+        self.id = id
+        self.name = name
+        self.type = type
+    }
 }
 
 
 public class Characteristic : NSObject {
     var status : Bool?
     var brightness : Int?
-    
-    var accessory : Accessory?
     
 }
 

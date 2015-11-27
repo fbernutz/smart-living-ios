@@ -26,7 +26,7 @@ class OverviewViewController: UIViewController, UITableViewDataSource, UITableVi
             { (alertAction: UIAlertAction!) -> Void in
                 
                 let homeTextField = alert.textFields?[0]
-                self.contextHandler?.homeKitController.addHome(homeTextField!.text!)
+                self.contextHandler?.homeKitController!.addHome(homeTextField!.text!)
                 
         })
         )
@@ -76,29 +76,8 @@ class OverviewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
-        //        let alert = UIAlertController(title: "Add Room", message: "Add a new room to this home", preferredStyle: .Alert)
-        //        alert.addTextFieldWithConfigurationHandler(nil)
-        //        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
-        //        alert.addAction(UIAlertAction(title: "Add", style: UIAlertActionStyle.Default, handler:
-        //            { (alertAction: UIAlertAction!) -> Void in
-        //
-        //                let roomTextField = alert.textFields?[0]
-        //                self.contextHandler?.homeKitController.addRoom(
-        //                    roomTextField!.text!,
-        //                    toHome: (self.contextHandler?.homeKitHomes?[indexPath.row])!
-        //                )
-        //                self.tableView?.reloadData()
-        //
-        //        })
-        //        )
-        //        self.presentViewController(alert, animated: true, completion: nil)
-        
         activeHome = homes![indexPath.row]
-        
         performSegueWithIdentifier("detailViewSegue", sender: self)
-        
-        
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
@@ -108,7 +87,7 @@ class OverviewViewController: UIViewController, UITableViewDataSource, UITableVi
             if editingStyle == .Delete{
                 
                 let home = self.contextHandler?.homeKitHomes?[indexPath.row]
-                self.contextHandler?.homeKitController.removeHome(home!)
+                self.contextHandler?.homeKitController!.removeHome(home!)
                 homes?.removeAtIndex(indexPath.row)
                 
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
@@ -116,13 +95,13 @@ class OverviewViewController: UIViewController, UITableViewDataSource, UITableVi
             }
     }
     
+    // MARK: - Segue
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "detailViewSegue" {
             let vc = segue.destinationViewController as! DetailViewController
             vc.home = activeHome
             vc.room = "Room1"
-            
-//            vc.accessories = 
         }
     }
     
