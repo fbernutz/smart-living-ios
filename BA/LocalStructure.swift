@@ -18,18 +18,15 @@ public class Home: NSObject {
         self.name = name
         self.primary = primary
     }
-    
-    func getIDForName(name: String?) -> NSUUID? {
-        
-        return id
-    }
 }
 
 public class Room: NSObject {
+    var homeID : NSUUID?
     var id : NSUUID?
     var name : String?
     
-    init(id: NSUUID?, name: String?) {
+    init(homeID: NSUUID?, id: NSUUID?, name: String?) {
+        self.homeID = homeID
         self.id = id
         self.name = name
     }
@@ -48,24 +45,24 @@ public class Accessory : NSObject {
 }
 
 
-public class Characteristic : NSObject {
-    var status : Bool?
-    var brightness : Int?
-    
-}
-
-public class ActionSet : NSObject {
-    
-}
-
-public class Zones : NSObject {
-    
-}
-
-public class Trigger : NSObject {
-    
-}
-
-public class Beacon : NSObject {
-    
-}
+//public class Characteristic : NSObject {
+//    var status : Bool?
+//    var brightness : Int?
+//    
+//}
+//
+//public class ActionSet : NSObject {
+//    
+//}
+//
+//public class Zones : NSObject {
+//    
+//}
+//
+//public class Trigger : NSObject {
+//    
+//}
+//
+//public class Beacon : NSObject {
+//    
+//}

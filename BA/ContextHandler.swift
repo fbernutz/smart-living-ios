@@ -11,27 +11,12 @@ import HomeKit
 
 class ContextHandler: NSObject, HMHomeManagerDelegate {
     
-    // TODO: Speichern der ID vom aktuellen Home und Room usw.
     var homeID : NSUUID?
     var roomID : NSUUID?
     
     var homeKitController : HomeKitController?
-    var homeKitHomeNames : [String]?
-    
-    var homeKitHomes : [HMHome]? {
-        didSet {
-            homeKitHomeNames = []
-            for elem in homeKitHomes! {
-                homeKitHomeNames!.append(elem.name)
-            }
-        }
-    }
-    
-    var localHomes : [Home]? {
-        didSet {
-            
-        }
-    }
+    var localHomes : [Home]?
+    var localRooms : [Room]?
     
     override init() {
         super.init()
@@ -39,38 +24,39 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         if homeKitController == nil {
             homeKitController = HomeKitController()
         }
-        
-        homeID = homeKitController!.retrieveHomeWithID()
-        roomID = homeKitController!.retrieveRoomWithID()
     }
     
-    // such den Namen für die gespeicherte homeID
-    func retrieveHome(forID : NSUUID?) -> String? {
-        
-        //VERSION1
-        if let locals = localHomes {
-            for homes in locals {
-                if homes.id == forID {
+    func searchHome(forID id: NSUUID?) -> String? {
+        if let localHomes = localHomes {
+            for homes in localHomes {
+                if homes.id == id {
                     return homes.name
                 }
             }
         }
         
-        
-        //VERSION2
-        //        let homeName = homeKitController.homeHelper.localHomes?[0].name
-        
-        
-        //VERSION3
-        //        if localHomes != nil {
-        //            let homeName = localHomes![0].name
-        //            return homeName!
-        //        } else {
-        //            return nil
-        //        }
-        
         return nil
     }
+    
+    func searchRoom(forID id: NSUUID?) -> String? {
+        if let localRooms = localRooms {
+            for rooms in localRooms {
+                if rooms.homeID == id {
+                    return rooms.name
+                }
+            }
+        }
+        return nil
+    }
+    
+    func retrieveHome() -> String? {
+        return searchHome(forID: homeID)
+    }
+    
+    func retrieveRoom() -> String? {
+        return searchRoom(forID: homeID)
+    }
+    
     
     
     //    func retrieveAccessories() {

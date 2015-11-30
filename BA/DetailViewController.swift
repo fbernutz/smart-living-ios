@@ -8,12 +8,12 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, HomeKitControllerDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     
-    @IBOutlet weak var homeName: UILabel!
-    @IBOutlet weak var roomName: UILabel!
+    @IBOutlet weak var homeName: UILabel?
+    @IBOutlet weak var roomName: UILabel?
     
     @IBAction func addAccessory(sender: UIButton) {
         
@@ -23,21 +23,13 @@ class DetailViewController: UIViewController {
     
     var home : String? {
         didSet {
-            if home == nil {
-                homeName.text = "Home funkt noch nicht"
-            } else {
-                homeName.text = home
-            }
+            homeName?.text = home
         }
     }
     
     var room : String? {
         didSet {
-            if room == nil {
-                roomName.text = "Room funkt noch nicht"
-            } else {
-                roomName.text = room
-            }
+            roomName?.text = room
         }
     }
     
@@ -48,8 +40,22 @@ class DetailViewController: UIViewController {
             contextHandler = appDelegate.contextHandler
         }
         
-//        home = contextHandler!.localHomes?[0].name
-//        home = contextHandler!.retrieveHome()
-//        room = contextHandler!.retrieveRoom()
+        let controller = contextHandler!.homeKitController
+        controller!.delegate = self
     }
+    
+    
+    func hasLoadedData(status: Bool) {
+        if status == true {
+            print("loading successful")
+            
+            home = contextHandler!.retrieveHome()
+            room = contextHandler!.retrieveRoom()
+            
+        } else {
+            print("loading failed")
+        }
+    }
+    
+    
 }

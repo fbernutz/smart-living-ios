@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F0547DC1BFF31E30061B3F0 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DB1BFF31E30061B3F0 /* Home.swift */; };
+		3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */; };
 		3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */; };
 		3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */; };
 		3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */; };
@@ -21,6 +21,7 @@
 		3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */; };
 		3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8261BBE750800854DE5 /* Assets.xcassets */; };
 		3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */; };
+		3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */; };
 		3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */; };
 		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
@@ -44,7 +45,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3F0547DB1BFF31E30061B3F0 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStructure.swift; sourceTree = "<group>"; };
 		3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHelper.swift; sourceTree = "<group>"; };
 		3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Light.otf"; path = "Ikaros Sans/Ikaros Light.otf"; sourceTree = "<group>"; };
 		3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Regular.otf"; path = "Ikaros Sans/Ikaros Regular.otf"; sourceTree = "<group>"; };
@@ -61,6 +62,7 @@
 		3F3DB8261BBE750800854DE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F3DB8291BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F3DB82B1BBE750800854DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitControllerDelegate.swift; sourceTree = "<group>"; };
 		3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
@@ -85,7 +87,7 @@
 		3F0547DA1BFF31BE0061B3F0 /* Modell */ = {
 			isa = PBXGroup;
 			children = (
-				3F0547DB1BFF31E30061B3F0 /* Home.swift */,
+				3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */,
 				3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */,
 			);
 			name = Modell;
@@ -95,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */,
+				3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */,
 				3FE105BD1BE2C45500E381F6 /* BeaconController.swift */,
 			);
 			name = Services;
@@ -291,9 +294,10 @@
 				3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */,
 				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
-				3F0547DC1BFF31E30061B3F0 /* Home.swift in Sources */,
+				3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */,
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
+				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
 				3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */,
 				3F0547EB1BFF622D0061B3F0 /* LightView.swift in Sources */,

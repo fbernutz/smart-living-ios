@@ -162,7 +162,6 @@
         <!--Overview View Controller-->
         <scene sceneID="Vvc-CG-Bdk">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="A66-2G-xLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController id="N79-MP-ELd" customClass="OverviewViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="nfj-DD-BEa"/>
@@ -238,13 +237,14 @@
                         <outlet property="tableView" destination="Ypo-Se-MRj" id="UdK-5U-39r"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="A66-2G-xLa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1814" y="335"/>
         </scene>
         <!--Detail View Controller-->
         <scene sceneID="yX1-8u-b0x">
             <objects>
-                <viewController id="1Ya-hT-zr4" customClass="DetailViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DetailViewController" id="1Ya-hT-zr4" customClass="DetailViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="BKv-oM-prW"/>
                         <viewControllerLayoutGuide type="bottom" id="MfB-kv-CzD"/>

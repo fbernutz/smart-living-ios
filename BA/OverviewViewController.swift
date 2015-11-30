@@ -51,7 +51,7 @@ class OverviewViewController: UIViewController, UITableViewDataSource, UITableVi
             contextHandler = appDelegate.contextHandler
         }
         
-        homes = contextHandler?.homeKitHomeNames
+//        homes = contextHandler?.homeKitHomeNames
     }
     
     // MARK: - TableView Delegates
@@ -86,8 +86,8 @@ class OverviewViewController: UIViewController, UITableViewDataSource, UITableVi
             
             if editingStyle == .Delete{
                 
-                let home = self.contextHandler?.homeKitHomes?[indexPath.row]
-                self.contextHandler?.homeKitController!.removeHome(home!)
+//                let home = self.contextHandler?.homeKitHomes?[indexPath.row]
+//                self.contextHandler?.homeKitController!.removeHome(home!)
                 homes?.removeAtIndex(indexPath.row)
                 
                 tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)

@@ -12,12 +12,15 @@ import HomeKit
 class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    private lazy var storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+    var vc : DetailViewController?
+    var delegate: HomeKitControllerDelegate?
+
     var homeManager : HMHomeManager?
     var accessoryBrowser : HMAccessoryBrowser?
     var homeHelper : HomeHelper?
     
     var primaryHome: HMHome?
-    var rooms = [HMRoom]()
     var accessories = [HMAccessory]()
     
     var currentHomeID : NSUUID?
@@ -25,11 +28,18 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     var homes = [HMHome]() {
         didSet {
-//            appDelegate.contextHandler?.homeKitHomes = homes
-            
-            appDelegate.contextHandler?.localHomes = homeHelper!.serviceToLocal(homeManager!.homes)
+            appDelegate.contextHandler?.localHomes = homeHelper!.serviceToLocalHomes(homes)
+            appDelegate.contextHandler?.localRooms = homeHelper!.serviceToLocalRooms(homes)
         }
     }
+    
+    var rooms = [HMRoom]() {
+        didSet {
+            // TODO: wenn ein Service Room neu erstellt wird, Umwandlung in lokale Struktur nochmal überarbeiten - noch falsch
+//            homeHelper?.serviceToLocalRooms(homes)
+        }
+    }
+    
     
     // MARK: - Setup
     
@@ -55,7 +65,11 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         if homeManager!.homes.count == 0 {
             initialHomeSetup("1 Home", roomName: "1 Room")
         }
+        
+        vc = storyboard.instantiateViewControllerWithIdentifier("DetailViewController") as? DetailViewController
+        
     }
+    
     
     // TODO:
     // ID von Home und Room speichern -> an CH weitergeben
@@ -175,6 +189,11 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         currentHomeID = homes[2].uniqueIdentifier
         currentRoomID = homes[2].rooms[0].uniqueIdentifier
+        
+        appDelegate.contextHandler!.homeID = currentHomeID
+        appDelegate.contextHandler!.roomID = currentRoomID
+        
+        delegate?.hasLoadedData(true)
     }
     
     func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
