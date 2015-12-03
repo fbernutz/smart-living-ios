@@ -18,6 +18,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
     @IBAction func addAccessory(sender: UIButton) {
         
     }
+
     
     var contextHandler : ContextHandler?
     
@@ -33,6 +34,8 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
         }
     }
     
+    var accessory : IAccessory?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,16 +47,29 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
         controller!.delegate = self
     }
     
-    
     func hasLoadedData(status: Bool) {
         if status == true {
             print("loading successful")
             
             home = contextHandler!.retrieveHome()
             room = contextHandler!.retrieveRoom()
+            accessory = contextHandler!.retrieveAccessories()
             
         } else {
             print("loading failed")
+        }
+    }
+//    
+//    func hasLoadedHomes(homes: [Home]) {
+//        home = homes[0].name
+//        
+//    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showAllAccessoriesSegue" {
+            let vc = segue.destinationViewController as! DiscoveryViewController
+            vc.activeRoom = room
+            vc.activeHome = home
         }
     }
     

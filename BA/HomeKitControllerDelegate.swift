@@ -11,5 +11,8 @@ import Foundation
 protocol HomeKitControllerDelegate {
     
     func hasLoadedData(status: Bool)
+//    func hasLoadedHomes(homes: [Home])
+//    func hasLoadedRooms(rooms: [Room])
+//    func hasLoadedAccessories(accessory: [IAccessory])
     
 }

@@ -22,6 +22,8 @@
 		3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8261BBE750800854DE5 /* Assets.xcassets */; };
 		3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */; };
 		3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */; };
+		3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */; };
+		3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */; };
 		3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */; };
 		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
@@ -63,6 +65,8 @@
 		3F3DB8291BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F3DB82B1BBE750800854DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitControllerDelegate.swift; sourceTree = "<group>"; };
+		3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryFactory.swift; sourceTree = "<group>"; };
+		3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAccessory.swift; sourceTree = "<group>"; };
 		3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
@@ -88,7 +92,6 @@
 			isa = PBXGroup;
 			children = (
 				3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */,
-				3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */,
 			);
 			name = Modell;
 			sourceTree = "<group>";
@@ -98,6 +101,9 @@
 			children = (
 				3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */,
 				3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */,
+				3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */,
+				3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */,
+				3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */,
 				3FE105BD1BE2C45500E381F6 /* BeaconController.swift */,
 			);
 			name = Services;
@@ -132,10 +138,10 @@
 			isa = PBXGroup;
 			children = (
 				3F0547E91BFF62110061B3F0 /* AccessoryViews */,
+				3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */,
 				3F84427D1BF9F53400C04B5C /* IntroViewController.swift */,
 				3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */,
 				3FEB51CC1C07345D00715FDD /* DiscoveryViewController.swift */,
-				3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -295,7 +301,9 @@
 				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
 				3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */,
+				3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */,
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
+				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,

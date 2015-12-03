@@ -407,7 +407,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpO-Zg-Lv6">
                                         <rect key="frame" x="518" y="22" width="22" height="22"/>
                                         <connections>
-                                            <action selector="addAccessory:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="NVe-fo-8d2"/>
+                                            <segue destination="cr5-yp-6O8" kind="show" identifier="showAllAccessoriesSegue" id="mYc-yr-Ygp"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -486,6 +486,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tke-Jh-ycu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1138" y="1113"/>
+        </scene>
+        <!--All Accessories-->
+        <scene sceneID="XhK-1N-YaM">
+            <objects>
+                <tableViewController id="cr5-yp-6O8" customClass="DiscoveryViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="42" sectionHeaderHeight="22" sectionFooterHeight="22" id="i7n-zP-Ft1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="discoveryCell" rowHeight="40" id="Dk6-X6-AsM" customClass="DiscoverAccessoryCell" customModule="BA" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="86" width="600" height="40"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dk6-X6-AsM" id="7h7-jS-C0b">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bQ7-Zo-Zhm">
+                                            <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                            <variation key="widthClass=compact" fixedFrame="YES">
+                                                <rect key="frame" x="16" y="9" width="84" height="21"/>
+                                            </variation>
+                                        </label>
+                                    </subviews>
+                                    <variation key="default">
+                                        <mask key="subviews">
+                                            <exclude reference="bQ7-Zo-Zhm"/>
+                                        </mask>
+                                    </variation>
+                                    <variation key="widthClass=compact">
+                                        <mask key="subviews">
+                                            <include reference="bQ7-Zo-Zhm"/>
+                                        </mask>
+                                    </variation>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="headingLabel" destination="bQ7-Zo-Zhm" id="qHb-cD-nQp"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="cr5-yp-6O8" id="oob-ii-Faa"/>
+                            <outlet property="delegate" destination="cr5-yp-6O8" id="api-41-Xmo"/>
+                        </connections>
+                    </tableView>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="All Accessories" id="GwG-DD-Rj8"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iak-QA-12T" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2738" y="1113"/>
         </scene>
     </scenes>
 </document>

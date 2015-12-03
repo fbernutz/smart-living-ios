@@ -15,18 +15,26 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
     var localRooms : [Room]?
     var homeKitController : HomeKitController?
     
+    //    enum ServiceTypes {
+    //        case LightService
+    //        case EveDoorWindowService
+    //        case EveWeatherService
+    //        case EveEnergyService
+    //    }
+    
+    
     override init() {
         super.init()
     }
     
-    // MARK: - Conversions from localHomes to homeKitHomes and vice versa
+    
+    // MARK: - Service To Local
     
     func serviceToLocalHomes(homeKitHomes: [HMHome]) -> [Home]? {
         localHomes = []
         for home in homeKitHomes {
             localHomes?.append(Home(id: home.uniqueIdentifier, name: home.name, primary: home.primary))
         }
-        
         return localHomes
     }
     
@@ -37,24 +45,23 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
                 localRooms?.append(Room(homeID: home.uniqueIdentifier, id: room.uniqueIdentifier, name: room.name))
             }
         }
-        
         return localRooms
     }
+    
+    
+    // MARK: - Local To Service
     
     func localHomeToService(localHome: Home) {
         homeKitController?.addHome(localHome.name!)
     }
     
     func localRoomToService(localRoom: Room) {
-        
-        //search in homeManager for home with id from localRoom
         for home in (homeKitController?.homeManager?.homes)! {
             if home.uniqueIdentifier == localRoom.homeID {
                 homeKitController?.addRoom(localRoom.name!, toHome: home)
             }
         }
     }
-    
     
     
 }

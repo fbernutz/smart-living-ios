@@ -12,16 +12,16 @@ import HomeKit
 class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    private lazy var storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    var vc : DetailViewController?
     var delegate: HomeKitControllerDelegate?
 
     var homeManager : HMHomeManager?
     var accessoryBrowser : HMAccessoryBrowser?
     var homeHelper : HomeHelper?
+    lazy var accessoryFactory = AccessoryFactory()
     
     var primaryHome: HMHome?
     var accessories = [HMAccessory]()
+    var services = [HMService]()
     
     var currentHomeID : NSUUID?
     var currentRoomID : NSUUID?
@@ -29,6 +29,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var homes = [HMHome]() {
         didSet {
             appDelegate.contextHandler?.localHomes = homeHelper!.serviceToLocalHomes(homes)
+            
+//            delegate?.hasLoadedHomes(homeHelper!.serviceToLocalHomes(homes)!)
+            
             appDelegate.contextHandler?.localRooms = homeHelper!.serviceToLocalRooms(homes)
         }
     }
@@ -36,7 +39,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var rooms = [HMRoom]() {
         didSet {
             // TODO: wenn ein Service Room neu erstellt wird, Umwandlung in lokale Struktur nochmal überarbeiten - noch falsch
-//            homeHelper?.serviceToLocalRooms(homes)
+            // homeHelper?.serviceToLocalRooms(homes)
         }
     }
     
@@ -55,24 +58,24 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             accessoryBrowser = HMAccessoryBrowser()
         }
         accessoryBrowser!.delegate = self
+//        accessoryBrowser!.startSearchingForNewAccessories()
+        
+//        NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
+        
         
         if homeHelper == nil {
             homeHelper = HomeHelper()
         }
         homeHelper!.homeKitController = self
         
-        
-        if homeManager!.homes.count == 0 {
-            initialHomeSetup("1 Home", roomName: "1 Room")
-        }
-        
-        vc = storyboard.instantiateViewControllerWithIdentifier("DetailViewController") as? DetailViewController
-        
     }
     
+//    func stopSearching() {
+//        accessoryBrowser!.stopSearchingForNewAccessories()
+//    }
     
-    // TODO:
-    // ID von Home und Room speichern -> an CH weitergeben
+    
+    // MARK: - Retrieve Methods
     
     func retrieveHomeWithID() -> NSUUID? {
           return currentHomeID
@@ -80,14 +83,26 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
 
     func retrieveRoomWithID() -> NSUUID? {
         return currentRoomID
-        // appDelegate.contextHandler?.roomID = roomID
+    }
+    
+    var accessoryBlock : (() -> ())?
+    
+    func retrieveAccessoriesForRoom(inHome homeID: NSUUID, roomID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
+        if !homes.isEmpty {
+            getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)
+        } else {
+            //merken und ids, homes holen und dann func aufrufen
+            accessoryBlock = { () in self.getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)}
+            //let a = accessoryBlock!() // call this when HomeKit data returns from HomeKit
+        }
+    }
+    
+    private func getIAccessories (roomID: NSUUID, inHome homeID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
+        let accessories = homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
+        let arrayOfIAccessories = accessories?.map({ accessoryFactory.accessoryForServices($0.services.first!)! })
+        completionHandler(arrayOfIAccessories!)
     }
 
-    
-//    func retrieveAccessoriesInRoom() {
-//    
-//    }
-//    
 //    func accessoriesForRoomWithID() -> Accessory? {
 //        //mitgeben welchen Service man braucht -> Licht oder GarageDoorOpener
 //    
@@ -187,13 +202,26 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             initialHomeSetup("Home",roomName: "Room")
         }
         
-        currentHomeID = homes[2].uniqueIdentifier
-        currentRoomID = homes[2].rooms[0].uniqueIdentifier
+        var index = 0
+        for home in homes {
+            if !home.rooms.isEmpty {
+                currentHomeID = homes[index].uniqueIdentifier
+                currentRoomID = homes[index].rooms[0].uniqueIdentifier
+                break
+            }
+            index++
+        }
+        
         
         appDelegate.contextHandler!.homeID = currentHomeID
         appDelegate.contextHandler!.roomID = currentRoomID
         
         delegate?.hasLoadedData(true)
+        
+        if let block = accessoryBlock {
+            block()
+            accessoryBlock = nil
+        }
     }
     
     func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
@@ -215,22 +243,22 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    // MARK: - Accessory Delegate
-    
-    func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
-        accessories.append(accessory)
-//        tableView.reloadData()
-    }
-    
-    func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
-        var index = 0
-        for item in accessories {
-            if item.name == accessory.name {
-                accessories.removeAtIndex(index)
-                break
-            }
-            ++index
-        }
-//        tableView.reloadData()
-    }
+//    // MARK: - Accessory Delegate
+//    
+//    func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
+//        accessories.append(accessory)
+////        tableView.reloadData()
+//    }
+//    
+//    func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
+//        var index = 0
+//        for item in accessories {
+//            if item.name == accessory.name {
+//                accessories.removeAtIndex(index)
+//                break
+//            }
+//            ++index
+//        }
+////        tableView.reloadData()
+//    }
 }

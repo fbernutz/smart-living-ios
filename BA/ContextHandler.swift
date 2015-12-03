@@ -26,6 +26,13 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
     }
     
+    
+    // MARK: - Retrieve Homes
+
+    func retrieveHome() -> String? {
+        return searchHome(forID: homeID)
+    }
+    
     func searchHome(forID id: NSUUID?) -> String? {
         if let localHomes = localHomes {
             for homes in localHomes {
@@ -36,6 +43,13 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
         
         return nil
+    }
+    
+    
+    // MARK: - Retrieve Rooms
+
+    func retrieveRoom() -> String? {
+        return searchRoom(forID: homeID)
     }
     
     func searchRoom(forID id: NSUUID?) -> String? {
@@ -49,20 +63,27 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         return nil
     }
     
-    func retrieveHome() -> String? {
-        return searchHome(forID: homeID)
+    
+    // MARK: - Retrieve Accessories
+    
+    func retrieveAccessories() -> IAccessory? {
+        if !searchAccessories(homeID, roomID: roomID).isEmpty {
+            let acc = searchAccessories(homeID, roomID: roomID).first
+            return acc
+        } else {
+            return nil
+        }
     }
     
-    func retrieveRoom() -> String? {
-        return searchRoom(forID: homeID)
+    func searchAccessories(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
+        
+        // TODO: Gib alle Accessories für Home > Room aus
+        var foundAccessoriesForRoom : [IAccessory]?
+        homeKitController?.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!, completionHandler: { (accessories) -> () in
+            foundAccessoriesForRoom = accessories
+        })
+        return foundAccessoriesForRoom!
     }
     
-    
-    
-    //    func retrieveAccessories() {
-    //        //gib alle Accessories für das Home>Room aus
-    //        //homeID: NSUUID?, roomID: NSUUID?
-    //
-    //    }
     
 }
