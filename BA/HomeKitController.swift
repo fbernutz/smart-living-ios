@@ -12,27 +12,23 @@ import HomeKit
 class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var contextHandler : ContextHandler?
     var delegate: HomeKitControllerDelegate?
-
-    var homeManager : HMHomeManager?
-    var accessoryBrowser : HMAccessoryBrowser?
-    var homeHelper : HomeHelper?
+    
+    var homeManager = HMHomeManager()
+    var accessoryBrowser = HMAccessoryBrowser()
+    lazy var homeHelper = HomeHelper()
     lazy var accessoryFactory = AccessoryFactory()
+    var services = [HMService]()
     
     var primaryHome: HMHome?
-    var accessories = [HMAccessory]()
-    var services = [HMService]()
     
     var currentHomeID : NSUUID?
     var currentRoomID : NSUUID?
     
     var homes = [HMHome]() {
         didSet {
-            appDelegate.contextHandler?.localHomes = homeHelper!.serviceToLocalHomes(homes)
-            
-//            delegate?.hasLoadedHomes(homeHelper!.serviceToLocalHomes(homes)!)
-            
-            appDelegate.contextHandler?.localRooms = homeHelper!.serviceToLocalRooms(homes)
+            homesAreSet()
         }
     }
     
@@ -43,57 +39,51 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
+    var pairedAccessories : [IAccessory]?
+    
+    var unpairedAccessories = [HMAccessory](){
+        didSet {
+            let newAccessory = unpairedAccessories.last!.name
+            delegate?.hasLoadedNewAccessory(newAccessory)
+            
+            if let block = newAccessoryBlock {
+                block()
+                newAccessoryBlock = nil
+            }
+        }
+    }
+    
+    var accessoryBlock : (() -> ())?
+    var newAccessoryBlock : (() -> ())?
+    var homesBlock : (() -> ())?
+    
     
     // MARK: - Setup
     
     override init() {
         super.init()
         
-        if homeManager == nil {
-            homeManager = HMHomeManager()
-        }
-        homeManager!.delegate = self
-        
-        if accessoryBrowser == nil {
-            accessoryBrowser = HMAccessoryBrowser()
-        }
-        accessoryBrowser!.delegate = self
-//        accessoryBrowser!.startSearchingForNewAccessories()
-        
-//        NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
-        
-        
-        if homeHelper == nil {
-            homeHelper = HomeHelper()
-        }
-        homeHelper!.homeKitController = self
-        
+        homeManager.delegate = self
+        accessoryBrowser.delegate = self
+        homeHelper.homeKitController = self
     }
     
-//    func stopSearching() {
-//        accessoryBrowser!.stopSearchingForNewAccessories()
-//    }
+    func startSearchingForAccessories() {
+        accessoryBrowser.startSearchingForNewAccessories()
+        NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
+    }
     
+    func stopSearching() {
+        accessoryBrowser.stopSearchingForNewAccessories()
+    }
     
     // MARK: - Retrieve Methods
-    
-    func retrieveHomeWithID() -> NSUUID? {
-          return currentHomeID
-    }
-
-    func retrieveRoomWithID() -> NSUUID? {
-        return currentRoomID
-    }
-    
-    var accessoryBlock : (() -> ())?
     
     func retrieveAccessoriesForRoom(inHome homeID: NSUUID, roomID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
         if !homes.isEmpty {
             getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)
         } else {
-            //merken und ids, homes holen und dann func aufrufen
             accessoryBlock = { () in self.getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)}
-            //let a = accessoryBlock!() // call this when HomeKit data returns from HomeKit
         }
     }
     
@@ -102,16 +92,154 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         let arrayOfIAccessories = accessories?.map({ accessoryFactory.accessoryForServices($0.services.first!)! })
         completionHandler(arrayOfIAccessories!)
     }
-
-//    func accessoriesForRoomWithID() -> Accessory? {
-//        //mitgeben welchen Service man braucht -> Licht oder GarageDoorOpener
-//    
-//        return nil
+    
+    //ACCESSORY LIST
+    
+    func retrieveNewAccessories(completionHandler : ([IAccessory]) -> ()) {
+        if !unpairedAccessories.isEmpty {
+            getNewIAccessories(completionHandler)
+        } else {
+            newAccessoryBlock = { () in self.getNewIAccessories(completionHandler) }
+        }
+    }
+    
+    func getNewIAccessories(completionHandler : ([IAccessory]) -> ()) {
+        let arrayOfIAccessories = unpairedAccessories.map({ accessoryFactory.accessoryForServices($0.services[1])! })
+        completionHandler(arrayOfIAccessories)
+    }
+    
+    //    func accessoriesForRoomWithID() -> Accessory? {
+    //        //mitgeben welchen Service man braucht -> Licht oder GarageDoorOpener
+    //
+    //        return nil
+    //    }
+    
+        // MARK: - Home Delegate
+    
+    //homeManager finished loading the home data
+    func homeManagerDidUpdateHomes(manager: HMHomeManager) {
+        homes = manager.homes
+        
+        if let home = manager.primaryHome {
+            primaryHome = home
+        } else {
+            initialHomeSetup("Home",roomName: "Room")
+        }
+        
+        
+        delegate?.hasLoadedData(true)
+        
+        if let block = accessoryBlock {
+            block()
+            accessoryBlock = nil
+        }
+        
+        if let block = homesBlock {
+            block()
+            homesBlock = nil
+        }
+    }
+    
+//    func retrieveHomes2(completionHandler completion: (homes: [Home]) -> ()) {
+//        if !homes.isEmpty {
+//            getHomes(completionHandler: completion)
+//        } else {
+//            homesBlock = { () in self.getHomes(completionHandler: completion)}
+//        }
 //    }
+//    
+//    private func getHomes (completionHandler completion: ([Home]) -> ()) {
+//        let arrayOfHomes = homeHelper.serviceToLocalHomes(homes)
+//        completion(arrayOfHomes!)
+//    }
+    
+    func homesAreSet() {
+        if !homes.isEmpty {
+            retrieveHomes(completionHandler: { (homes) -> () in
+                self.contextHandler!.localHomes = homes
+            })
+            
+            retrieveRooms(homes, completionHandler: { (rooms) -> () in
+                self.contextHandler!.localRooms = rooms
+            })
+            
+            retrieveCurrentHomeAndRoom { (homeID, roomID) -> () in
+                self.contextHandler!.homeID = homeID
+                self.contextHandler!.roomID = roomID
+            }
+        } else {
+            print ("Failed: Homes are not set yet or set to nil")
+        }
+    }
+    
+    func retrieveHomes(completionHandler completion: (homes: [Home]) -> ()) {
+        let localHome = homeHelper.serviceToLocalHomes(homes)
+        completion(homes: localHome!)
+    }
+    
+    func retrieveRooms(homes: [HMHome], completionHandler completion: (rooms: [Room]) -> ()) {
+        let localRooms = homeHelper.serviceToLocalRooms(homes)
+        completion(rooms: localRooms!)
+    }
+    
+    func retrieveCurrentHomeAndRoom(completionHandler completion: (homeID: NSUUID, roomID: NSUUID) -> ()){
+        var index = 0
+        for home in homes {
+            if !home.rooms.isEmpty {
+                currentHomeID = homes[index].uniqueIdentifier
+                currentRoomID = homes[index].rooms[0].uniqueIdentifier
+                break
+            }
+            index++
+        }
+        
+        completion(homeID: currentHomeID!, roomID: currentRoomID!)
+    }
+    
+    func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
+        homes.append(home)
+        print(homes)
+    }
+    
+    func homeManagerDidUpdatePrimaryHome(manager: HMHomeManager) {
+        print("Did update home")
+    }
+    
+    func homeManager(manager: HMHomeManager, didRemoveHome home: HMHome) {
+        var index = 0
+        for elem in homes {
+            if elem == home {
+                homes.removeAtIndex(index)
+            }
+            index++
+        }
+    }
+    
+    // MARK: - Accessory Delegate
+    
+    func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
+        unpairedAccessories.append(accessory)
+        //        tableView.reloadData()
+    }
+    
+    func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
+        var index = 0
+        for item in unpairedAccessories {
+            if item.name == accessory.name {
+                unpairedAccessories.removeAtIndex(index)
+                break
+            }
+            ++index
+        }
+        
+        //        tableView.reloadData()
+    }
+    
+    // MARK: - HomeKit Methods
     
     //Create first Home as Primary Home and first Room
     func initialHomeSetup (homeName: String, roomName: String) {
-        homeManager!.addHomeWithName(homeName) { home, error in
+        homeManager.addHomeWithName(homeName) { home, error in
             if let error = error {
                 print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
             } else {
@@ -123,7 +251,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     func addHome (withName: String) {
-        homeManager!.addHomeWithName(withName) { home, error in
+        homeManager.addHomeWithName(withName) { home, error in
             if let error = error {
                 print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
             } else {
@@ -146,7 +274,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     func updatePrimaryHome (home: HMHome) {
-        homeManager!.updatePrimaryHome(home) { error in
+        homeManager.updatePrimaryHome(home) { error in
             if let error = error {
                 print("Something went wrong when attempting to make this home our primary home. \(error.localizedDescription)")
             } else {
@@ -157,7 +285,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     func removeHome (home: HMHome) {
-        homeManager!.removeHome(home) { error in
+        homeManager.removeHome(home) { error in
             if let error = error {
                 print ("Error: \(error)")
             } else {
@@ -167,98 +295,32 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func addAccessory (activeRoom: HMRoom?, activeHome: HMHome?) {
-        let accessory = accessories[0]
-    
-        if let activeRoom = activeRoom {
-            if let activeHome = activeHome {
-                activeHome.addAccessory(accessory, completionHandler: { (error) -> Void in
+    func addAccessory (accessory: String, activeHomeID: NSUUID, activeRoomID: NSUUID) {
+        
+        let homeKitAccessory = unpairedAccessories.filter{$0.name == accessory}.first!
+        let activeHome = homes.filter{$0.uniqueIdentifier == activeHomeID}.first!
+        let activeRoom = homes.filter{$0.uniqueIdentifier == activeHomeID}.first!.rooms.filter{$0.uniqueIdentifier == activeRoomID}.first!
+        
+        activeHome.addAccessory(homeKitAccessory, completionHandler: { (error) -> Void in
+            if error != nil {
+                print("Something went wrong when attempting to add an accessory to \(activeHome.name). \(error!.localizedDescription)")
+            } else {
+                activeHome.assignAccessory(homeKitAccessory, toRoom: activeRoom, completionHandler: { (error) -> Void in
                     if error != nil {
-                        print("Something went wrong when attempting to add an accessory to \(activeHome.name). \(error!.localizedDescription)")
+                        print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
                     } else {
-                        activeHome.assignAccessory(accessory, toRoom: activeRoom, completionHandler: { (error) -> Void in
-                            if error != nil {
-                                print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
-                            } else {
-                                
-                            }
-                        })
-                        
+                        //jetzt soll accessory : String zu einem IAccessory werden -> hier anstoßen
+                        //herausfinden was das accessory für einen Service hat 
+                        if homeKitAccessory.services.count > 0 {
+                            print(homeKitAccessory.services)
+                            self.accessoryFactory.accessoryForServices(homeKitAccessory.services[1])
+                        }
                     }
                 })
+                
             }
-        }
+        })
     }
     
-    // MARK: - Home Delegate
-    
-    //homeManager finished loading the home data
-    func homeManagerDidUpdateHomes(manager: HMHomeManager) {
-        homes = manager.homes
-        
-        if let home = manager.primaryHome {
-            primaryHome = home
-        } else {
-            initialHomeSetup("Home",roomName: "Room")
-        }
-        
-        var index = 0
-        for home in homes {
-            if !home.rooms.isEmpty {
-                currentHomeID = homes[index].uniqueIdentifier
-                currentRoomID = homes[index].rooms[0].uniqueIdentifier
-                break
-            }
-            index++
-        }
-        
-        
-        appDelegate.contextHandler!.homeID = currentHomeID
-        appDelegate.contextHandler!.roomID = currentRoomID
-        
-        delegate?.hasLoadedData(true)
-        
-        if let block = accessoryBlock {
-            block()
-            accessoryBlock = nil
-        }
-    }
-    
-    func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
-        homes.append(home)
-        print(homes)
-    }
-    
-    func homeManagerDidUpdatePrimaryHome(manager: HMHomeManager) {
-        print("Did update home")
-    }
-    
-    func homeManager(manager: HMHomeManager, didRemoveHome home: HMHome) {
-        var index = 0
-        for elem in homes {
-            if elem == home {
-                homes.removeAtIndex(index)
-            }
-            index++
-        }
-    }
-    
-//    // MARK: - Accessory Delegate
-//    
-//    func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
-//        accessories.append(accessory)
-////        tableView.reloadData()
-//    }
-//    
-//    func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
-//        var index = 0
-//        for item in accessories {
-//            if item.name == accessory.name {
-//                accessories.removeAtIndex(index)
-//                break
-//            }
-//            ++index
-//        }
-////        tableView.reloadData()
-//    }
+
 }

@@ -268,6 +268,14 @@
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPS-1P-Ope">
+                                        <rect key="frame" x="501" y="18" width="51" height="30"/>
+                                        <state key="normal" title="change"/>
+                                        <connections>
+                                            <action selector="addAccessory:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="0Hf-3h-TMs"/>
+                                            <action selector="changeHome:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="aoO-Zx-y9G"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
@@ -276,7 +284,9 @@
                                     <constraint firstItem="Uu1-Lc-Yd4" firstAttribute="leading" secondItem="7OU-SH-nHU" secondAttribute="leading" constant="20" symbolic="YES" id="TFw-EC-zZ1"/>
                                     <constraint firstItem="9rT-1X-Pd2" firstAttribute="top" secondItem="Uu1-Lc-Yd4" secondAttribute="bottom" constant="8" symbolic="YES" id="YpD-Qf-mI1"/>
                                     <constraint firstItem="Uu1-Lc-Yd4" firstAttribute="top" secondItem="7OU-SH-nHU" secondAttribute="top" constant="20" symbolic="YES" id="Zxl-YV-Hz5"/>
+                                    <constraint firstAttribute="trailing" secondItem="zPS-1P-Ope" secondAttribute="trailing" constant="8" id="o4j-V7-yqX"/>
                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uu1-Lc-Yd4" secondAttribute="trailing" constant="20" symbolic="YES" id="quK-RB-J1f"/>
+                                    <constraint firstItem="zPS-1P-Ope" firstAttribute="centerY" secondItem="Uu1-Lc-Yd4" secondAttribute="centerY" id="wIB-Wz-xmQ"/>
                                     <constraint firstAttribute="trailing" secondItem="9rT-1X-Pd2" secondAttribute="trailing" id="wff-wA-aSD"/>
                                 </constraints>
                             </view>
@@ -407,7 +417,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpO-Zg-Lv6">
                                         <rect key="frame" x="518" y="22" width="22" height="22"/>
                                         <connections>
-                                            <segue destination="cr5-yp-6O8" kind="show" identifier="showAllAccessoriesSegue" id="mYc-yr-Ygp"/>
+                                            <action selector="addAccessory:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="mBh-OP-jJj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -436,6 +446,9 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2su-0T-zjS">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -444,6 +457,8 @@
                             <constraint firstItem="IBG-ft-Hwm" firstAttribute="trailing" secondItem="7OU-SH-nHU" secondAttribute="trailing" id="8jU-Mj-mie"/>
                             <constraint firstItem="PA7-WI-4z6" firstAttribute="trailing" secondItem="7OU-SH-nHU" secondAttribute="trailing" id="BKZ-rh-yin"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7OU-SH-nHU" secondAttribute="trailing" id="GPs-7q-Z9A"/>
+                            <constraint firstItem="2su-0T-zjS" firstAttribute="centerX" secondItem="yCF-5z-gty" secondAttribute="centerX" id="KGf-Xl-t4g"/>
+                            <constraint firstItem="2su-0T-zjS" firstAttribute="centerY" secondItem="yCF-5z-gty" secondAttribute="centerY" id="OkA-PT-C3c"/>
                             <constraint firstItem="MfB-kv-CzD" firstAttribute="top" relation="greaterThanOrEqual" secondItem="IBG-ft-Hwm" secondAttribute="bottom" constant="8" symbolic="YES" id="a9l-hP-aEs"/>
                             <constraint firstItem="7OU-SH-nHU" firstAttribute="leading" secondItem="yCF-5z-gty" secondAttribute="leadingMargin" id="ahE-fq-eF7"/>
                             <constraint firstItem="IBG-ft-Hwm" firstAttribute="top" secondItem="PA7-WI-4z6" secondAttribute="bottom" constant="8" symbolic="YES" id="arr-Ns-h9J"/>
@@ -453,6 +468,9 @@
                             <constraint firstItem="7OU-SH-nHU" firstAttribute="top" secondItem="BKv-oM-prW" secondAttribute="bottom" constant="8" symbolic="YES" id="ufM-aT-tkg"/>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="2su-0T-zjS"/>
+                            </mask>
                             <mask key="constraints">
                                 <exclude reference="epo-tN-eOe"/>
                                 <exclude reference="f3A-44-kl4"/>
@@ -461,8 +479,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="WqP-VE-1Fu"/>
                     <connections>
+                        <outlet property="accessoryNameFirst" destination="oRE-ES-KOZ" id="JXh-5d-Ur8"/>
                         <outlet property="homeName" destination="9rT-1X-Pd2" id="BJP-hp-NcR"/>
                         <outlet property="roomName" destination="qia-4F-yDl" id="ta3-Hy-ANy"/>
+                        <outlet property="spinner" destination="2su-0T-zjS" id="CZz-gz-DoN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q5y-3F-7by" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -497,7 +517,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="discoveryCell" rowHeight="40" id="Dk6-X6-AsM" customClass="DiscoverAccessoryCell" customModule="BA" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="86" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="22" width="600" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Dk6-X6-AsM" id="7h7-jS-C0b">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>

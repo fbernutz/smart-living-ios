@@ -10,18 +10,47 @@ import Foundation
 import HomeKit
 
 protocol IAccessory {
-     func canHandle(service: HMService) -> Bool
+    func canHandle(service: HMService) -> Bool
     // TODO: func die entscheidet, welche Characteristic sie hat
 }
+
+
+func findServicesForAccessory(accessory: HMAccessory) -> HMService? {
+    if (accessory.services.count != 0) { //mehr Services als der eine Information Service
+        for service in accessory.services {
+            return service
+        }
+    } else {
+        print("has no services")
+    }
+    return nil
+}
+
+func findCharacteristicsOfService(service: HMService){
+    //    characteristics.removeAll(keepCapacity: true)
+    for characteristic in service.characteristics {
+        
+        //        if characteristic.characteristicType == (HMCharacteristicTypeBrightness as String) {
+        //            brightnessCharacteristic = characteristic
+        //            enableBrightnessView()
+        //        }
+        //        //..
+        //        if !characteristics.contains(characteristic) {
+        //            characteristics.append(characteristic)
+        //        }
+    }
+}
+
+
 
 // MARK: - Lamp
 
 class Lamp: IAccessory {
     
     var uniqueID : NSUUID?
-    var name : String = "Lamp"
+    var name : String?
     
-     func canHandle(service: HMService) -> Bool {
+    func canHandle(service: HMService) -> Bool {
         
         if service.serviceType == HMServiceTypeLightbulb {
             return true
@@ -37,9 +66,9 @@ class Lamp: IAccessory {
 class WeatherStation: IAccessory {
     
     var uniqueID : NSUUID?
-    var name : String = "Weather Station"
+    var name : String?
     
-     func canHandle(service: HMService) -> Bool {
+    func canHandle(service: HMService) -> Bool {
         
         if service.serviceType == HMServiceTypeTemperatureSensor {
             return true
@@ -55,9 +84,9 @@ class WeatherStation: IAccessory {
 class EnergyController: IAccessory {
     
     var uniqueID : NSUUID?
-    var name : String = "Energy Controller"
+    var name : String?
     
-     func canHandle(service: HMService) -> Bool {
+    func canHandle(service: HMService) -> Bool {
         
         if service.serviceType == HMServiceTypeSwitch {
             return true
@@ -73,15 +102,35 @@ class EnergyController: IAccessory {
 class DoorWindowSensor: IAccessory {
     
     var uniqueID : NSUUID?
-    var name : String = "DoorWindow Sensor"
+    var name : String?
     
-     func canHandle(service: HMService) -> Bool {
+    func canHandle(service: HMService) -> Bool {
         
         // TODO: überprüfen welcher Service, der richtige ist
         if service.serviceType == HMServiceTypeWindow {
             return true
         } else {
             return false
+        }
+    }
+    
+}
+
+
+// MARK: - Diverse
+
+class Diverse: IAccessory {
+    
+    var uniqueID : NSUUID?
+    var name : String?
+    
+    func canHandle(service: HMService) -> Bool {
+        
+        switch service.serviceType {
+        case HMServiceTypeWindow, HMServiceTypeWindow, HMServiceTypeSwitch, HMServiceTypeTemperatureSensor, HMServiceTypeLightbulb:
+            return false
+        default:
+            return true
         }
     }
     

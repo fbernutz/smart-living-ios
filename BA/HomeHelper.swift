@@ -13,6 +13,7 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
     
     var localHomes : [Home]?
     var localRooms : [Room]?
+//    var localAccessories : [IAccessory]?
     var homeKitController : HomeKitController?
     
     //    enum ServiceTypes {
@@ -48,6 +49,14 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
         return localRooms
     }
     
+//    func serviceToLocalAccessories(homeKitAccessories: [HMAccessory]) -> [IAccessory]? {
+//        localAccessories = []
+//        for accessory in homeKitAccessories {
+////            localAccessories?.append()
+//        }
+//        return localAccessories
+//    }
+    
     
     // MARK: - Local To Service
     
@@ -56,7 +65,7 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
     }
     
     func localRoomToService(localRoom: Room) {
-        for home in (homeKitController?.homeManager?.homes)! {
+        for home in (homeKitController?.homeManager.homes)! {
             if home.uniqueIdentifier == localRoom.homeID {
                 homeKitController?.addRoom(localRoom.name!, toHome: home)
             }

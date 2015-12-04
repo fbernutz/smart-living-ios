@@ -18,17 +18,58 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var localHomes : [Home]?
     var localRooms : [Room]?
     
+    var pairedAccessory : [IAccessory]?
+    
     override init() {
         super.init()
         
         if homeKitController == nil {
             homeKitController = HomeKitController()
         }
+        homeKitController!.contextHandler = self
+        
+    }
+    
+    
+    func loadAccessoryBrowser(){
+        homeKitController!.startSearchingForAccessories()
+//        searchNewAccessories()
+    }
+    
+    func addAccessory(accessory: String) {
+        homeKitController?.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!)
     }
     
     
     // MARK: - Retrieve Homes
-
+    
+    //    Bei der Anfrage gibst Du einen Block / Closure nach unten
+    //    die speicherst Du in einer Variable und startest die Anfrage an Homekit.
+    //    Wenn HomeKit den Delegate aufruft, schaust Du ob die Block/Closure-Variable gesetzt ist und wenn ja, führst Du sie aus.
+    
+//    func retrieveHomes() -> [Home]? {
+//        if !searchHomes().isEmpty {
+//            let foundHomes = searchHomes()
+//            return foundHomes
+//        } else {
+//            return nil
+//        }
+//    }
+//    
+//    func searchHomes() -> [Home] {
+//        var foundHomes : [Home]?
+//        homeKitController?.retrieveHomes2(completionHandler: { (homes) -> () in
+//                foundHomes = homes
+//        })
+//        
+//        if let foundHomes = foundHomes {
+//            return foundHomes
+//        } else {
+//            return []
+//        }
+//    }
+    
+    
     func retrieveHome() -> String? {
         return searchHome(forID: homeID)
     }
@@ -66,23 +107,34 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Retrieve Accessories
     
-    func retrieveAccessories() -> IAccessory? {
-        if !searchAccessories(homeID, roomID: roomID).isEmpty {
-            let acc = searchAccessories(homeID, roomID: roomID).first
-            return acc
+    func retrieveAccessories() -> [IAccessory]? {
+        if !searchAccessoriesForRoom(homeID, roomID: roomID).isEmpty {
+            let accessoriesInRoom = searchAccessoriesForRoom(homeID, roomID: roomID)
+            return accessoriesInRoom
         } else {
             return nil
         }
     }
     
-    func searchAccessories(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
-        
-        // TODO: Gib alle Accessories für Home > Room aus
+    func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
         var foundAccessoriesForRoom : [IAccessory]?
-        homeKitController?.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!, completionHandler: { (accessories) -> () in
+        homeKitController?.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
             foundAccessoriesForRoom = accessories
-        })
+        }
         return foundAccessoriesForRoom!
+    }
+    
+    func searchNewAccessories() -> [IAccessory] {
+        var foundAccessoriesForRoom : [IAccessory]?
+        homeKitController?.retrieveNewAccessories() { (accessories) -> () in
+            foundAccessoriesForRoom = accessories
+        }
+        
+        if let foundAccessoriesForRoom = foundAccessoriesForRoom {
+            return foundAccessoriesForRoom
+        } else {
+            return []
+        }
     }
     
     

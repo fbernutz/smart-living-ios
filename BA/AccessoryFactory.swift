@@ -13,7 +13,7 @@ class AccessoryFactory {
     
     var localAccessories : [IAccessory]?
     var accessories : [HMAccessory]?
-    var arrayOfTypes: [IAccessory] = [Lamp(), WeatherStation(), EnergyController(), DoorWindowSensor()]
+    var arrayOfTypes: [IAccessory] = [Lamp(), WeatherStation(), EnergyController(), DoorWindowSensor(), Diverse()]
     
     
     func accessoryForServices(service: HMService) -> IAccessory? {
