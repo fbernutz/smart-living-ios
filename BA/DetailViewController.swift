@@ -47,6 +47,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
             accessory = accessories?.first
         }
     }
+    //accessories hat 5 Einträge -> TableView NUmber Of Rows
     
     var accessory : IAccessory? {
         didSet {
@@ -73,13 +74,14 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
             home = contextHandler!.retrieveHome()
             room = contextHandler!.retrieveRoom()
             
+            accessories = contextHandler!.retrieveAccessories()
         } else {
             print("loading failed")
         }
     }
     
-    func hasLoadedNewAccessory(status: String) {
-        accessoryList.append(status)
+    func hasLoadedNewAccessoriesList(accessoryNames: [String]) {
+        accessoryList = accessoryNames.map({ $0 })
         
         let sheet = self.createActionSheet(accessoryList)
         self.presentViewController(sheet, animated: true, completion: nil)
@@ -96,21 +98,24 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
     func createActionSheet(accessories : [String]) -> UIAlertController {
         let sheet = UIAlertController(title: "Found accessories", message: "By choosing you can add this accessory", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        var index = 0
         for accessory in accessories {
             sheet.addAction(UIAlertAction(title: accessory, style: UIAlertActionStyle.Default)
                 { action in
-                    self.accessoryList.removeAtIndex(index)
+                    // 1 add accessory
                     self.contextHandler!.addAccessory(accessory)
+                    
+                    // 2 show name of accessories
                     self.accessories = self.contextHandler!.retrieveAccessories()
+                    
+                    // 3 delete from list for next query
+                    self.accessoryList.removeAtIndex(accessories.indexOf(accessory)!)
                 }
             )
-            index++
         }
         
-        sheet.addAction(UIAlertAction(title: "Cancel", style:UIAlertActionStyle.Cancel)
+        sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel)
             { action in
-                //
+                
             }
         )
         

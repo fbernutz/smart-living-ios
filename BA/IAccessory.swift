@@ -10,6 +10,8 @@ import Foundation
 import HomeKit
 
 protocol IAccessory {
+    var name : String? { get set }
+    var uniqueID : NSUUID? { get set }
     func canHandle(service: HMService) -> Bool
     // TODO: func die entscheidet, welche Characteristic sie hat
 }
@@ -84,7 +86,7 @@ class WeatherStation: IAccessory {
 class EnergyController: IAccessory {
     
     var uniqueID : NSUUID?
-    var name : String?
+    var name : String? 
     
     func canHandle(service: HMService) -> Bool {
         

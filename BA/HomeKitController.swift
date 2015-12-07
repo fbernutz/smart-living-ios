@@ -40,18 +40,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     var pairedAccessories : [IAccessory]?
-    
-    var unpairedAccessories = [HMAccessory](){
-        didSet {
-            let newAccessory = unpairedAccessories.last!.name
-            delegate?.hasLoadedNewAccessory(newAccessory)
-            
-            if let block = newAccessoryBlock {
-                block()
-                newAccessoryBlock = nil
-            }
-        }
-    }
+    var unpairedAccessories = [HMAccessory]()
     
     var accessoryBlock : (() -> ())?
     var newAccessoryBlock : (() -> ())?
@@ -75,6 +64,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func stopSearching() {
         accessoryBrowser.stopSearchingForNewAccessories()
+        
+        if !unpairedAccessories.isEmpty {
+            let newAccessoryArray = unpairedAccessories.map({ $0.name })
+            delegate?.hasLoadedNewAccessoriesList(newAccessoryArray)
+        }
+        
+        if let block = newAccessoryBlock {
+            block()
+            newAccessoryBlock = nil
+        }
     }
     
     // MARK: - Retrieve Methods
@@ -87,9 +86,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    private func getIAccessories (roomID: NSUUID, inHome homeID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
+    private func getIAccessories(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
         let accessories = homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
-        let arrayOfIAccessories = accessories?.map({ accessoryFactory.accessoryForServices($0.services.first!)! })
+        
+        let arrayOfIAccessories: [IAccessory]? = accessories?.map({
+            var iAccessory = accessoryFactory.accessoryForServices($0.services.first!)!
+            iAccessory.name = $0.name
+            iAccessory.uniqueID = $0.uniqueIdentifier
+            return iAccessory
+        })
+        
         completionHandler(arrayOfIAccessories!)
     }
     
@@ -219,20 +225,14 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
         unpairedAccessories.append(accessory)
-        //        tableView.reloadData()
     }
     
     func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
-        var index = 0
-        for item in unpairedAccessories {
-            if item.name == accessory.name {
-                unpairedAccessories.removeAtIndex(index)
-                break
+        let _ = unpairedAccessories.map({
+            if $0.name == accessory.name {
+                unpairedAccessories.removeAtIndex(unpairedAccessories.indexOf($0)!)
             }
-            ++index
-        }
-        
-        //        tableView.reloadData()
+        })
     }
     
     // MARK: - HomeKit Methods
@@ -256,7 +256,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
             } else {
                 // TODO
-                
             }
         }
     }
@@ -290,7 +289,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 print ("Error: \(error)")
             } else {
                 // TODO
-                
             }
         }
     }
@@ -309,8 +307,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     if error != nil {
                         print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
                     } else {
-                        //jetzt soll accessory : String zu einem IAccessory werden -> hier anstoßen
-                        //herausfinden was das accessory für einen Service hat 
                         if homeKitAccessory.services.count > 0 {
                             print(homeKitAccessory.services)
                             self.accessoryFactory.accessoryForServices(homeKitAccessory.services[1])
