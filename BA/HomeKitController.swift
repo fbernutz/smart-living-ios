@@ -89,14 +89,22 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     private func getIAccessories(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
         let accessories = homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
         
-        let arrayOfIAccessories: [IAccessory]? = accessories?.map({
-            var iAccessory = accessoryFactory.accessoryForServices($0.services.first!)!
-            iAccessory.name = $0.name
-            iAccessory.uniqueID = $0.uniqueIdentifier
-            return iAccessory
-        })
+        if accessories != nil {
+            pairedAccessories = accessories!.map({
+                var new = accessoryFactory.accessoryForServices($0.services.first!)!
+                new.name = $0.name
+                new.uniqueID = $0.uniqueIdentifier
+                return new
+            })
+            completionHandler(pairedAccessories!)
+        }
         
-        completionHandler(arrayOfIAccessories!)
+//        var arrayOfIAccessories: [IAccessory] = []
+//        for accessory in accessories! {
+//            let iAccessory = createIAccessory(accessory)
+//            arrayOfIAccessories.append(iAccessory)
+//        }
+        
     }
     
     //ACCESSORY LIST

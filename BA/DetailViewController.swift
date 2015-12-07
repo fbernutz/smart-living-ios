@@ -8,24 +8,22 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, HomeKitControllerDelegate {
+class DetailViewController: UIViewController, HomeKitControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var contextHandler : ContextHandler?
     
     @IBOutlet weak var spinner: UIActivityIndicatorView?
     @IBOutlet weak var homeName: UILabel?
     @IBOutlet weak var roomName: UILabel?
-    @IBOutlet weak var accessoryNameFirst: UILabel?
+    @IBOutlet weak var accessoryName: UILabel?
+    @IBOutlet weak var accessoriesTableView: UITableView?
     
     @IBAction func addAccessory(sender: UIButton) {
         contextHandler?.loadAccessoryBrowser()
     }
-    
     @IBAction func changeHome(sender: UIButton) {
-        
     }
-    
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var contextHandler : ContextHandler?
     
     var home : String? {
         didSet {
@@ -44,14 +42,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
     
     var accessories : [IAccessory]? {
         didSet {
-            accessory = accessories?.first
-        }
-    }
-    //accessories hat 5 Einträge -> TableView NUmber Of Rows
-    
-    var accessory : IAccessory? {
-        didSet {
-            accessoryNameFirst?.text = accessory?.name
+            accessoriesTableView?.reloadData()
         }
     }
     
@@ -67,6 +58,27 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
         
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if let accessories = accessories {
+            return accessories.count
+        } else {
+            return 0
+        }
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+        
+        cell?.textLabel?.text = accessories![indexPath.row].name
+        
+        return cell!
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        //
+    }
+    
+    
     func hasLoadedData(status: Bool) {
         if status == true {
             print("loading successful")
@@ -81,7 +93,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate {
     }
     
     func hasLoadedNewAccessoriesList(accessoryNames: [String]) {
-        accessoryList = accessoryNames.map({ $0 })
+        accessoryList += accessoryNames
         
         let sheet = self.createActionSheet(accessoryList)
         self.presentViewController(sheet, animated: true, completion: nil)

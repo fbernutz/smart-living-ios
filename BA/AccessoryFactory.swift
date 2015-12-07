@@ -15,18 +15,22 @@ class AccessoryFactory {
     var accessories : [HMAccessory]?
     var arrayOfTypes: [IAccessory] = [Lamp(), WeatherStation(), EnergyController(), DoorWindowSensor(), Diverse()]
     
-    var name : String?
-    var uniqueID : NSUUID?
-    
     func accessoryForServices(service: HMService) -> IAccessory? {
         let canHandleServiceAccessory = arrayOfTypes.filter { $0.canHandle(service) }.first
         return canHandleServiceAccessory
     }
     
-    func setIAccessory(accessoryName: String, accessoryID: NSUUID) {
-        name = accessoryName
-        uniqueID = accessoryID
+    func createIAccessory(accessory: HMAccessory) -> IAccessory {
+        var iAccessory = accessoryForServices(accessory.services.first!)
+        iAccessory!.name = accessory.name
+        iAccessory!.uniqueID = accessory.uniqueIdentifier
+        return iAccessory!
     }
+    
+//    func setIAccessory(accessoryName: String, accessoryID: NSUUID) {
+//        name = accessoryName
+//        uniqueID = accessoryID
+//    }
     
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {
