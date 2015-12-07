@@ -49,8 +49,8 @@ func findCharacteristicsOfService(service: HMService){
 
 class Lamp: IAccessory {
     
-    var uniqueID : NSUUID?
     var name : String?
+    var uniqueID : NSUUID?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -67,8 +67,8 @@ class Lamp: IAccessory {
 
 class WeatherStation: IAccessory {
     
-    var uniqueID : NSUUID?
     var name : String?
+    var uniqueID : NSUUID?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -85,8 +85,8 @@ class WeatherStation: IAccessory {
 
 class EnergyController: IAccessory {
     
+    var name : String?
     var uniqueID : NSUUID?
-    var name : String? 
     
     func canHandle(service: HMService) -> Bool {
         
@@ -103,8 +103,8 @@ class EnergyController: IAccessory {
 
 class DoorWindowSensor: IAccessory {
     
-    var uniqueID : NSUUID?
     var name : String?
+    var uniqueID : NSUUID?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -123,8 +123,8 @@ class DoorWindowSensor: IAccessory {
 
 class Diverse: IAccessory {
     
-    var uniqueID : NSUUID?
     var name : String?
+    var uniqueID : NSUUID?
     
     func canHandle(service: HMService) -> Bool {
         

@@ -253,9 +253,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="2su-0T-zjS">
-                                <rect key="frame" x="290" y="290" width="20" height="20"/>
-                            </activityIndicatorView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7OU-SH-nHU">
                                 <rect key="frame" x="20" y="72" width="560" height="94"/>
                                 <subviews>
@@ -379,18 +376,21 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="AOr-pM-Tup">
+                                <rect key="frame" x="282" y="282" width="37" height="37"/>
+                                <color key="color" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="PA7-WI-4z6" firstAttribute="leading" secondItem="7OU-SH-nHU" secondAttribute="leading" id="2UI-Yq-W8g"/>
                             <constraint firstItem="IBG-ft-Hwm" firstAttribute="leading" secondItem="7OU-SH-nHU" secondAttribute="leading" id="6pC-Ce-emM"/>
                             <constraint firstItem="IBG-ft-Hwm" firstAttribute="trailing" secondItem="7OU-SH-nHU" secondAttribute="trailing" id="8jU-Mj-mie"/>
+                            <constraint firstItem="AOr-pM-Tup" firstAttribute="centerX" secondItem="yCF-5z-gty" secondAttribute="centerX" id="A3S-Ne-iRj"/>
                             <constraint firstItem="PA7-WI-4z6" firstAttribute="trailing" secondItem="7OU-SH-nHU" secondAttribute="trailing" id="BKZ-rh-yin"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7OU-SH-nHU" secondAttribute="trailing" id="GPs-7q-Z9A"/>
                             <constraint firstItem="MfB-kv-CzD" firstAttribute="top" secondItem="Ohe-C4-0TX" secondAttribute="bottom" constant="72" id="JcE-Dc-HTo"/>
-                            <constraint firstItem="2su-0T-zjS" firstAttribute="centerX" secondItem="yCF-5z-gty" secondAttribute="centerX" id="KGf-Xl-t4g"/>
                             <constraint firstAttribute="trailing" secondItem="Ohe-C4-0TX" secondAttribute="trailing" constant="20" id="M9V-2U-fPu"/>
-                            <constraint firstItem="2su-0T-zjS" firstAttribute="centerY" secondItem="yCF-5z-gty" secondAttribute="centerY" id="OkA-PT-C3c"/>
                             <constraint firstItem="MfB-kv-CzD" firstAttribute="top" secondItem="IBG-ft-Hwm" secondAttribute="bottom" constant="8" symbolic="YES" id="a9l-hP-aEs"/>
                             <constraint firstItem="7OU-SH-nHU" firstAttribute="leading" secondItem="yCF-5z-gty" secondAttribute="leadingMargin" id="ahE-fq-eF7"/>
                             <constraint firstItem="IBG-ft-Hwm" firstAttribute="top" secondItem="PA7-WI-4z6" secondAttribute="bottom" constant="8" symbolic="YES" id="arr-Ns-h9J"/>
@@ -398,11 +398,9 @@
                             <constraint firstItem="PA7-WI-4z6" firstAttribute="top" secondItem="IBG-ft-Hwm" secondAttribute="bottom" constant="8" symbolic="YES" id="f3A-44-kl4"/>
                             <constraint firstItem="PA7-WI-4z6" firstAttribute="top" secondItem="7OU-SH-nHU" secondAttribute="bottom" constant="8" symbolic="YES" id="rVL-ob-gHy"/>
                             <constraint firstItem="7OU-SH-nHU" firstAttribute="top" secondItem="BKv-oM-prW" secondAttribute="bottom" constant="8" symbolic="YES" id="ufM-aT-tkg"/>
+                            <constraint firstItem="AOr-pM-Tup" firstAttribute="centerY" secondItem="yCF-5z-gty" secondAttribute="centerY" id="wFJ-7N-CgC"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="2su-0T-zjS"/>
-                            </mask>
                             <mask key="constraints">
                                 <exclude reference="epo-tN-eOe"/>
                                 <exclude reference="f3A-44-kl4"/>
@@ -416,7 +414,7 @@
                         <outlet property="accessoriesTableView" destination="Ohe-C4-0TX" id="9UX-6e-irX"/>
                         <outlet property="homeName" destination="9rT-1X-Pd2" id="BJP-hp-NcR"/>
                         <outlet property="roomName" destination="qia-4F-yDl" id="ta3-Hy-ANy"/>
-                        <outlet property="spinner" destination="2su-0T-zjS" id="CZz-gz-DoN"/>
+                        <outlet property="spinner" destination="AOr-pM-Tup" id="tht-VN-eTM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q5y-3F-7by" userLabel="First Responder" sceneMemberID="firstResponder"/>

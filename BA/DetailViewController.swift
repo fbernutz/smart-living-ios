@@ -20,15 +20,17 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     @IBOutlet weak var accessoriesTableView: UITableView?
     
     @IBAction func addAccessory(sender: UIButton) {
+        spinner?.startAnimating()
         contextHandler?.loadAccessoryBrowser()
     }
+    
     @IBAction func changeHome(sender: UIButton) {
+        
     }
     
     var home : String? {
         didSet {
             homeName?.text = home
-            //            spinner?.stopAnimating()
         }
     }
     
@@ -108,6 +110,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     }
     
     func createActionSheet(accessories : [String]) -> UIAlertController {
+        spinner?.stopAnimating()
         let sheet = UIAlertController(title: "Found accessories", message: "By choosing you can add this accessory", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         for accessory in accessories {
