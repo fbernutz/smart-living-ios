@@ -105,7 +105,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     
-    // MARK: - Retrieve Accessories
+    // MARK: - Retrieve paired accessories
     
     func retrieveAccessories() -> [IAccessory]? {
         if !searchAccessoriesForRoom(homeID, roomID: roomID).isEmpty {
@@ -123,6 +123,8 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
         return foundAccessoriesForRoom!
     }
+    
+    // MARK: - Retrieve unpaired accessory list
     
     func searchNewAccessories() -> [IAccessory] {
         var foundAccessoriesForRoom : [IAccessory]?

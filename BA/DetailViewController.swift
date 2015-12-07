@@ -57,8 +57,33 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         
         let controller = contextHandler!.homeKitController
         controller!.delegate = self
-        
     }
+   
+    
+    // MARK: - HomeKitController Delegates
+    
+    func hasLoadedData(status: Bool) {
+        if status == true {
+            print("loading successful")
+            
+            home = contextHandler!.retrieveHome()
+            room = contextHandler!.retrieveRoom()
+            
+            accessories = contextHandler!.retrieveAccessories()
+            
+        } else {
+            print("loading failed")
+        }
+    }
+    
+    func hasLoadedNewAccessoriesList(accessoryNames: [String]) {
+        accessoryList = accessoryNames
+        
+        let sheet = self.createActionSheet(accessoryList)
+        self.presentViewController(sheet, animated: true, completion: nil)
+    }
+    
+    // MARK: - TableView Delegates
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if let accessories = accessories {
@@ -77,37 +102,10 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        //
+        print("Selected row \(indexPath.row)")
     }
     
-    
-    func hasLoadedData(status: Bool) {
-        if status == true {
-            print("loading successful")
-            
-            home = contextHandler!.retrieveHome()
-            room = contextHandler!.retrieveRoom()
-            
-            accessories = contextHandler!.retrieveAccessories()
-        } else {
-            print("loading failed")
-        }
-    }
-    
-    func hasLoadedNewAccessoriesList(accessoryNames: [String]) {
-        accessoryList += accessoryNames
-        
-        let sheet = self.createActionSheet(accessoryList)
-        self.presentViewController(sheet, animated: true, completion: nil)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showAllAccessoriesSegue" {
-            //            let vc = segue.destinationViewController as! DiscoveryViewController
-            //            vc.activeRoom = room
-            //            vc.activeHome = home
-        }
-    }
+    // MARK: - Create Action Sheet
     
     func createActionSheet(accessories : [String]) -> UIAlertController {
         spinner?.stopAnimating()
@@ -137,4 +135,14 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         return sheet
     }
     
+    
+    // MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showAllAccessoriesSegue" {
+            //            let vc = segue.destinationViewController as! DiscoveryViewController
+            //            vc.activeRoom = room
+            //            vc.activeHome = home
+        }
+    }
 }
