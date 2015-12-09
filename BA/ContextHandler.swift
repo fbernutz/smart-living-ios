@@ -30,16 +30,10 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         
     }
     
-    
     func loadAccessoryBrowser(){
         homeKitController!.startSearchingForAccessories()
 //        searchNewAccessories()
     }
-    
-    func addAccessory(accessory: String) {
-        homeKitController?.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!)
-    }
-    
     
     // MARK: - Retrieve Homes
     
@@ -118,7 +112,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
         var foundAccessoriesForRoom : [IAccessory]?
-        homeKitController?.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
+        homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
             foundAccessoriesForRoom = accessories
         }
         return foundAccessoriesForRoom!
@@ -128,7 +122,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     func searchNewAccessories() -> [IAccessory] {
         var foundAccessoriesForRoom : [IAccessory]?
-        homeKitController?.retrieveNewAccessories() { (accessories) -> () in
+        homeKitController!.retrieveNewAccessories() { (accessories) -> () in
             foundAccessoriesForRoom = accessories
         }
         
@@ -137,6 +131,12 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         } else {
             return []
         }
+    }
+    
+    // MARK: - Add new accessory
+    
+    func addAccessory(accessory: String) {
+        homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!)
     }
     
     

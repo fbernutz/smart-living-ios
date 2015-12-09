@@ -68,7 +68,6 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
             
             home = contextHandler!.retrieveHome()
             room = contextHandler!.retrieveRoom()
-            
             accessories = contextHandler!.retrieveAccessories()
             
         } else {

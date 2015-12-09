@@ -91,19 +91,13 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         if accessories != nil {
             pairedAccessories = accessories!.map({
-                var new = accessoryFactory.accessoryForServices($0.services.first!)!
+                var new = accessoryFactory.accessoryForServices($0.services.last!)!
                 new.name = $0.name
                 new.uniqueID = $0.uniqueIdentifier
                 return new
             })
             completionHandler(pairedAccessories!)
         }
-        
-//        var arrayOfIAccessories: [IAccessory] = []
-//        for accessory in accessories! {
-//            let iAccessory = createIAccessory(accessory)
-//            arrayOfIAccessories.append(iAccessory)
-//        }
         
     }
     
@@ -139,7 +133,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         } else {
             initialHomeSetup("Home",roomName: "Room")
         }
-        
         
         delegate?.hasLoadedData(true)
         

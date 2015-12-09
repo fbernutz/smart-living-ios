@@ -13,25 +13,36 @@ class AccessoryFactory {
     
     var localAccessories : [IAccessory]?
     var accessories : [HMAccessory]?
-    var arrayOfTypes: [IAccessory] = [Lamp(), WeatherStation(), EnergyController(), DoorWindowSensor(), Diverse()]
+    
+    var lampService = Lamp()
+    var weatherStationService = WeatherStation()
+    var energyControllerService = EnergyController()
+    var doorWindowSensorService = DoorWindowSensor()
+    var diverse = Diverse()
+    
+    var arrayOfTypes: [IAccessory]?
+    
     
     func accessoryForServices(service: HMService) -> IAccessory? {
-        let canHandleServiceAccessory = arrayOfTypes.filter { $0.canHandle(service) }.first
-        return canHandleServiceAccessory
+        arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, diverse]
+        
+        let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service) }.first
+        
+        //new instance of type
+        switch canHandleServiceAccessory {
+        case is Lamp:
+            return Lamp()
+        case is WeatherStation:
+            return WeatherStation()
+        case is EnergyController:
+            return EnergyController()
+        case is DoorWindowSensor:
+            return DoorWindowSensor()
+        case is Diverse:
+            return Diverse()
+        default: return nil
+        }
     }
-    
-    func createIAccessory(accessory: HMAccessory) -> IAccessory {
-        var iAccessory = accessoryForServices(accessory.services.first!)
-        iAccessory!.name = accessory.name
-        iAccessory!.uniqueID = accessory.uniqueIdentifier
-        return iAccessory!
-    }
-    
-//    func setIAccessory(accessoryName: String, accessoryID: NSUUID) {
-//        name = accessoryName
-//        uniqueID = accessoryID
-//    }
-    
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {
 //    // sucht nach verfügbaren Services für die Accessories

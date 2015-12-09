@@ -6,14 +6,15 @@
 //  Copyright © 2015 Felizia Bernutz. All rights reserved.
 //
 
-import Foundation
+import UIKit
 import HomeKit
 
 protocol IAccessory {
     var name : String? { get set }
     var uniqueID : NSUUID? { get set }
+    
     func canHandle(service: HMService) -> Bool
-    // TODO: func die entscheidet, welche Characteristic sie hat
+    func characteristicForService() -> Int
 }
 
 
@@ -61,6 +62,16 @@ class Lamp: IAccessory {
         }
     }
     
+    
+    func characteristicForService() -> Int {
+        let status: Bool?
+        let brightness: Int?
+        let color: UIColor?
+//        var array = [status: true, brightness: 10, color: UIColor.whiteColor()]
+        
+        return 3
+    }
+    
 }
 
 // MARK: - Eve Weather
@@ -79,6 +90,14 @@ class WeatherStation: IAccessory {
         }
     }
     
+    func characteristicForService() -> Int {
+        let temperature: Float?   // in °C
+        let humidity: Float?  // Luftfeuchtigkeit in %
+        let airPressure: Float?   // Luftdruck in Pa
+        
+        return 3
+    }
+    
 }
 
 // MARK: - Eve Energy
@@ -95,6 +114,13 @@ class EnergyController: IAccessory {
         } else {
             return false
         }
+    }
+    
+    func characteristicForService() -> Int {
+        let status: Bool?
+        let powerConsumption: Float?
+        
+        return 2
     }
     
 }
@@ -116,6 +142,13 @@ class DoorWindowSensor: IAccessory {
         }
     }
     
+    func characteristicForService() -> Int {
+        let status: Bool?
+        let counter: Int?
+        
+        return 2
+    }
+    
 }
 
 
@@ -134,6 +167,11 @@ class Diverse: IAccessory {
         default:
             return true
         }
+    }
+    
+    func characteristicForService() -> Int {
+        //nothing
+        return 0
     }
     
 }

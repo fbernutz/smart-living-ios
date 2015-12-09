@@ -10,5 +10,9 @@ import UIKit
 
 class LightView: UIView {
     
+    @IBOutlet weak var infotext: UILabel!
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var statusBtn: UIButton!
+    @IBOutlet weak var icon: UIImageView!
     
 }
