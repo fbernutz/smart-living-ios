@@ -32,7 +32,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     func loadAccessoryBrowser(){
         homeKitController!.startSearchingForAccessories()
-//        searchNewAccessories()
     }
     
     // MARK: - Retrieve Homes
@@ -49,7 +48,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
 //            return nil
 //        }
 //    }
-//    
+    
 //    func searchHomes() -> [Home] {
 //        var foundHomes : [Home]?
 //        homeKitController?.retrieveHomes2(completionHandler: { (homes) -> () in
@@ -135,9 +134,8 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Add new accessory
     
-    func addAccessory(accessory: String) {
-        homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!)
+    func addAccessory(accessory: String, completionHandler: () -> () ) {
+        homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!, completionHandler: completionHandler)
     }
-    
     
 }

@@ -1,102 +1,95 @@
-////
-////  AccessoryViewController.swift
-////  HomeKit01
-////
-////  Created by Felizia Bernutz on 22.05.15.
-////  Copyright (c) 2015 Felizia Bernutz. All rights reserved.
-////
 //
-//import UIKit
+//  AccessoryViewController.swift
+//  HomeKit01
 //
-//class DiscoveryViewController: UITableViewController {
-//    
-//    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-//    
-//    var accessories = [HMAccessory]()
-//    
-//    
-//    var activeRoom: String?
-//    var activeHome: String?
-//    var lastSelectedIndexRow = 0
-//    
-////    var delegate : HomeKitControllerDelegate
-//    
-//    required init?(coder aDecoder: NSCoder) {
-//        super.init(coder: aDecoder)
-//        title = "Searching"
-//        
-//        //homeKitController.startSearchingForAccessories()
-//    }
-//    
-//    // MARK: - Table Delegate
-//    
-//    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return accessories.count
-//    }
-//    
-//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("discoveryCell") as! DiscoverAccessoryCell
-//        let accessory = accessories[indexPath.row] as HMAccessory
-//        
-//        cell.headingLabel?.text = accessory.name
-//        
-//        return cell
-//    }
-//    
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let accessory = accessories[indexPath.row] as HMAccessory
-//        //lastSelectedIndexRow = indexPath.row
-//        //
-//        //        if let activeRoom = self.activeRoom {
-//        //            if let activeHome = self.activeHome {
-//        //                activeHome.addAccessory(accessory, completionHandler: { (error) -> Void in
-//        //                    if error != nil {
-//        //                        print("Something went wrong when attempting to add an accessory to \(activeHome.name). \(error!.localizedDescription)")
-//        //                    } else {
-//        //                        self.activeHome!.assignAccessory(accessory, toRoom: self.activeRoom!, completionHandler: { (error) -> Void in
-//        //                            if error != nil {
-//        //                                print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
-//        //                            } else {
-//        //                                self.navigationController?.popViewControllerAnimated(true)
-//        //
-//        //
-//        //                                tableView.reloadData()
-//        //                            }
-//        //                        })
-//        //
-//        //                    }
-//        //                })
-//        //            }
-//        //        }
-//        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-//    }
-//    
-//    // MARK: - Accessory Delegate
-//    
-//    func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
-//        accessories.append(accessory)
-//        tableView.reloadData()
-//    }
-//    
-//    func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
-//        var index = 0
-//        for item in accessories {
-//            if item.name == accessory.name {
-//                accessories.removeAtIndex(index)
-//                break
-//            }
-//            ++index
-//        }
-//        tableView.reloadData()
-//    }
-//    
-//}
+//  Created by Felizia Bernutz on 22.05.15.
+//  Copyright (c) 2015 Felizia Bernutz. All rights reserved.
 //
-//// MARK: - Cell
-//
-//class DiscoverAccessoryCell: UITableViewCell {
-//    
-//    @IBOutlet weak var headingLabel: UILabel!
-//    //@IBOutlet weak var descriptionLabel: UILabel!
-//    
-//}
+
+import UIKit
+
+class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccessoriesDelegate {
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView?
+    
+    var contextHandler: ContextHandler?
+    var controller : HomeKitController?
+    
+    var tempArray: [String] = []
+    
+    var accessoryList : [String]? {
+        didSet {
+            tableView?.reloadData()
+        }
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        controller = contextHandler!.homeKitController
+        controller!.accessoryDelegate = self
+        
+        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    // MARK: - Table Delegate
+    
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if accessoryList != nil {
+            return accessoryList!.count
+        } else {
+            return 0
+        }
+    }
+    
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("newAccessoryCell")
+        cell?.textLabel?.text = accessoryList![indexPath.row]
+        return cell!
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let accessory = accessoryList![indexPath.row]
+        
+        self.contextHandler!.addAccessory(accessory, completionHandler: { _ in
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            self.accessoryList?.removeAtIndex((self.accessoryList?.indexOf(accessory)!)!)
+            self.performSegueWithIdentifier("addedAccessorySegue", sender: self)
+        })
+    }
+    
+    // MARK: - HomeKitController Delegates
+    
+    func hasLoadedNewAccessoriesList(accessoryNames: [String], stillLoading: Bool) {
+        if stillLoading {
+            title = "Searching"
+            tempArray += accessoryNames
+            accessoryList = tempArray
+        } else {
+            title = "Discovered"
+        }
+    }
+    
+    func refresh(sender: AnyObject) {
+        title = "Searching"
+        controller?.startSearchingForAccessories()
+        
+        refreshControl?.endRefreshing()
+        tableView?.reloadData()
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "addedAccessorySegue" {
+            let vc = segue.destinationViewController as! DetailViewController
+            vc.accessories = contextHandler?.retrieveAccessories()
+        }
+    }
+    
+}
+

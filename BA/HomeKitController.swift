@@ -14,6 +14,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var contextHandler : ContextHandler?
     var delegate: HomeKitControllerDelegate?
+    var accessoryDelegate : HomeKitControllerNewAccessoriesDelegate?
     
     var homeManager = HMHomeManager()
     var accessoryBrowser = HMAccessoryBrowser()
@@ -39,8 +40,18 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    var pairedAccessories : [IAccessory]?
-    var unpairedAccessories = [HMAccessory]()
+    var pairedAccessories : [IAccessory]? {
+        didSet {
+            contextHandler?.pairedAccessory = pairedAccessories
+        }
+    }
+    
+    var unpairedAccessories = [HMAccessory]() {
+        didSet {
+            let newAccessoryArray = unpairedAccessories.map({ $0.name }).last
+            accessoryDelegate?.hasLoadedNewAccessoriesList([newAccessoryArray!], stillLoading: true)
+        }
+    }
     
     var accessoryBlock : (() -> ())?
     var newAccessoryBlock : (() -> ())?
@@ -67,7 +78,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         if !unpairedAccessories.isEmpty {
             let newAccessoryArray = unpairedAccessories.map({ $0.name })
-            delegate?.hasLoadedNewAccessoriesList(newAccessoryArray)
+            accessoryDelegate?.hasLoadedNewAccessoriesList(newAccessoryArray, stillLoading: false)
         }
         
         if let block = newAccessoryBlock {
@@ -261,7 +272,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func addRoom (withName: String, toHome: HMHome){
+    func addRoom (withName: String, toHome: HMHome) {
         toHome.addRoomWithName(withName) { room, error in
             if let error = error {
                 print("Something went wrong when attempting to create our room. \(error.localizedDescription)")
@@ -294,7 +305,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func addAccessory (accessory: String, activeHomeID: NSUUID, activeRoomID: NSUUID) {
+    func addAccessory (accessory: String, activeHomeID: NSUUID, activeRoomID: NSUUID, completionHandler: () -> () ) {
         
         let homeKitAccessory = unpairedAccessories.filter{$0.name == accessory}.first!
         let activeHome = homes.filter{$0.uniqueIdentifier == activeHomeID}.first!
@@ -308,10 +319,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     if error != nil {
                         print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
                     } else {
-                        if homeKitAccessory.services.count > 0 {
-                            print(homeKitAccessory.services)
-                            self.accessoryFactory.accessoryForServices(homeKitAccessory.services[1])
-                        }
+                        let newAccessory = self.accessoryFactory.accessoryForServices(homeKitAccessory.services.last!)!
+                        self.pairedAccessories?.append(newAccessory)
+                        completionHandler()
                     }
                 })
                 
