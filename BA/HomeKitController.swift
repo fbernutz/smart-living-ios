@@ -102,9 +102,15 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         if accessories != nil {
             pairedAccessories = accessories!.map({
-                var new = accessoryFactory.accessoryForServices($0.services.last!)!
+                let service = $0.services.last!
+                
+                var new = accessoryFactory.accessoryForServices(service)!
                 new.name = $0.name
                 new.uniqueID = $0.uniqueIdentifier
+                accessoryFactory.characteristicForService(new, service: service, completionHandler: { characteristicProperties in
+                    new.characteristicProperties = characteristicProperties
+                })
+                
                 return new
             })
             completionHandler(pairedAccessories!)
@@ -319,8 +325,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     if error != nil {
                         print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
                     } else {
-                        let newAccessory = self.accessoryFactory.accessoryForServices(homeKitAccessory.services.last!)!
-                        self.pairedAccessories?.append(newAccessory)
+                        let newAccessory = self.accessoryFactory.accessoryForServices(homeKitAccessory.services.last!)
+                        self.pairedAccessories?.append(newAccessory!)
                         completionHandler()
                     }
                 })

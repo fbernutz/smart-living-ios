@@ -57,6 +57,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         
         let controller = contextHandler!.homeKitController
         controller!.delegate = self
+        
     }
    
     
@@ -85,18 +86,59 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         }
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+        let accessoryInRow = accessories![indexPath.row]
         
-        cell?.textLabel?.text = accessories![indexPath.row].name
+        switch accessoryInRow {
+        case is Lamp:
+            tableView.registerNib(UINib(nibName: "LightCell", bundle: nil), forCellReuseIdentifier: "lightCell")
+            
+            let cell = tableView.dequeueReusableCellWithIdentifier("lightCell") as! LightCell
+            
+            cell.accessory = accessoryInRow
+            cell.slider?.minimumValue = 0
+            cell.slider?.maximumValue = 100
+            
+            return cell
+            
+        case is WeatherStation:
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+            cell!.textLabel?.text = "\(accessoryInRow.name!) Weather"
+            return cell!
+            
+        case is EnergyController:
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+            cell!.textLabel?.text = "\(accessoryInRow.name!) Energy"
+            return cell!
+            
+        case is DoorWindowSensor:
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+            cell!.textLabel?.text = "\(accessoryInRow.name!) Door & Window"
+            return cell!
+            
+        case is Diverse:
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+            cell!.textLabel?.text = "\(accessoryInRow.name!) Sonstiges"
+            return cell!
         
-        return cell!
+        default:
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")
+            cell!.textLabel?.text = "\(accessoryInRow.name!) Default"
+            return cell!
+        }
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print("Selected row \(indexPath.row)")
     }
     
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
     
     // MARK: - Segue
     

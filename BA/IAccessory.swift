@@ -12,38 +12,12 @@ import HomeKit
 protocol IAccessory {
     var name : String? { get set }
     var uniqueID : NSUUID? { get set }
+    var characteristicProperties : CharacteristicProperties { get set }
+//    var characteristicBlock : (() -> ())? { get set }
     
     func canHandle(service: HMService) -> Bool
-    func characteristicForService() -> Int
+    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () )
 }
-
-
-func findServicesForAccessory(accessory: HMAccessory) -> HMService? {
-    if (accessory.services.count != 0) { //mehr Services als der eine Information Service
-        for service in accessory.services {
-            return service
-        }
-    } else {
-        print("has no services")
-    }
-    return nil
-}
-
-func findCharacteristicsOfService(service: HMService){
-    //    characteristics.removeAll(keepCapacity: true)
-    for characteristic in service.characteristics {
-        
-        //        if characteristic.characteristicType == (HMCharacteristicTypeBrightness as String) {
-        //            brightnessCharacteristic = characteristic
-        //            enableBrightnessView()
-        //        }
-        //        //..
-        //        if !characteristics.contains(characteristic) {
-        //            characteristics.append(characteristic)
-        //        }
-    }
-}
-
 
 
 // MARK: - Lamp
@@ -52,6 +26,39 @@ class Lamp: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+//    var characteristicBlock : (() -> ())?
+    lazy var characteristicProperties = CharacteristicProperties()
+    var charPropertiesSet = false
+    
+//    var state: Bool? {
+//        didSet {
+//            if state == true {
+//                //                    self.sliderLabel.enabled = true
+//                //                    self.SliderBtn.enabled = true
+//                //
+//                //                    self.SwitchBtn.setOn(true, animated: true)
+//                //                    self.switchLabel.text = "On"
+//            } else {
+//                //                    self.sliderLabel.enabled = false
+//                //                    self.SliderBtn.enabled = false
+//                //
+//                //                    self.SwitchBtn.setOn(false, animated: true)
+//                //                    self.switchLabel.text = "Off"
+//            }
+//        }
+//    }
+//    var brightness: Float? {
+//        didSet {
+//            //                self.SliderBtn.setValue(newValue!, animated: true)
+//            //                self.sliderLabel.text = "\(Int(newValue!))"
+//        }
+//    }
+//    var color: UIColor?
+    
+//    var homeKitCharacteristics: [HMCharacteristic]? = []
+//    
+//    var brightnessCharacteristic : HMCharacteristic?
+//    var stateCharacteristic : HMCharacteristic?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -62,15 +69,148 @@ class Lamp: IAccessory {
         }
     }
     
-    
-    func characteristicForService() -> Int {
-        let status: Bool?
-        let brightness: Int?
-        let color: UIColor?
-//        var array = [status: true, brightness: 10, color: UIColor.whiteColor()]
+    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
         
-        return 3
+        for characteristic in service.characteristics {
+            
+            switch characteristic.characteristicType {
+                
+            case HMCharacteristicTypeBrightness:
+                print("Brightness")
+                
+                getCharacteristicValue(characteristic, completion: { value, error in
+                    self.characteristicProperties.brightness = value as? Float
+                    self.charPropertiesSet = true
+                    completionHandler(self.characteristicProperties)
+                })
+                
+            case HMCharacteristicTypePowerState:
+                print("PowerState")
+//                stateCharacteristic = characteristic
+                
+                getCharacteristicValue(characteristic, completion: { value, error in
+                    self.characteristicProperties.state = value as? Bool
+                    self.charPropertiesSet = true
+                    completionHandler(self.characteristicProperties)
+                })
+                
+                /* hier noch weitere Characteristics abfragen */
+                
+            default:
+                print("default")
+                
+                getCharacteristicValue(characteristic, completion: { value, error in
+                    self.characteristicProperties.testVariableDefault = value
+                    self.charPropertiesSet = true
+                    completionHandler(self.characteristicProperties)
+                })
+                
+                break
+            }
+            
+            
+//            if !homeKitCharacteristics!.contains(characteristic) {
+//                homeKitCharacteristics!.append(characteristic)
+//            }
+            
+//            if !characteristics!.contains(characteristic.characteristicType) {
+//                characteristics!.append(characteristic.characteristicType)
+//            }
+            
+        }
+        
+        //        return characteristics
     }
+    
+    func getCharacteristicValue(characteristic: HMCharacteristic, completion: (AnyObject?, NSError?) -> () ) {
+        if !characteristic.isReadable() {
+            completion(nil, NSError(domain: "not readable", code: 1, userInfo: nil))
+        } else {
+            characteristic.readValueWithCompletionHandler { error in
+                if error != nil {
+                    completion(nil, error)
+                } else {
+                    if !characteristic.isWritable() {
+                        completion(characteristic.value, NSError(domain: "not writable", code: 2, userInfo: nil))
+                    } else {
+                        characteristic.writeValue(characteristic.value, completionHandler: { error in
+                            if error != nil {
+                                completion(characteristic.value, error)
+                            } else {
+                                completion(characteristic.value, nil)
+                            }
+                            }
+                        )
+                    }
+                }
+            }
+        }
+    }
+//    
+//    func getBrightnessValue(characteristic: HMCharacteristic, completion: (AnyObject?, NSError?) -> Void) {
+//        if characteristic.isReadable() == false {
+//            print("Cannot read the value of the brightness characteristic")
+//        } else {
+//            characteristic.readValueWithCompletionHandler { error in
+//                if error != nil {
+//                    NSLog("Error read brightness characteristic value. \(error)")
+//                } else {
+//                    completion(characteristic.value, nil)
+//                    
+//                    self.brightness = characteristic.value as? Float
+//                    
+//                    
+//                    if let block = self.characteristicBlock {
+//                        block()
+//                        self.characteristicBlock = nil
+//                    }
+//                    
+//                    if characteristic.isWritable() == false {
+//                        print("Cannot write the value of the brightness characteristic")
+//                    } else {
+//                        characteristic.writeValue(self.brightness, completionHandler:
+//                            { error in
+//                                if error != nil {
+//                                    NSLog("Failed to update brightness \(error)")
+//                                }
+//                            }
+//                        )
+//                    }
+//                }
+//            }
+//            
+//        }
+//    }
+//    
+//    func getStateValue(characteristic: HMCharacteristic) {
+//        if characteristic.isReadable() == false {
+//            print("Cannot read the value of the brightness characteristic")
+//        } else {
+//            characteristic.readValueWithCompletionHandler(
+//                { error in
+//                    if error != nil {
+//                        NSLog("Error read brightness characteristic value. \(error)")
+//                    } else {
+//                        self.state = characteristic.value as? Bool
+//                        
+//                        //
+//                        
+//                        if characteristic.isWritable() == false {
+//                            print("Cannot write the value of the brightness characteristic")
+//                        } else {
+//                            characteristic.writeValue(self.state, completionHandler:
+//                                { error in
+//                                    if error != nil {
+//                                        NSLog("Failed to update brightness \(error)")
+//                                    }
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+//            )
+//        }
+//    }
     
 }
 
@@ -80,6 +220,8 @@ class WeatherStation: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    lazy var characteristicProperties = CharacteristicProperties()
+    var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -90,12 +232,13 @@ class WeatherStation: IAccessory {
         }
     }
     
-    func characteristicForService() -> Int {
+    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
         let temperature: Float?   // in °C
         let humidity: Float?  // Luftfeuchtigkeit in %
         let airPressure: Float?   // Luftdruck in Pa
         
-        return 3
+        //        return 3
+        //        return nil
     }
     
 }
@@ -106,6 +249,8 @@ class EnergyController: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    lazy var characteristicProperties = CharacteristicProperties()
+    var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -116,11 +261,12 @@ class EnergyController: IAccessory {
         }
     }
     
-    func characteristicForService() -> Int {
+    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
         let status: Bool?
         let powerConsumption: Float?
         
-        return 2
+        //        return 2
+        //        return nil
     }
     
 }
@@ -131,22 +277,25 @@ class DoorWindowSensor: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    lazy var characteristicProperties = CharacteristicProperties()
+    var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService) -> Bool {
         
         // TODO: überprüfen welcher Service, der richtige ist
-        if service.serviceType == HMServiceTypeWindow {
+        if service.serviceType == HMServiceTypeWindow || service.serviceType == HMServiceTypeDoor {
             return true
         } else {
             return false
         }
     }
     
-    func characteristicForService() -> Int {
+    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
         let status: Bool?
         let counter: Int?
         
-        return 2
+        //        return 2
+        //        return nil
     }
     
 }
@@ -158,6 +307,8 @@ class Diverse: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    lazy var characteristicProperties = CharacteristicProperties()
+    var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService) -> Bool {
         
@@ -169,10 +320,33 @@ class Diverse: IAccessory {
         }
     }
     
-    func characteristicForService() -> Int {
+    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
         //nothing
-        return 0
+        //        return 0
+        //        return nil
     }
     
 }
 
+
+// MARK: - Extension
+
+extension HMCharacteristic {
+    
+    func containsProperty(paramProperty: String) -> Bool {
+        for property in self.properties {
+            if property == paramProperty {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func isReadable() -> Bool {
+        return containsProperty(HMCharacteristicPropertyReadable)
+    }
+    
+    func isWritable() -> Bool {
+        return containsProperty(HMCharacteristicPropertyWritable)
+    }
+}

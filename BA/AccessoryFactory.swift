@@ -11,9 +11,6 @@ import HomeKit
 
 class AccessoryFactory {
     
-    var localAccessories : [IAccessory]?
-    var accessories : [HMAccessory]?
-    
     var lampService = Lamp()
     var weatherStationService = WeatherStation()
     var energyControllerService = EnergyController()
@@ -27,6 +24,10 @@ class AccessoryFactory {
         arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, diverse]
         
         let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service) }.first
+        
+//        canHandleServiceAccessory?.characteristicsForService(service, completionHandler: { characteristicProperties -> () in
+//            canHandleServiceAccessory?.characteristicProperties = characteristicProperties
+//        })
         
         //new instance of type
         switch canHandleServiceAccessory {
@@ -42,6 +43,10 @@ class AccessoryFactory {
             return Diverse()
         default: return nil
         }
+    }
+    
+    func characteristicForService(accessory: IAccessory, service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
+        accessory.characteristicsForService(service, completionHandler: completionHandler)
     }
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {

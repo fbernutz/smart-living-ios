@@ -12,7 +12,7 @@
 		3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */; };
 		3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */; };
 		3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */; };
-		3F0547EB1BFF622D0061B3F0 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547EA1BFF622D0061B3F0 /* LightView.swift */; };
+		3F0547EB1BFF622D0061B3F0 /* LightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547EA1BFF622D0061B3F0 /* LightCell.swift */; };
 		3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */; };
 		3F3566D61BF3830D0050B78C /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3566D51BF3830D0050B78C /* HomeKit.framework */; };
 		3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */; };
@@ -21,6 +21,10 @@
 		3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */; };
 		3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8261BBE750800854DE5 /* Assets.xcassets */; };
 		3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */; };
+		3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A956C1C197CA20095CC06 /* Accessories.storyboard */; };
+		3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A956E1C197CFC0095CC06 /* LightViewController.swift */; };
+		3F6A95711C19A6ED0095CC06 /* LightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A95701C19A6ED0095CC06 /* LightCell.xib */; };
+		3F6A95761C1EC02A0095CC06 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A95751C1EC02A0095CC06 /* ErrorMessage.swift */; };
 		3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */; };
 		3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */; };
 		3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */; };
@@ -52,7 +56,7 @@
 		3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Light.otf"; path = "Ikaros Sans/Ikaros Light.otf"; sourceTree = "<group>"; };
 		3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Regular.otf"; path = "Ikaros Sans/Ikaros Regular.otf"; sourceTree = "<group>"; };
 		3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		3F0547EA1BFF622D0061B3F0 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
+		3F0547EA1BFF622D0061B3F0 /* LightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightCell.swift; sourceTree = "<group>"; };
 		3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitController.swift; sourceTree = "<group>"; };
 		3F3566D41BF3830C0050B78C /* BA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BA.entitlements; sourceTree = "<group>"; };
 		3F3566D51BF3830D0050B78C /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
@@ -64,6 +68,10 @@
 		3F3DB8261BBE750800854DE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3F3DB8291BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3F3DB82B1BBE750800854DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F6A956C1C197CA20095CC06 /* Accessories.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Accessories.storyboard; sourceTree = "<group>"; };
+		3F6A956E1C197CFC0095CC06 /* LightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewController.swift; sourceTree = "<group>"; };
+		3F6A95701C19A6ED0095CC06 /* LightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LightCell.xib; sourceTree = "<group>"; };
+		3F6A95751C1EC02A0095CC06 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitControllerDelegate.swift; sourceTree = "<group>"; };
 		3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryFactory.swift; sourceTree = "<group>"; };
 		3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAccessory.swift; sourceTree = "<group>"; };
@@ -121,7 +129,8 @@
 		3F0547E91BFF62110061B3F0 /* AccessoryViews */ = {
 			isa = PBXGroup;
 			children = (
-				3F0547EA1BFF622D0061B3F0 /* LightView.swift */,
+				3F6A956E1C197CFC0095CC06 /* LightViewController.swift */,
+				3F0547EA1BFF622D0061B3F0 /* LightCell.swift */,
 			);
 			name = AccessoryViews;
 			sourceTree = "<group>";
@@ -187,13 +196,16 @@
 			children = (
 				3F3566D41BF3830C0050B78C /* BA.entitlements */,
 				3F0BACF31BF080C600AF65A5 /* Design */,
+				3F6A95741C1EC0110095CC06 /* Error */,
 				3F0547DD1BFF32840061B3F0 /* Services */,
 				3F0547DA1BFF31BE0061B3F0 /* Modell */,
 				3F0BACF21BF080BB00AF65A5 /* Controller */,
 				3F0BACF11BF080A800AF65A5 /* ViewController */,
 				3F3DB8201BBE750800854DE5 /* Main.storyboard */,
+				3F6A956C1C197CA20095CC06 /* Accessories.storyboard */,
 				3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */,
 				3F3DB8311BBE752800854DE5 /* Supporting Files */,
+				3F6A95701C19A6ED0095CC06 /* LightCell.xib */,
 			);
 			path = BA;
 			sourceTree = "<group>";
@@ -207,6 +219,14 @@
 				3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3F6A95741C1EC0110095CC06 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				3F6A95751C1EC02A0095CC06 /* ErrorMessage.swift */,
+			);
+			name = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,8 +298,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F6A95711C19A6ED0095CC06 /* LightCell.xib in Resources */,
 				3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */,
 				3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */,
+				3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */,
 				3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */,
 				3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */,
 				3F3DB8221BBE750800854DE5 /* Main.storyboard in Resources */,
@@ -295,6 +317,7 @@
 			files = (
 				3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */,
 				3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */,
+				3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */,
 				3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */,
 				3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */,
 				3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */,
@@ -304,11 +327,12 @@
 				3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */,
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
+				3F6A95761C1EC02A0095CC06 /* ErrorMessage.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
 				3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */,
-				3F0547EB1BFF622D0061B3F0 /* LightView.swift in Sources */,
+				3F0547EB1BFF622D0061B3F0 /* LightCell.swift in Sources */,
 				3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */,
 				3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */,
 			);

@@ -19,6 +19,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var localRooms : [Room]?
     
     var pairedAccessory : [IAccessory]?
+    var characteristicProperties : CharacteristicProperties?
     
     override init() {
         super.init()
@@ -28,6 +29,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
         homeKitController!.contextHandler = self
         
+        characteristicProperties = CharacteristicProperties()
     }
     
     func loadAccessoryBrowser(){

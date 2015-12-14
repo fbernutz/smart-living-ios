@@ -6,7 +6,7 @@
 //  Copyright © 2015 Felizia Bernutz. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 public class Home: NSObject {
     var id : NSUUID?
@@ -32,25 +32,28 @@ public class Room: NSObject {
     }
 }
 
-public class Accessory : NSObject {
-    var id : NSUUID?
-    var name : String?
-    var type : String?
+public class CharacteristicProperties: NSObject {
     
-    init(id: NSUUID?, name: String?, type: String?) {
-        self.id = id
-        self.name = name
-        self.type = type
-    }
+    //ContractPropertiesHandler to handle these properties (?)
+    
+    var testVariableDefault : AnyObject?
+    
+    var state : Bool?
+    
+    var brightness : Float?
+    var colour : UIColor?
+    
+    var temperature: Float?   // in °C
+    var humidity: Float?  // Luftfeuchtigkeit in %
+    var airPressure: Float?   // Luftdruck in Pa
+    
+    var powerConsumption: Float?
+    
+    var counter: Int?
 }
 
 
-//public class Characteristic : NSObject {
-//    var status : Bool?
-//    var brightness : Int?
-//    
-//}
-//
+
 //public class ActionSet : NSObject {
 //    
 //}
