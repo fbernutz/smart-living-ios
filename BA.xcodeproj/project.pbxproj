@@ -24,7 +24,6 @@
 		3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A956C1C197CA20095CC06 /* Accessories.storyboard */; };
 		3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A956E1C197CFC0095CC06 /* LightViewController.swift */; };
 		3F6A95711C19A6ED0095CC06 /* LightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A95701C19A6ED0095CC06 /* LightCell.xib */; };
-		3F6A95761C1EC02A0095CC06 /* ErrorMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A95751C1EC02A0095CC06 /* ErrorMessage.swift */; };
 		3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */; };
 		3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */; };
 		3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */; };
@@ -71,7 +70,6 @@
 		3F6A956C1C197CA20095CC06 /* Accessories.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Accessories.storyboard; sourceTree = "<group>"; };
 		3F6A956E1C197CFC0095CC06 /* LightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewController.swift; sourceTree = "<group>"; };
 		3F6A95701C19A6ED0095CC06 /* LightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LightCell.xib; sourceTree = "<group>"; };
-		3F6A95751C1EC02A0095CC06 /* ErrorMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitControllerDelegate.swift; sourceTree = "<group>"; };
 		3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryFactory.swift; sourceTree = "<group>"; };
 		3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAccessory.swift; sourceTree = "<group>"; };
@@ -196,7 +194,6 @@
 			children = (
 				3F3566D41BF3830C0050B78C /* BA.entitlements */,
 				3F0BACF31BF080C600AF65A5 /* Design */,
-				3F6A95741C1EC0110095CC06 /* Error */,
 				3F0547DD1BFF32840061B3F0 /* Services */,
 				3F0547DA1BFF31BE0061B3F0 /* Modell */,
 				3F0BACF21BF080BB00AF65A5 /* Controller */,
@@ -219,14 +216,6 @@
 				3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */,
 			);
 			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		3F6A95741C1EC0110095CC06 /* Error */ = {
-			isa = PBXGroup;
-			children = (
-				3F6A95751C1EC02A0095CC06 /* ErrorMessage.swift */,
-			);
-			name = Error;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -327,7 +316,6 @@
 				3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */,
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
-				3F6A95761C1EC02A0095CC06 /* ErrorMessage.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
