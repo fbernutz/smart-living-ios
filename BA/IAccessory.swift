@@ -212,6 +212,7 @@ class Lamp: IAccessory {
 //        }
 //    }
     
+    
 }
 
 // MARK: - Eve Weather

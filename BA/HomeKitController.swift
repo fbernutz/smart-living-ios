@@ -40,9 +40,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    var pairedAccessories : [IAccessory]? {
+    var pairedAccessories : [IAccessory]? = [] {
         didSet {
-            contextHandler?.pairedAccessory = pairedAccessories
+            contextHandler?.pairedAccessories = pairedAccessories
         }
     }
     

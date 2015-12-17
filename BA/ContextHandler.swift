@@ -18,8 +18,25 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var localHomes : [Home]?
     var localRooms : [Room]?
     
-    var pairedAccessory : [IAccessory]?
     var characteristicProperties : CharacteristicProperties?
+    var viewControllerArray : [UIViewController]?
+    
+    var accessoryStoryboard : UIStoryboard?
+    
+    var pairedAccessories : [IAccessory]? {
+        didSet {
+            if oldValue != nil {
+                for accessory in oldValue! {
+                    if pairedAccessories?.last?.name != accessory.name {
+                        assignAccessoryToViewController(pairedAccessories!.last!)
+                    }
+                }
+            }
+        }
+    }
+    var lightController : LightViewController?
+    var diverseController : DiverseViewController?
+    
     
     override init() {
         super.init()
@@ -30,10 +47,53 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         homeKitController!.contextHandler = self
         
         characteristicProperties = CharacteristicProperties()
+        accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
     }
     
     func loadAccessoryBrowser(){
         homeKitController!.startSearchingForAccessories()
+    }
+    
+    func assignAccessoryToViewController (accessory: IAccessory) {
+        switch accessory {
+        case is Lamp:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as? LightViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is WeatherStation:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("WeatherViewController") as? WeatherViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is EnergyController:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as? EnergyViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is DoorWindowSensor:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DoorWindowViewController") as? DoorWindowViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is Diverse:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as? DiverseViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        default:
+            break
+        }
+    }
+    
+    func retrieveViewControllerList() -> [UIViewController]? {
+        viewControllerArray = []
+        
+        for accessory in pairedAccessories! {
+            assignAccessoryToViewController(accessory)
+        }
+        
+        return viewControllerArray
     }
     
     // MARK: - Retrieve Homes

@@ -12,9 +12,14 @@
 		3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */; };
 		3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */; };
 		3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */; };
-		3F0547EB1BFF622D0061B3F0 /* LightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547EA1BFF622D0061B3F0 /* LightCell.swift */; };
 		3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */; };
 		3F3566D61BF3830D0050B78C /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3566D51BF3830D0050B78C /* HomeKit.framework */; };
+		3F3B24881C2347D40037CD24 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B24871C2347D40037CD24 /* WeatherViewController.swift */; };
+		3F3B248A1C2347E60037CD24 /* EnergyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B24891C2347E60037CD24 /* EnergyViewController.swift */; };
+		3F3B248C1C2347F80037CD24 /* DoorWindowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B248B1C2347F80037CD24 /* DoorWindowViewController.swift */; };
+		3F3B248E1C2348180037CD24 /* WeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B248D1C2348180037CD24 /* WeatherView.swift */; };
+		3F3B24901C2348240037CD24 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B248F1C2348240037CD24 /* EnergyView.swift */; };
+		3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B24911C2348300037CD24 /* DoorWindowView.swift */; };
 		3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */; };
 		3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */; };
 		3F3DB8221BBE750800854DE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8201BBE750800854DE5 /* Main.storyboard */; };
@@ -23,13 +28,15 @@
 		3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */; };
 		3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A956C1C197CA20095CC06 /* Accessories.storyboard */; };
 		3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6A956E1C197CFC0095CC06 /* LightViewController.swift */; };
-		3F6A95711C19A6ED0095CC06 /* LightCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F6A95701C19A6ED0095CC06 /* LightCell.xib */; };
 		3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */; };
 		3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */; };
 		3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */; };
 		3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */; };
+		3F7232A01C206526004E7503 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72329F1C206526004E7503 /* LightView.swift */; };
 		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
+		3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FC1C2329090031E439 /* DiverseView.swift */; };
+		3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FE1C2329170031E439 /* DiverseViewController.swift */; };
 		3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105B91BE2B5A000E381F6 /* CustomButton.swift */; };
 		3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BB1BE2B77300E381F6 /* Colours.swift */; };
 		3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BD1BE2C45500E381F6 /* BeaconController.swift */; };
@@ -55,10 +62,15 @@
 		3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Light.otf"; path = "Ikaros Sans/Ikaros Light.otf"; sourceTree = "<group>"; };
 		3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Regular.otf"; path = "Ikaros Sans/Ikaros Regular.otf"; sourceTree = "<group>"; };
 		3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
-		3F0547EA1BFF622D0061B3F0 /* LightCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightCell.swift; sourceTree = "<group>"; };
 		3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitController.swift; sourceTree = "<group>"; };
 		3F3566D41BF3830C0050B78C /* BA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BA.entitlements; sourceTree = "<group>"; };
 		3F3566D51BF3830D0050B78C /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
+		3F3B24871C2347D40037CD24 /* WeatherViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
+		3F3B24891C2347E60037CD24 /* EnergyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyViewController.swift; sourceTree = "<group>"; };
+		3F3B248B1C2347F80037CD24 /* DoorWindowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorWindowViewController.swift; sourceTree = "<group>"; };
+		3F3B248D1C2348180037CD24 /* WeatherView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
+		3F3B248F1C2348240037CD24 /* EnergyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
+		3F3B24911C2348300037CD24 /* DoorWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorWindowView.swift; sourceTree = "<group>"; };
 		3F3DB8191BBE750800854DE5 /* BA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
@@ -69,13 +81,15 @@
 		3F3DB82B1BBE750800854DE5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F6A956C1C197CA20095CC06 /* Accessories.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Accessories.storyboard; sourceTree = "<group>"; };
 		3F6A956E1C197CFC0095CC06 /* LightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewController.swift; sourceTree = "<group>"; };
-		3F6A95701C19A6ED0095CC06 /* LightCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LightCell.xib; sourceTree = "<group>"; };
 		3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitControllerDelegate.swift; sourceTree = "<group>"; };
 		3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessoryFactory.swift; sourceTree = "<group>"; };
 		3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAccessory.swift; sourceTree = "<group>"; };
 		3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
+		3F72329F1C206526004E7503 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
 		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
+		3FA972FC1C2329090031E439 /* DiverseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseView.swift; sourceTree = "<group>"; };
+		3FA972FE1C2329170031E439 /* DiverseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseViewController.swift; sourceTree = "<group>"; };
 		3FE105B91BE2B5A000E381F6 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3FE105BB1BE2B77300E381F6 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		3FE105BD1BE2C45500E381F6 /* BeaconController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconController.swift; sourceTree = "<group>"; };
@@ -127,8 +141,11 @@
 		3F0547E91BFF62110061B3F0 /* AccessoryViews */ = {
 			isa = PBXGroup;
 			children = (
-				3F6A956E1C197CFC0095CC06 /* LightViewController.swift */,
-				3F0547EA1BFF622D0061B3F0 /* LightCell.swift */,
+				3F3B24931C2348340037CD24 /* Light */,
+				3F3B24951C2348470037CD24 /* Weather */,
+				3F3B24961C23484D0037CD24 /* Energy */,
+				3F3B24971C2348520037CD24 /* Door & Window */,
+				3F3B24941C2348400037CD24 /* Diverse */,
 			);
 			name = AccessoryViews;
 			sourceTree = "<group>";
@@ -172,6 +189,51 @@
 			name = Design;
 			sourceTree = "<group>";
 		};
+		3F3B24931C2348340037CD24 /* Light */ = {
+			isa = PBXGroup;
+			children = (
+				3F6A956E1C197CFC0095CC06 /* LightViewController.swift */,
+				3F72329F1C206526004E7503 /* LightView.swift */,
+			);
+			name = Light;
+			sourceTree = "<group>";
+		};
+		3F3B24941C2348400037CD24 /* Diverse */ = {
+			isa = PBXGroup;
+			children = (
+				3FA972FE1C2329170031E439 /* DiverseViewController.swift */,
+				3FA972FC1C2329090031E439 /* DiverseView.swift */,
+			);
+			name = Diverse;
+			sourceTree = "<group>";
+		};
+		3F3B24951C2348470037CD24 /* Weather */ = {
+			isa = PBXGroup;
+			children = (
+				3F3B24871C2347D40037CD24 /* WeatherViewController.swift */,
+				3F3B248D1C2348180037CD24 /* WeatherView.swift */,
+			);
+			name = Weather;
+			sourceTree = "<group>";
+		};
+		3F3B24961C23484D0037CD24 /* Energy */ = {
+			isa = PBXGroup;
+			children = (
+				3F3B24891C2347E60037CD24 /* EnergyViewController.swift */,
+				3F3B248F1C2348240037CD24 /* EnergyView.swift */,
+			);
+			name = Energy;
+			sourceTree = "<group>";
+		};
+		3F3B24971C2348520037CD24 /* Door & Window */ = {
+			isa = PBXGroup;
+			children = (
+				3F3B248B1C2347F80037CD24 /* DoorWindowViewController.swift */,
+				3F3B24911C2348300037CD24 /* DoorWindowView.swift */,
+			);
+			name = "Door & Window";
+			sourceTree = "<group>";
+		};
 		3F3DB8101BBE750800854DE5 = {
 			isa = PBXGroup;
 			children = (
@@ -202,7 +264,6 @@
 				3F6A956C1C197CA20095CC06 /* Accessories.storyboard */,
 				3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */,
 				3F3DB8311BBE752800854DE5 /* Supporting Files */,
-				3F6A95701C19A6ED0095CC06 /* LightCell.xib */,
 			);
 			path = BA;
 			sourceTree = "<group>";
@@ -287,7 +348,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F6A95711C19A6ED0095CC06 /* LightCell.xib in Resources */,
 				3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */,
 				3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */,
 				3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */,
@@ -305,24 +365,32 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */,
+				3F7232A01C206526004E7503 /* LightView.swift in Sources */,
 				3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */,
 				3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */,
+				3F3B248C1C2347F80037CD24 /* DoorWindowViewController.swift in Sources */,
 				3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */,
 				3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */,
 				3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */,
+				3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */,
 				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
+				3F3B248E1C2348180037CD24 /* WeatherView.swift in Sources */,
+				3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */,
 				3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */,
 				3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */,
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
+				3F3B24901C2348240037CD24 /* EnergyView.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
 				3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */,
-				3F0547EB1BFF622D0061B3F0 /* LightCell.swift in Sources */,
+				3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */,
 				3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */,
 				3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */,
+				3F3B248A1C2347E60037CD24 /* EnergyViewController.swift in Sources */,
+				3F3B24881C2347D40037CD24 /* WeatherViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
