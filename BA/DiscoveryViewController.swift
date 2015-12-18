@@ -10,10 +10,10 @@ import UIKit
 
 class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccessoriesDelegate {
     
-    @IBOutlet weak var spinner: UIActivityIndicatorView?
-    
     var contextHandler: ContextHandler?
     var controller : HomeKitController?
+    var searchingTitle = "Searching..."
+    var discoveredTitle = "Discovered"
     
     var tempArray: [String] = []
     
@@ -22,7 +22,6 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
             tableView?.reloadData()
         }
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -35,7 +34,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         controller = contextHandler!.homeKitController
         controller!.accessoryDelegate = self
         
-        title = "Searching..."
+        title = searchingTitle
         
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -74,7 +73,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         self.contextHandler!.addAccessory(accessory, completionHandler: { _ in
             tableView.deselectRowAtIndexPath(indexPath, animated: true)
             self.accessoryList?.removeAtIndex((self.accessoryList?.indexOf(accessory)!)!)
-            self.performSegueWithIdentifier("addedAccessorySegue", sender: self)
+            self.navigationController?.popViewControllerAnimated(true)
         })
     }
     
@@ -85,27 +84,19 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
             tempArray += accessoryNames
             accessoryList = tempArray
         } else {
-            title = "Discovered"
+            title = discoveredTitle
             accessoryList = accessoryNames
         }
     }
     
     func refresh(sender: AnyObject) {
-        if title == "Discovered" {
-            title = "Searching..."
+        if title == discoveredTitle {
             controller?.startSearchingForAccessories()
-            
+            title = searchingTitle
             refreshControl?.endRefreshing()
             tableView?.reloadData()
         } else {
             refreshControl?.endRefreshing()
-        }
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "addedAccessorySegue" {
-            let vc = segue.destinationViewController as! DetailViewController
-            vc.accessories = contextHandler?.retrieveAccessories()
         }
     }
     

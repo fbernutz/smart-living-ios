@@ -8,16 +8,13 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, HomeKitControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class DetailViewController: UIViewController, HomeKitControllerDelegate, ContextHandlerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var contextHandler : ContextHandler?
-    var accessoryStoryboard : UIStoryboard?
     
-    @IBOutlet weak var spinner: UIActivityIndicatorView?
     @IBOutlet weak var homeName: UILabel?
     @IBOutlet weak var roomName: UILabel?
-    @IBOutlet weak var accessoryName: UILabel?
     @IBOutlet weak var accessoriesTableView: UITableView?
     
     @IBAction func addAccessory(sender: UIButton) {
@@ -26,13 +23,6 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     
     @IBAction func changeHome(sender: UIButton) {
         //choose another home or room
-    }
-    
-    var viewControllerArray : [UIViewController]? {
-        didSet {
-            print("ViewControllerArray didSet with: \(viewControllerArray)")
-            accessoriesTableView?.reloadData()
-        }
     }
     
     var home : String? {
@@ -47,13 +37,12 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         }
     }
     
-    var accessoryList : [String] = []
-    
-    var accessories : [IAccessory]? {
+    var viewControllerArray : [UIViewController]? {
         didSet {
             accessoriesTableView?.reloadData()
         }
     }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,10 +51,10 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
             contextHandler = appDelegate.contextHandler
         }
         
+        contextHandler!.delegate = self
+        
         let controller = contextHandler!.homeKitController
         controller!.delegate = self
-        
-        accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
     }
    
     
@@ -77,12 +66,17 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
             
             home = contextHandler!.retrieveHome()
             room = contextHandler!.retrieveRoom()
-            accessories = contextHandler!.retrieveAccessories()
-            
             viewControllerArray = contextHandler!.retrieveViewControllerList()
+            
         } else {
             print("loading failed")
         }
+    }
+    
+    // MARK: - ContextHandler Delegates
+    
+    func contextHandlerChangedVCArray() {
+        viewControllerArray = contextHandler!.retrieveViewControllerList()
     }
     
     // MARK: - TableView Delegates
@@ -93,6 +87,10 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         } else {
             return 0
         }
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -109,15 +107,8 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         
         view.frame = cell.frame
         cell.contentView.addSubview(view)
+        
         return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("Selected row \(indexPath.row)")
-    }
-    
-    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
     }
     
     // MARK: - Segue

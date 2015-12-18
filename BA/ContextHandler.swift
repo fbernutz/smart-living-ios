@@ -11,31 +11,31 @@ import HomeKit
 
 class ContextHandler: NSObject, HMHomeManagerDelegate {
     
+    var accessoryStoryboard : UIStoryboard?
+    var homeKitController : HomeKitController?
+    
     var homeID : NSUUID?
     var roomID : NSUUID?
     
-    var homeKitController : HomeKitController?
     var localHomes : [Home]?
     var localRooms : [Room]?
     
     var characteristicProperties : CharacteristicProperties?
-    var viewControllerArray : [UIViewController]?
+    var delegate : ContextHandlerDelegate?
     
-    var accessoryStoryboard : UIStoryboard?
+    var viewControllerArray : [UIViewController]?
     
     var pairedAccessories : [IAccessory]? {
         didSet {
+            print(pairedAccessories)
             if oldValue != nil {
-                for accessory in oldValue! {
-                    if pairedAccessories?.last?.name != accessory.name {
-                        assignAccessoryToViewController(pairedAccessories!.last!)
-                    }
+                if oldValue!.count != pairedAccessories?.count {
+                    assignAccessoryToViewController(pairedAccessories!.last!)
+                    delegate!.contextHandlerChangedVCArray()
                 }
             }
         }
     }
-    var lightController : LightViewController?
-    var diverseController : DiverseViewController?
     
     
     override init() {
@@ -50,76 +50,8 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
     }
     
-    func assignAccessoryToViewController (accessory: IAccessory) {
-        switch accessory {
-        case is Lamp:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as? LightViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
-        case is WeatherStation:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("WeatherViewController") as? WeatherViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
-        case is EnergyController:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as? EnergyViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
-        case is DoorWindowSensor:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DoorWindowViewController") as? DoorWindowViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
-        case is Diverse:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as? DiverseViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
-        default:
-            break
-        }
-    }
-    
-    func retrieveViewControllerList() -> [UIViewController]? {
-        viewControllerArray = []
-        
-        for accessory in pairedAccessories! {
-            assignAccessoryToViewController(accessory)
-        }
-        
-        return viewControllerArray
-    }
     
     // MARK: - Retrieve Homes
-    
-    //    Bei der Anfrage gibst Du einen Block / Closure nach unten
-    //    die speicherst Du in einer Variable und startest die Anfrage an Homekit.
-    //    Wenn HomeKit den Delegate aufruft, schaust Du ob die Block/Closure-Variable gesetzt ist und wenn ja, führst Du sie aus.
-    
-//    func retrieveHomes() -> [Home]? {
-//        if !searchHomes().isEmpty {
-//            let foundHomes = searchHomes()
-//            return foundHomes
-//        } else {
-//            return nil
-//        }
-//    }
-    
-//    func searchHomes() -> [Home] {
-//        var foundHomes : [Home]?
-//        homeKitController?.retrieveHomes2(completionHandler: { (homes) -> () in
-//                foundHomes = homes
-//        })
-//        
-//        if let foundHomes = foundHomes {
-//            return foundHomes
-//        } else {
-//            return []
-//        }
-//    }
-    
     
     func retrieveHome() -> String? {
         return searchHome(forID: homeID)
@@ -173,6 +105,50 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
             foundAccessoriesForRoom = accessories
         }
         return foundAccessoriesForRoom!
+    }
+    
+    func retrieveViewControllerList() -> [UIViewController]? {
+        viewControllerArray = []
+        
+        pairedAccessories = retrieveAccessories()
+        
+        for accessory in pairedAccessories! {
+            assignAccessoryToViewController(accessory)
+        }
+        
+        return viewControllerArray
+    }
+    
+    func assignAccessoryToViewController (accessory: IAccessory) {
+        switch accessory {
+        case is Lamp:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as? LightViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is WeatherStation:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("WeatherViewController") as? WeatherViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is EnergyController:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as? EnergyViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is DoorWindowSensor:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DoorWindowViewController") as? DoorWindowViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        case is Diverse:
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as? DiverseViewController
+            controller!.accessory = accessory
+            viewControllerArray?.append(controller!)
+            break
+        default:
+            break
+        }
     }
     
     // MARK: - Retrieve unpaired accessory list
