@@ -15,13 +15,14 @@ class AccessoryFactory {
     var weatherStationService = WeatherStation()
     var energyControllerService = EnergyController()
     var doorWindowSensorService = DoorWindowSensor()
+    var information = Information()
     var diverse = Diverse()
     
     var arrayOfTypes: [IAccessory]?
     
     
     func accessoryForServices(service: HMService) -> IAccessory? {
-        arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, diverse]
+        arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, information, diverse]
         
         let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service) }.first
         
@@ -39,6 +40,8 @@ class AccessoryFactory {
             return EnergyController()
         case is DoorWindowSensor:
             return DoorWindowSensor()
+        case is Information:
+            return Information()
         case is Diverse:
             return Diverse()
         default: return nil

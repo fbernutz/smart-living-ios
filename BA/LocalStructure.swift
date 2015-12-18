@@ -50,6 +50,7 @@ public class CharacteristicProperties: NSObject {
     var powerConsumption: Float?
     
     var counter: Int?
+    var doorState: Bool?
 }
 
 

@@ -42,6 +42,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     var pairedAccessories : [IAccessory]? = [] {
         didSet {
+            print(pairedAccessories)
             contextHandler?.pairedAccessories = pairedAccessories
         }
     }
@@ -216,7 +217,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
         homes.append(home)
-        print(homes)
     }
     
     func homeManagerDidUpdatePrimaryHome(manager: HMHomeManager) {
@@ -279,7 +279,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             } else {
                 // TODO
                 self.rooms.append(room!)
-                print(self.rooms)
             }
         }
     }

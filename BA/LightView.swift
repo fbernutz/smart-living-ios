@@ -16,7 +16,7 @@ class LightView: UIView {
     @IBOutlet weak var icon: UIImageView?
     
     @IBAction func changeValueOfSlider(sender: UISlider) {
-        print("value changed to: \(sender.value)")
+        print("value changed to: \(Int(sender.value))")
         
     }
     

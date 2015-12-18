@@ -18,7 +18,7 @@
         <!--Weather View Controller-->
         <scene sceneID="Yut-Px-2kM">
             <objects>
-                <viewController id="VTr-Sn-57h" customClass="WeatherViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WeatherViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="VTr-Sn-57h" customClass="WeatherViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="OWq-US-RCs"/>
                         <viewControllerLayoutGuide type="bottom" id="W6e-Q4-ISc"/>
@@ -122,8 +122,6 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="icon" destination="toY-qI-hG5" id="ydg-oX-Nda"/>
-                        <outlet property="statusBtn" destination="I3F-QC-9WX" id="gUJ-KN-Pyg"/>
                         <outlet property="weatherView" destination="kVd-oY-9hE" id="xYl-ZN-BYO"/>
                     </connections>
                 </viewController>
@@ -134,7 +132,7 @@
         <!--Energy View Controller-->
         <scene sceneID="ptB-ev-zbF">
             <objects>
-                <viewController id="9Wk-9z-aG9" customClass="EnergyViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="EnergyViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="9Wk-9z-aG9" customClass="EnergyViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wbp-Z2-tVA"/>
                         <viewControllerLayoutGuide type="bottom" id="s3m-n2-cCH"/>
@@ -206,8 +204,6 @@
                     </view>
                     <connections>
                         <outlet property="energyView" destination="8Xn-Nb-P5S" id="0Tr-x5-cYc"/>
-                        <outlet property="icon" destination="bPd-Fm-NQB" id="5ya-cU-HBl"/>
-                        <outlet property="statusBtn" destination="Rsw-TB-Ju4" id="xYG-YA-NKn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vSK-NR-2TF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -217,7 +213,7 @@
         <!--Door Window View Controller-->
         <scene sceneID="gUX-wM-bZ2">
             <objects>
-                <viewController id="w8k-Av-V5x" customClass="DoorWindowViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DoorWindowViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="w8k-Av-V5x" customClass="DoorWindowViewController" customModule="BA" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Gag-8N-cUu"/>
                         <viewControllerLayoutGuide type="bottom" id="qsF-xZ-oEv"/>
@@ -239,7 +235,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="O4L-lu-GrX">
                                         <rect key="frame" x="150" y="65" width="300" height="21"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Uhrzeit der letzten Statusänderung: " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfa-Qr-fuW">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Uhrzeit der letzten Statusänderung: " textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfa-Qr-fuW">
                                                 <rect key="frame" x="0.0" y="0.0" width="300" height="21"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -289,8 +285,6 @@
                     </view>
                     <connections>
                         <outlet property="doorWindowView" destination="VM4-y7-by2" id="Jme-p5-kO0"/>
-                        <outlet property="icon" destination="Afb-Sv-Kyr" id="WJx-C5-b6G"/>
-                        <outlet property="statusBtn" destination="fA6-nl-eBA" id="zFh-Lr-K9k"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kjt-ac-e14" userLabel="First Responder" sceneMemberID="firstResponder"/>

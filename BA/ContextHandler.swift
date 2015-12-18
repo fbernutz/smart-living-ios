@@ -27,7 +27,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     var pairedAccessories : [IAccessory]? {
         didSet {
-            print(pairedAccessories)
             if oldValue != nil {
                 if oldValue!.count != pairedAccessories?.count {
                     assignAccessoryToViewController(pairedAccessories!.last!)
@@ -141,7 +140,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
             controller!.accessory = accessory
             viewControllerArray?.append(controller!)
             break
-        case is Diverse:
+        case is Diverse, is Information:
             let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as? DiverseViewController
             controller!.accessory = accessory
             viewControllerArray?.append(controller!)
