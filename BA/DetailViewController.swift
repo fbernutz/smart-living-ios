@@ -21,7 +21,6 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     @IBOutlet weak var accessoriesTableView: UITableView?
     
     @IBAction func addAccessory(sender: UIButton) {
-        contextHandler?.loadAccessoryBrowser()
         performSegueWithIdentifier("showAllAccessoriesSegue", sender: self)
     }
     

@@ -50,10 +50,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
     }
     
-    func loadAccessoryBrowser(){
-        homeKitController!.startSearchingForAccessories()
-    }
-    
     func assignAccessoryToViewController (accessory: IAccessory) {
         switch accessory {
         case is Lamp:

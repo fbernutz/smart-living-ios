@@ -68,9 +68,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         homeHelper.homeKitController = self
     }
     
+    // MARK: - Start and stop searching for new accessories
+    
     func startSearchingForAccessories() {
         accessoryBrowser.startSearchingForNewAccessories()
-        NSTimer.scheduledTimerWithTimeInterval(10.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
+        NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
+        
+        if !unpairedAccessories.isEmpty {
+            let newAccessoryArray = unpairedAccessories.map({ $0.name })
+            accessoryDelegate?.hasLoadedNewAccessoriesList(newAccessoryArray, stillLoading: true)
+        }
     }
     
     func stopSearching() {
@@ -163,19 +170,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             homesBlock = nil
         }
     }
-    
-//    func retrieveHomes2(completionHandler completion: (homes: [Home]) -> ()) {
-//        if !homes.isEmpty {
-//            getHomes(completionHandler: completion)
-//        } else {
-//            homesBlock = { () in self.getHomes(completionHandler: completion)}
-//        }
-//    }
-//    
-//    private func getHomes (completionHandler completion: ([Home]) -> ()) {
-//        let arrayOfHomes = homeHelper.serviceToLocalHomes(homes)
-//        completion(arrayOfHomes!)
-//    }
     
     func homesAreSet() {
         if !homes.isEmpty {

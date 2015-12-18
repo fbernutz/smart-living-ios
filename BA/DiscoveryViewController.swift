@@ -35,7 +35,21 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         controller = contextHandler!.homeKitController
         controller!.accessoryDelegate = self
         
+        title = "Searching..."
+        
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        controller?.startSearchingForAccessories()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        controller?.stopSearching()
     }
     
     // MARK: - Table Delegate
@@ -68,20 +82,24 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     
     func hasLoadedNewAccessoriesList(accessoryNames: [String], stillLoading: Bool) {
         if stillLoading {
-            title = "Searching"
             tempArray += accessoryNames
             accessoryList = tempArray
         } else {
             title = "Discovered"
+            accessoryList = accessoryNames
         }
     }
     
     func refresh(sender: AnyObject) {
-        title = "Searching"
-        controller?.startSearchingForAccessories()
-        
-        refreshControl?.endRefreshing()
-        tableView?.reloadData()
+        if title == "Discovered" {
+            title = "Searching..."
+            controller?.startSearchingForAccessories()
+            
+            refreshControl?.endRefreshing()
+            tableView?.reloadData()
+        } else {
+            refreshControl?.endRefreshing()
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
