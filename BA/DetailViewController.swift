@@ -37,7 +37,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
         }
     }
     
-    var viewControllerArray : [UIViewController]? {
+    var viewControllerArray : [UIViewController] = [] {
         didSet {
             accessoriesTableView?.reloadData()
         }
@@ -56,7 +56,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
         let controller = contextHandler!.homeKitController
         controller!.delegate = self
     }
-   
+    
     
     // MARK: - HomeKitController Delegates
     
@@ -66,7 +66,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
             
             home = contextHandler!.retrieveHome()
             room = contextHandler!.retrieveRoom()
-            viewControllerArray = contextHandler!.retrieveViewControllerList()
+            viewControllerArray = contextHandler!.retrieveViewControllerList()!
             
         } else {
             print("loading failed")
@@ -76,16 +76,16 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
     // MARK: - ContextHandler Delegates
     
     func contextHandlerChangedVCArray() {
-        viewControllerArray = contextHandler!.retrieveViewControllerList()
+        viewControllerArray = contextHandler!.retrieveViewControllerList()!
     }
     
     // MARK: - TableView Delegates
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if let viewController = viewControllerArray {
-            return viewController.count
+        if viewControllerArray.count != 0 {
+            return viewControllerArray.count
         } else {
-            return 0
+            return 1
         }
     }
     
@@ -94,21 +94,32 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        let vcInRow = viewControllerArray![indexPath.row]
-        let view = vcInRow.view
-        let size = view?.frame.height
-        return size!
+        
+        if viewControllerArray.count != 0 {
+            let vcInRow = viewControllerArray[indexPath.row]
+            let view = vcInRow.view
+            let size = view?.frame.height
+            return size!
+        }
+        
+        return 100
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let vcInRow = viewControllerArray![indexPath.row]
-        let view = vcInRow.view
-        let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
-        
-        view.frame = cell.frame
-        cell.contentView.addSubview(view)
-        
-        return cell
+        if viewControllerArray.count != 0 {
+            let vcInRow = viewControllerArray[indexPath.row]
+            let view = vcInRow.view
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
+            
+            view.frame = cell.frame
+            cell.contentView.addSubview(view)
+            
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
+            cell.textLabel!.text = "No accessories connected"
+            return cell
+        }
     }
     
     // MARK: - Segue

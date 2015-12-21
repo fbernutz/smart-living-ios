@@ -29,12 +29,13 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     var homes = [HMHome]() {
         didSet {
-            homesAreSet()
+            
         }
     }
     
     var rooms = [HMRoom]() {
         didSet {
+            
             // TODO: wenn ein Service Room neu erstellt wird, Umwandlung in lokale Struktur nochmal überarbeiten - noch falsch
             // homeHelper?.serviceToLocalRooms(homes)
         }
@@ -151,15 +152,25 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     //homeManager finished loading the home data
     func homeManagerDidUpdateHomes(manager: HMHomeManager) {
+        // Set homes
         homes = manager.homes
+        
+        // Set rooms
+        for home in homes {
+            rooms += home.rooms
+        }
+        
+        // If one of them is still empty, create one default home and room
+        if homes.isEmpty || rooms.isEmpty {
+            initialHomeSetup("Default Home",roomName: "Default Room")
+        } else {
+            homesAreSet()
+            roomsAreSet()
+        }
         
         if let home = manager.primaryHome {
             primaryHome = home
-        } else {
-            initialHomeSetup("Home",roomName: "Room")
         }
-        
-        delegate?.hasLoadedData(true)
         
         if let block = accessoryBlock {
             block()
@@ -177,7 +188,13 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             retrieveHomes(completionHandler: { (homes) -> () in
                 self.contextHandler!.localHomes = homes
             })
-            
+        } else {
+            print ("Failed: Homes are not set yet or set to nil")
+        }
+    }
+    
+    func roomsAreSet() {
+        if !rooms.isEmpty {
             retrieveRooms(homes, completionHandler: { (rooms) -> () in
                 self.contextHandler!.localRooms = rooms
             })
@@ -186,8 +203,11 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 self.contextHandler!.homeID = homeID
                 self.contextHandler!.roomID = roomID
             }
+            
+            delegate?.hasLoadedData(true)
+            
         } else {
-            print ("Failed: Homes are not set yet or set to nil")
+            print ("Failed: Rooms are not set yet or set to nil")
         }
     }
     
@@ -217,6 +237,12 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
         homes.append(home)
+        homesAreSet()
+    }
+    
+    func homeManager(manager: HMHomeManager, didAddRoom room: HMRoom) {
+        rooms.append(room)
+        roomsAreSet()
     }
     
     func homeManagerDidUpdatePrimaryHome(manager: HMHomeManager) {
@@ -251,15 +277,45 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     //Create first Home as Primary Home and first Room
     func initialHomeSetup (homeName: String, roomName: String) {
-        homeManager.addHomeWithName(homeName) { home, error in
-            if let error = error {
-                print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
-            } else {
-                // TODO
-                self.addRoom(roomName, toHome: home!)
-                self.updatePrimaryHome(home!)
+        
+        switch homes.count {
+        case 0:
+            homeManager.addHomeWithName(homeName) { home, error in
+                if let error = error {
+                    print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
+                } else {
+                    // TODO
+                    home!.addRoomWithName(roomName) { room, error in
+                        if let error = error {
+                            print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
+                        } else {
+                            self.homes.append(home!)
+                            self.rooms.append(room!)
+                            self.homesAreSet()
+                            self.roomsAreSet()
+                        }
+                    }
+                    self.updatePrimaryHome(home!)
+                }
+            }
+        default:
+            for home in homes {
+                if home.name == homeName {
+                    if home.rooms.isEmpty {
+                        home.addRoomWithName(roomName) { room, error in
+                            if let error = error {
+                                print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
+                            } else {
+                                self.rooms.append(room!)
+                                self.homesAreSet()
+                                self.roomsAreSet()
+                            }
+                        }
+                    }
+                }
             }
         }
+        
     }
     
     func addHome (withName: String) {
@@ -267,7 +323,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             if let error = error {
                 print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
             } else {
-                // TODO
+                //
             }
         }
     }

@@ -27,12 +27,20 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     var pairedAccessories : [IAccessory]? {
         didSet {
-            if oldValue != nil {
-                if oldValue!.count != pairedAccessories?.count {
-                    assignAccessoryToViewController(pairedAccessories!.last!)
-                    delegate!.contextHandlerChangedVCArray()
+            if let pairedAccessories = pairedAccessories {
+                if pairedAccessories.count != 0 {
+                    if oldValue?.count != pairedAccessories.count {
+                        assignAccessoryToViewController(pairedAccessories.last!)
+                        delegate!.contextHandlerChangedVCArray()
+                    }
                 }
             }
+//            if pairedAccessories != nil || (pairedAccessories?.isEmpty == false) {
+//                if oldValue?.count != pairedAccessories?.count {
+//                    assignAccessoryToViewController(pairedAccessories!.last!)
+//                    delegate!.contextHandlerChangedVCArray()
+//                }
+//            }
         }
     }
     
@@ -52,20 +60,20 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Retrieve Homes
     
-    func retrieveHome() -> String? {
-        return searchHome(forID: homeID)
+    func retrieveHome() -> String {
+        return searchHome(forID: homeID!)
     }
     
-    func searchHome(forID id: NSUUID?) -> String? {
+    func searchHome(forID id: NSUUID) -> String {
         if let localHomes = localHomes {
             for homes in localHomes {
                 if homes.id == id {
-                    return homes.name
+                    return homes.name!
                 }
             }
         }
         
-        return nil
+        return ""
     }
     
     
@@ -99,7 +107,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
-        var foundAccessoriesForRoom : [IAccessory]?
+        var foundAccessoriesForRoom : [IAccessory]? = []
         homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
             foundAccessoriesForRoom = accessories
         }
@@ -111,8 +119,10 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         
         pairedAccessories = retrieveAccessories()
         
-        for accessory in pairedAccessories! {
-            assignAccessoryToViewController(accessory)
+        if let pairedAccessories = pairedAccessories {
+            for accessory in pairedAccessories {
+                assignAccessoryToViewController(accessory)
+            }
         }
         
         return viewControllerArray
