@@ -15,7 +15,7 @@ protocol IAccessory {
     var characteristicProperties : CharacteristicProperties { get set }
 //    var characteristicBlock : (() -> ())? { get set }
     
-    func canHandle(service: HMService) -> Bool
+    func canHandle(service: HMService, name: String?) -> Bool
     func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () )
 }
 
@@ -30,8 +30,7 @@ class Lamp: IAccessory {
     lazy var characteristicProperties = CharacteristicProperties()
     var charPropertiesSet = false
     
-    func canHandle(service: HMService) -> Bool {
-        
+    func canHandle(service: HMService, name: String?) -> Bool {
         if service.serviceType == HMServiceTypeLightbulb {
             return true
         } else {
@@ -118,13 +117,22 @@ class WeatherStation: IAccessory {
     lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService) -> Bool {
-        
-        if service.serviceType == HMServiceTypeTemperatureSensor || service.serviceType == HMServiceTypeHumiditySensor {
-            return true
-        } else {
+    func canHandle(service: HMService, name: String?) -> Bool {
+        switch service.serviceType {
+        case "E863F007-079E-48FF-8F27-9C2605A29F52":
+            if name == "Eve Weather" {
+                return true
+            } else {
+                return false
+            }
+        default:
             return false
         }
+//        if service.serviceType == HMServiceTypeTemperatureSensor || service.serviceType == HMServiceTypeHumiditySensor {
+//            return true
+//        } else {
+//            return false
+//        }
     }
     
     func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
@@ -145,11 +153,15 @@ class EnergyController: IAccessory {
     lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService) -> Bool {
-        
-        if service.serviceType == HMServiceTypeSwitch {
-            return true
-        } else {
+    func canHandle(service: HMService, name: String?) -> Bool {
+        switch service.serviceType {
+        case "E863F007-079E-48FF-8F27-9C2605A29F52":
+            if name == "Eve Energy" {
+                return true
+            } else {
+                return false
+            }
+        default:
             return false
         }
     }
@@ -171,11 +183,14 @@ class DoorWindowSensor: IAccessory {
     lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService) -> Bool {
-        
+    func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case "E863F007-079E-48FF-8F27-9C2605A29F52":
-            return true
+            if name == "Eve Door" {
+                return true
+            } else {
+                return false
+            }
         default:
             return false
         }
@@ -230,7 +245,7 @@ class Information: IAccessory {
     lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService) -> Bool {
+    func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation:
             return true
@@ -255,7 +270,7 @@ class Diverse: IAccessory {
     lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService) -> Bool {
+    func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation, HMServiceTypeHumiditySensor, HMServiceTypeLightbulb, HMServiceTypeSwitch, HMServiceTypeTemperatureSensor:
             return false

@@ -113,7 +113,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             pairedAccessories = accessories!.map({
                 let service = $0.services.last!
                 
-                var new = accessoryFactory.accessoryForServices(service)!
+                var new = accessoryFactory.accessoryForServices(service, name: $0.name)!
                 new.name = $0.name
                 new.uniqueID = $0.uniqueIdentifier
                 accessoryFactory.characteristicForService(new, service: service, completionHandler: { characteristicProperties in
@@ -138,7 +138,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     func getNewIAccessories(completionHandler : ([IAccessory]) -> ()) {
-        let arrayOfIAccessories = unpairedAccessories.map({ accessoryFactory.accessoryForServices($0.services[1])! })
+        let arrayOfIAccessories = unpairedAccessories.map({ accessoryFactory.accessoryForServices($0.services[1], name: $0.name)! })
         completionHandler(arrayOfIAccessories)
     }
     
@@ -374,7 +374,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     if error != nil {
                         print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
                     } else {
-                        let newAccessory = self.accessoryFactory.accessoryForServices(homeKitAccessory.services.last!)
+                        let newAccessory = self.accessoryFactory.accessoryForServices(homeKitAccessory.services.last!, name: homeKitAccessory.name)
                         self.pairedAccessories?.append(newAccessory!)
                         completionHandler()
                     }

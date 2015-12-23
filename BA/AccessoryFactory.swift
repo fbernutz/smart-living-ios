@@ -21,10 +21,10 @@ class AccessoryFactory {
     var arrayOfTypes: [IAccessory]?
     
     
-    func accessoryForServices(service: HMService) -> IAccessory? {
+    func accessoryForServices(service: HMService, name: String?) -> IAccessory? {
         arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, information, diverse]
         
-        let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service) }.first
+        let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service, name: name) }.first
         
 //        canHandleServiceAccessory?.characteristicsForService(service, completionHandler: { characteristicProperties -> () in
 //            canHandleServiceAccessory?.characteristicProperties = characteristicProperties

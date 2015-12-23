@@ -27,20 +27,19 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     var pairedAccessories : [IAccessory]? {
         didSet {
-            if let pairedAccessories = pairedAccessories {
+            if let pairedAccessories = pairedAccessories, let oldValue = oldValue {
                 if pairedAccessories.count != 0 {
-                    if oldValue?.count != pairedAccessories.count {
-                        assignAccessoryToViewController(pairedAccessories.last!)
-                        delegate!.contextHandlerChangedVCArray()
+                    if oldValue.count != pairedAccessories.count {
+                        
+                        //if oldValue doesnt contain the last accessory, it's a new one
+                        let newAccessories = oldValue.filter { $0.name == pairedAccessories.last!.name }
+                        if newAccessories.count == 0 {
+                            delegate?.contextHandlerChangedVCArray()
+                        }
+                        
                     }
                 }
             }
-//            if pairedAccessories != nil || (pairedAccessories?.isEmpty == false) {
-//                if oldValue?.count != pairedAccessories?.count {
-//                    assignAccessoryToViewController(pairedAccessories!.last!)
-//                    delegate!.contextHandlerChangedVCArray()
-//                }
-//            }
         }
     }
     
