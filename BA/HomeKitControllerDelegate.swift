@@ -15,6 +15,7 @@ protocol HomeKitControllerDelegate {
 //    func hasLoadedRooms(rooms: [Room])
 //    func hasLoadedAccessories(accessory: [IAccessory])
     
+    func hasCreatedDefaultHomes(title: String, message: String)
 }
 
 protocol HomeKitControllerNewAccessoriesDelegate {

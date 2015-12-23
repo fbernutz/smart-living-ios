@@ -293,6 +293,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                             self.rooms.append(room!)
                             self.homesAreSet()
                             self.roomsAreSet()
+                            
+                            self.delegate?.hasCreatedDefaultHomes("Keine Daten gefunden", message: "Es wurde ein neues Zuhause mit einem neuen Raum erstellt.")
                         }
                     }
                     self.updatePrimaryHome(home!)
@@ -309,6 +311,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                                 self.rooms.append(room!)
                                 self.homesAreSet()
                                 self.roomsAreSet()
+                                
+                                self.delegate?.hasCreatedDefaultHomes("Kein Raum gefunden", message: "Es wurde ein neuer Raum in \(home) erstellt.")
                             }
                         }
                     }
@@ -383,6 +387,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             }
         })
     }
-    
 
+    
 }

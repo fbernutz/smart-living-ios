@@ -73,6 +73,12 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
         }
     }
     
+    func hasCreatedDefaultHomes(title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alertController, animated: true, completion: nil)
+    }
+    
     // MARK: - ContextHandler Delegates
     
     func contextHandlerChangedVCArray() {
