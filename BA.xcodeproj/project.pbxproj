@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F0254B51C29904D002F6B3E /* ImprintViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0254B41C29904D002F6B3E /* ImprintViewController.swift */; };
+		3F0254B71C29907A002F6B3E /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0254B61C29907A002F6B3E /* FAQViewController.swift */; };
 		3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */; };
 		3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */; };
 		3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */; };
@@ -58,6 +60,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3F0254B41C29904D002F6B3E /* ImprintViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImprintViewController.swift; sourceTree = "<group>"; };
+		3F0254B61C29907A002F6B3E /* FAQViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalStructure.swift; sourceTree = "<group>"; };
 		3F0547DE1BFF354B0061B3F0 /* HomeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeHelper.swift; sourceTree = "<group>"; };
 		3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Light.otf"; path = "Ikaros Sans/Ikaros Light.otf"; sourceTree = "<group>"; };
@@ -168,6 +172,8 @@
 				3F84427D1BF9F53400C04B5C /* IntroViewController.swift */,
 				3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */,
 				3FEB51CC1C07345D00715FDD /* DiscoveryViewController.swift */,
+				3F0254B41C29904D002F6B3E /* ImprintViewController.swift */,
+				3F0254B61C29907A002F6B3E /* FAQViewController.swift */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -370,6 +376,7 @@
 				3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */,
 				3F88BC1A1C2412A600BD1523 /* ContextHandlerDelegate.swift in Sources */,
 				3F7232A01C206526004E7503 /* LightView.swift in Sources */,
+				3F0254B71C29907A002F6B3E /* FAQViewController.swift in Sources */,
 				3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */,
 				3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */,
 				3F3B248C1C2347F80037CD24 /* DoorWindowViewController.swift in Sources */,
@@ -380,6 +387,7 @@
 				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
 				3F3B248E1C2348180037CD24 /* WeatherView.swift in Sources */,
+				3F0254B51C29904D002F6B3E /* ImprintViewController.swift in Sources */,
 				3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */,
 				3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */,
 				3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */,
