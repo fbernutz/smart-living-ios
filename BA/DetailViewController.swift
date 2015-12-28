@@ -13,6 +13,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var contextHandler : ContextHandler?
     
+    @IBOutlet weak var spinner: UIActivityIndicatorView?
     @IBOutlet weak var homeName: UILabel?
     @IBOutlet weak var roomName: UILabel?
     @IBOutlet weak var accessoriesTableView: UITableView?
@@ -55,6 +56,8 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
         
         let controller = contextHandler!.homeKitController
         controller!.delegate = self
+        
+        spinner?.startAnimating()
     }
     
     
@@ -68,6 +71,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
             room = contextHandler!.retrieveRoom()
             viewControllerArray = contextHandler!.retrieveViewControllerList()!
             
+            spinner?.stopAnimating()
         } else {
             print("loading failed")
         }

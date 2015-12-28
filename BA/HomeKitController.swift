@@ -112,15 +112,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         if accessories != nil {
             pairedAccessories = accessories!.map({
                 let service = $0.services.last!
+                let name = $0.name
                 
-                var new = accessoryFactory.accessoryForServices(service, name: $0.name)!
-                new.name = $0.name
-                new.uniqueID = $0.uniqueIdentifier
-                accessoryFactory.characteristicForService(new, service: service, completionHandler: { characteristicProperties in
-                    new.characteristicProperties = characteristicProperties
+                var newAcc = accessoryFactory.accessoryForServices(service, name: name)!
+                newAcc.name = name
+                newAcc.uniqueID = $0.uniqueIdentifier
+                accessoryFactory.characteristicForService(newAcc, service: service, completionHandler: { characteristicProperties in
+                    newAcc.characteristicProperties = characteristicProperties
                 })
                 
-                return new
+                return newAcc
             })
             completionHandler(pairedAccessories!)
         }

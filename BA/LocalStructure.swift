@@ -35,6 +35,7 @@ public class Room: NSObject {
 public class CharacteristicProperties: NSObject {
     
     //ContractPropertiesHandler to handle these properties (?)
+    var name : String?
     
     var testVariableDefault : AnyObject?
     
