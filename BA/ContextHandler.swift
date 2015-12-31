@@ -20,7 +20,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var localHomes : [Home]?
     var localRooms : [Room]?
     
-    var characteristicProperties : CharacteristicProperties?
     var delegate : ContextHandlerDelegate?
     
     var viewControllerArray : [UIViewController]?
@@ -31,9 +30,9 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
                 if pairedAccessories.count != 0 {
                     if oldValue.count != pairedAccessories.count {
                         
-                        //if oldValue doesnt contain the last accessory, it's a new one
+                        //if oldValue does not contain the last paired accessory, it's a new accessory
                         let newAccessories = oldValue.filter { $0.name == pairedAccessories.last!.name }
-                        if newAccessories.count == 0 {
+                        if newAccessories.isEmpty {
                             delegate?.contextHandlerChangedVCArray()
                         }
                         
@@ -52,7 +51,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
         homeKitController!.contextHandler = self
         
-        characteristicProperties = CharacteristicProperties()
         accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
     }
     
@@ -97,8 +95,9 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     // MARK: - Retrieve paired accessories
     
     func retrieveAccessories() -> [IAccessory]? {
-        if !searchAccessoriesForRoom(homeID, roomID: roomID).isEmpty {
-            let accessoriesInRoom = searchAccessoriesForRoom(homeID, roomID: roomID)
+        let accessoriesInRoom = searchAccessoriesForRoom(homeID, roomID: roomID)
+        
+        if !accessoriesInRoom.isEmpty {
             return accessoriesInRoom
         } else {
             return nil

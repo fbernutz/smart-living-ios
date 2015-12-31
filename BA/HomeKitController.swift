@@ -43,7 +43,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     var pairedAccessories : [IAccessory]? = [] {
         didSet {
-            print(pairedAccessories)
+            print("HomeKitController: \(pairedAccessories!)")
             contextHandler?.pairedAccessories = pairedAccessories
         }
     }
@@ -120,8 +120,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 accessoryFactory.characteristicForService(newAcc, service: service, completionHandler: { characteristicProperties in
                     newAcc.characteristicProperties = characteristicProperties
                 })
-                
                 return newAcc
+                
             })
             completionHandler(pairedAccessories!)
         }

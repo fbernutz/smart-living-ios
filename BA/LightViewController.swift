@@ -12,7 +12,11 @@ class LightViewController: UIViewController {
     
     @IBOutlet var lightView: LightView?
     
-    var accessory : IAccessory?
+    var accessory : IAccessory? {
+        didSet {
+//            lightView?.infotext?.text = accessory?.name
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
