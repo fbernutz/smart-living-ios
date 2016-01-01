@@ -20,12 +20,24 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var localHomes : [Home]?
     var localRooms : [Room]?
     
-    var delegate : ContextHandlerDelegate?
-    
-    var viewControllerArray : [UIViewController]?
+    var viewControllerArray : [UIViewController]? {
+        didSet {
+            if viewControllerArray?.count == pairedAccessories?.count {
+                
+                //register notification
+                let center = NSNotificationCenter.defaultCenter()
+                let notification = NSNotification(name: "vcArray", object: self, userInfo: ["VCArray":viewControllerArray!])
+                center.postNotification(notification)
+            }
+        }
+    }
     
     var pairedAccessories : [IAccessory]? {
         didSet {
+            if oldValue == nil {
+                viewControllerArray = retrieveViewControllerList()
+            }
+            
             if let pairedAccessories = pairedAccessories, let oldValue = oldValue {
                 if pairedAccessories.count != 0 {
                     if oldValue.count != pairedAccessories.count {
@@ -33,7 +45,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
                         //if oldValue does not contain the last paired accessory, it's a new accessory
                         let newAccessories = oldValue.filter { $0.name == pairedAccessories.last!.name }
                         if newAccessories.isEmpty {
-                            delegate?.contextHandlerChangedVCArray()
+                            viewControllerArray = retrieveViewControllerList()
                         }
                         
                     }
@@ -114,8 +126,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     func retrieveViewControllerList() -> [UIViewController]? {
         viewControllerArray = []
-        
-        pairedAccessories = retrieveAccessories()
         
         if let pairedAccessories = pairedAccessories {
             for accessory in pairedAccessories {

@@ -110,20 +110,30 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         let accessories = homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
         
         if accessories != nil {
-            pairedAccessories = accessories!.map({
+            let localPairedAccessories: [IAccessory]? = accessories!.map({
                 let service = $0.services.last!
                 let name = $0.name
                 
                 var newAcc = accessoryFactory.accessoryForServices(service, name: name)!
                 newAcc.name = name
                 newAcc.uniqueID = $0.uniqueIdentifier
-                accessoryFactory.characteristicForService(newAcc, service: service, completionHandler: { characteristicProperties in
-                    newAcc.characteristicProperties = characteristicProperties
-                })
+                newAcc.retrieveCharacteristics(service)
+
                 return newAcc
-                
             })
-            completionHandler(pairedAccessories!)
+            
+            if let pairedAccessories = localPairedAccessories {
+                for var acc in pairedAccessories {
+                    if acc.characteristics.isEmpty {
+                        acc.characteristicBlock = { () in
+                            acc.characteristics = acc.getCharacteristics()!
+                            print(acc.characteristics)
+                            self.pairedAccessories = pairedAccessories
+                            completionHandler(self.pairedAccessories!)
+                        }
+                    }
+                }
+            }
         }
         
     }

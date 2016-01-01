@@ -32,29 +32,6 @@ public class Room: NSObject {
     }
 }
 
-public class CharacteristicProperties: NSObject {
-    
-    //ContractPropertiesHandler to handle these properties (?)
-    var name : String?
-    
-    var testVariableDefault : AnyObject?
-    
-    var state : Bool?
-    
-    var brightness : Float?
-    var colour : UIColor?
-    
-    var temperature: Float?   // in °C
-    var humidity: Float?  // Luftfeuchtigkeit in %
-    var airPressure: Float?   // Luftdruck in Pa
-    
-    var powerConsumption: Float?
-    
-    var counter: Int?
-    var doorState: Bool?
-}
-
-
 
 //public class ActionSet : NSObject {
 //    

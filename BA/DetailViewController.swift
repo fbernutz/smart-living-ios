@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, HomeKitControllerDelegate, ContextHandlerDelegate, UITableViewDataSource, UITableViewDelegate {
+class DetailViewController: UIViewController, HomeKitControllerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var contextHandler : ContextHandler?
@@ -52,12 +52,21 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
             contextHandler = appDelegate.contextHandler
         }
         
-        contextHandler!.delegate = self
-        
         let controller = contextHandler!.homeKitController
         controller!.delegate = self
         
         spinner?.startAnimating()
+        
+        //    listen for notification
+        
+        let center = NSNotificationCenter.defaultCenter()
+        let queue = NSOperationQueue.mainQueue()
+        
+        center.addObserverForName("vcArray", object: contextHandler, queue: queue) { notification in
+            if let vcArray = notification.userInfo!["VCArray"] as? [UIViewController] {
+                self.viewControllerArray = vcArray
+            }
+        }
     }
     
     
@@ -69,7 +78,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
             
             home = contextHandler!.retrieveHome()
             room = contextHandler!.retrieveRoom()
-            viewControllerArray = contextHandler!.retrieveViewControllerList()!
+            contextHandler?.retrieveAccessories()
             
             spinner?.stopAnimating()
         } else {
@@ -81,12 +90,6 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, Context
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alertController, animated: true, completion: nil)
-    }
-    
-    // MARK: - ContextHandler Delegates
-    
-    func contextHandlerChangedVCArray() {
-        viewControllerArray = contextHandler!.retrieveViewControllerList()!
     }
     
     // MARK: - TableView Delegates

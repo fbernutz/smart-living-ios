@@ -14,7 +14,9 @@ class LightViewController: UIViewController, LightViewDelegate {
     
     var accessory : IAccessory? {
         didSet {
-            setName(accessory!.name)
+            if accessory?.characteristics != nil {
+                characteristics = accessory!.characteristics
+            }
         }
     }
     
@@ -22,40 +24,49 @@ class LightViewController: UIViewController, LightViewDelegate {
         didSet {
             if let chars = characteristics {
                 print(chars)
-                
+                if !chars.isEmpty {
+                    serviceName = chars.filter{ $0.0 == "name" }.first.map{ $0.1 as! String }
+                    brightness = chars.filter{ $0.0 == "brightness" }.first.map{ $0.1 as! Float }
+                    state = chars.filter{ $0.0 == "powerState" }.first.map{ $0.1 as! Bool }
+                }
             }
         }
     }
+    
+    var serviceName : String?
+    var brightness : Float?
+    var state : Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         lightView!.delegate = self
         
-        accessory!.getCharacteristics()
-        characteristics = accessory?.characteristics
-        
-        setCharacteristics()
+        if let chars = characteristics {
+            if !chars.isEmpty {
+                setCharacteristics()
+            }
+        }
     }
     
     // MARK: - Set Values in LightView
     
     func setCharacteristics() {
         setName(accessory?.name)
-        setState(true)
-        setSlider(20)
+        setState(state!)
+        setSlider(brightness!)
     }
     
     func setName(name: String?) {
-        lightView?.infotext?.text = name ?? "Test"
+        lightView!.infotext!.text = name ?? "Test"
     }
     
     func setState(state: Bool) {
-        lightView?.stateSwitch?.setOn(state, animated: false)
+        lightView!.stateSwitch!.setOn(state, animated: false)
     }
     
     func setSlider(value: Float) {
-        lightView?.slider?.value = value
+        lightView!.slider!.value = value
     }
     
     // MARK: - LightViewDelegate

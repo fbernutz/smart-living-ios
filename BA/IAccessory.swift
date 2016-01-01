@@ -9,16 +9,6 @@
 import UIKit
 import HomeKit
 
-protocol IAccessory {
-    var name : String? { get set }
-    var uniqueID : NSUUID? { get set }
-    var characteristicProperties : CharacteristicProperties { get set }
-//    var characteristicBlock : (() -> ())? { get set }
-    
-    func canHandle(service: HMService, name: String?) -> Bool
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () )
-}
-
 let EveServiceType = "E863F007-079E-48FF-8F27-9C2605A29F52"
 
 let EveCharacteristic1 = "E863F11C-079E-48FF-8F27-9C2605A29F52"
@@ -26,15 +16,25 @@ let EveCharacteristic2 = "E863F121-079E-48FF-8F27-9C2605A29F52"
 let EveCharacteristic3 = "E863F116-079E-48FF-8F27-9C2605A29F52"
 let EveCharacteristic4 = "E863F117-079E-48FF-8F27-9C2605A29F52"
 
+
+protocol IAccessory {
+    var name : String? { get set }
+    var uniqueID : NSUUID? { get set }
+    var characteristics : [String : AnyObject] { get set }
+    var characteristicBlock : (() -> ())? { get set }
+    
+    func canHandle(service: HMService, name: String?) -> Bool
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () )
+}
+
 // MARK: - Lamp
 
 class Lamp: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-//    var characteristicBlock : (() -> ())?
-    lazy var characteristicProperties = CharacteristicProperties()
-    var charPropertiesSet = false
+    var characteristicBlock : (() -> ())?
+    var characteristics = [String : AnyObject]()
     
     func canHandle(service: HMService, name: String?) -> Bool {
         if service.serviceType == HMServiceTypeLightbulb {
@@ -44,42 +44,48 @@ class Lamp: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+        
+        characteristics.removeAll(keepCapacity: false)
         
         for characteristic in service.characteristics {
-            print("Licht: \(characteristic.characteristicType)")
             
-            switch characteristic.characteristicType {
-                
-            case HMCharacteristicTypeBrightness:
-                print("Brightness")
+            if characteristic.characteristicType == (HMCharacteristicTypeName as String) {
+                print("new Name")
                 
                 getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.brightness = value as? Float
-                    self.charPropertiesSet = true
-                    completionHandler(self.characteristicProperties)
+                    if let value = value {
+                        self.characteristics["name"] = value as! String
+                        print(self.characteristics)
+                        completionHandler(self.characteristics)
+                    }
                 })
-                
-            case HMCharacteristicTypePowerState:
-                print("PowerState")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.state = value as? Bool
-                    self.charPropertiesSet = true
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            default:
-                print("default")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.testVariableDefault = value
-                    self.charPropertiesSet = true
-                    completionHandler(self.characteristicProperties)
-                })
-                
-                break
             }
+            
+            if characteristic.characteristicType == (HMCharacteristicTypeBrightness as String) {
+                print("new Brightness")
+                
+                getCharacteristicValue(characteristic, completion: { value, error in
+                    if let value = value {
+                        self.characteristics["brightness"] = value as! Float
+                        print(self.characteristics)
+                        completionHandler(self.characteristics)
+                    }
+                })
+            }
+            
+            if characteristic.characteristicType == (HMCharacteristicTypePowerState as String) {
+                print("new State")
+                
+                getCharacteristicValue(characteristic, completion: { value, error in
+                    if let value = value {
+                        self.characteristics["powerState"] = value as! NSNumber
+                        print(self.characteristics)
+                        completionHandler(self.characteristics)
+                    }
+                })
+            }
+            
         }
     }
 }
@@ -90,8 +96,9 @@ class WeatherStation: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
+    
+    var characteristics = [String : AnyObject]()
     
     func canHandle(service: HMService, name: String?) -> Bool {
         
@@ -107,43 +114,43 @@ class WeatherStation: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
 //        let temperature: Float?   // in °C
 //        let humidity: Float?  // Luftfeuchtigkeit in %
 //        let airPressure: Float?   // Luftdruck in Pa
         
-        for characteristic in service.characteristics {
-            
-            switch characteristic.characteristicType {
-                
-            case HMCharacteristicTypeCurrentTemperature:
-                print("Current Temperature")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.temperature = value as? Float
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            case HMCharacteristicTypeCurrentRelativeHumidity:
-                print("Current Humidity")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.humidity = value as? Float
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            default:
-                print("default")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.testVariableDefault = value
-                    completionHandler(self.characteristicProperties)
-                })
-                
-                break
-            }
-            
-        }
+//        for characteristic in service.characteristics {
+//            
+//            switch characteristic.characteristicType {
+//                
+//            case HMCharacteristicTypeCurrentTemperature:
+//                print("Current Temperature")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.temperature = value as? Float
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            case HMCharacteristicTypeCurrentRelativeHumidity:
+//                print("Current Humidity")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.humidity = value as? Float
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            default:
+//                print("default")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.testVariableDefault = value
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//                break
+//            }
+//            
+//        }
 
     }
     
@@ -155,11 +162,7 @@ class EnergyController: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    var characteristicProperties = CharacteristicProperties() {
-        didSet {
-            
-        }
-    }
+    var characteristics = [String : AnyObject]()
     var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService, name: String?) -> Bool {
@@ -175,65 +178,67 @@ class EnergyController: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
 
-        for characteristic in service.characteristics {
-            
-            print("Eve Energy: \(characteristic.characteristicType)")
-            
-            switch characteristic.characteristicType {
-            case EveCharacteristic1:
-                print("1")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.state = value as? Bool
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            case EveCharacteristic2:
-                print("2")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.state = value as? Bool
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            case EveCharacteristic3:
-                print("3")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.state = value as? Bool
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            case EveCharacteristic4:
-                print("4")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.state = value as? Bool
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            case HMCharacteristicTypePowerState:
-                print("Current State")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.state = value as? Bool
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            default:
-                print("default")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.testVariableDefault = value
-                    completionHandler(self.characteristicProperties)
-                })
-                
-                break
-            }
-            
-        }
+//        for characteristic in service.characteristics {
+//            
+////            print("Eve Energy: \(characteristic.characteristicType)")
+//            
+//            switch characteristic.characteristicType {
+//            case EveCharacteristic1:
+//                print("Eve Energy 1")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    if value != nil {
+//                        self.characteristicProperties.name = value as? String
+//                        completionHandler(self.characteristicProperties)
+//                    }
+//                })
+//                
+//            case EveCharacteristic2:
+//                print("Eve Energy 2")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.state = value as? Bool
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            case EveCharacteristic3:
+//                print("Eve Energy 3")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.state = value as? Bool
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            case EveCharacteristic4:
+//                print("Eve Energy 4")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.state = value as? Bool
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            case HMCharacteristicTypePowerState:
+//                print("Eve Energy Current State")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.state = value as? Bool
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            default:
+//                print("default")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.testVariableDefault = value as? String
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//                break
+//            }
+//            
+//        }
         
     }
     
@@ -245,9 +250,9 @@ class DoorWindowSensor: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
+    var characteristics = [String : AnyObject]()
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case EveServiceType:
@@ -262,32 +267,32 @@ class DoorWindowSensor: IAccessory {
         
     }
     
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
         
-        for characteristic in service.characteristics {
-            
-            print("Eve Door: \(characteristic.characteristicType)")
-            
-            switch characteristic.characteristicType {
-            case HMCharacteristicTypeCurrentDoorState:
-                print("Current Door State")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.doorState = value as? Bool
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            default:
-                print("default")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.testVariableDefault = value
-                    completionHandler(self.characteristicProperties)
-                })
-                
-                break
-            }
-        }
+//        for characteristic in service.characteristics {
+//            
+////            print("Eve Door: \(characteristic.characteristicType)")
+//            
+//            switch characteristic.characteristicType {
+//            case HMCharacteristicTypeCurrentDoorState:
+//                print("Current Door State")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.doorState = value as? Bool
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            default:
+//                print("default")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.testVariableDefault = value
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//                break
+//            }
+//        }
     }
     
 }
@@ -298,9 +303,9 @@ class Information: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
     
+    var characteristics = [String : AnyObject]()
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation:
@@ -310,29 +315,29 @@ class Information: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
-        for characteristic in service.characteristics {
-            
-            switch characteristic.characteristicType {
-            case HMCharacteristicTypeName:
-                print("Current Name")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.name = value as? String
-                    completionHandler(self.characteristicProperties)
-                })
-                
-            default:
-                print("default")
-                
-                getCharacteristicValue(characteristic, completion: { value, error in
-                    self.characteristicProperties.testVariableDefault = value
-                    completionHandler(self.characteristicProperties)
-                })
-                
-                break
-            }
-        }
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+//        for characteristic in service.characteristics {
+//            
+//            switch characteristic.characteristicType {
+//            case HMCharacteristicTypeName:
+//                print("Current Name")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.name = value as? String
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//            default:
+//                print("default")
+//                
+//                getCharacteristicValue(characteristic, completion: { value, error in
+//                    self.characteristicProperties.testVariableDefault = value
+//                    completionHandler(self.characteristicProperties)
+//                })
+//                
+//                break
+//            }
+//        }
     }
     
 }
@@ -343,8 +348,9 @@ class Diverse: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    lazy var characteristicProperties = CharacteristicProperties()
     var characteristicBlock : (() -> ())?
+    
+    var characteristics = [String : AnyObject]()
     
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
@@ -355,9 +361,9 @@ class Diverse: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
         //nothing
-        completionHandler(characteristicProperties)
+//        completionHandler(characteristicProperties)
     }
     
 }
@@ -411,4 +417,30 @@ extension IAccessory {
             }
         }
     }
+    
+    mutating func retrieveCharacteristics(service: HMService) {
+        
+        characteristicsForService(service, completionHandler: { characteristics in
+            print(characteristics.count, service.characteristics.count)
+            
+            if characteristics.count == service.characteristics.count {
+                self.characteristics = characteristics
+                
+                if let block = self.characteristicBlock {
+                    block()
+                    self.characteristicBlock = nil
+                }
+            }
+        })
+    }
+    
+    func getCharacteristics() -> [String:AnyObject]? {
+        if !characteristics.isEmpty {
+            print(characteristics)
+            return characteristics
+        } else {
+            return nil
+        }
+    }
+
 }

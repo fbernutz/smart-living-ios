@@ -15,20 +15,15 @@ class AccessoryFactory {
     var weatherStationService = WeatherStation()
     var energyControllerService = EnergyController()
     var doorWindowSensorService = DoorWindowSensor()
-    var information = Information()
-    var diverse = Diverse()
+    var informationService = Information()
+    var diverseService = Diverse()
     
     var arrayOfTypes: [IAccessory]?
     
-    
     func accessoryForServices(service: HMService, name: String?) -> IAccessory? {
-        arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, information, diverse]
+        arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, informationService, diverseService]
         
         let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service, name: name) }.first
-        
-//        canHandleServiceAccessory?.characteristicsForService(service, completionHandler: { characteristicProperties -> () in
-//            canHandleServiceAccessory?.characteristicProperties = characteristicProperties
-//        })
         
         //new instance of type
         switch canHandleServiceAccessory {
@@ -48,9 +43,6 @@ class AccessoryFactory {
         }
     }
     
-    func characteristicForService(accessory: IAccessory, service: HMService, completionHandler: (CharacteristicProperties) -> () ) {
-        accessory.characteristicsForService(service, completionHandler: completionHandler)
-    }
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {
 //    // sucht nach verfügbaren Services für die Accessories
