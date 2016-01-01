@@ -330,12 +330,29 @@
                                             <action selector="changeValueOfSlider:" destination="xtI-QF-tid" eventType="valueChanged" id="VPT-K2-oj8"/>
                                         </connections>
                                     </slider>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dfd-B9-nrG">
+                                        <rect key="frame" x="450" y="20" width="150" height="150"/>
+                                        <subviews>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5io-Ma-2sS">
+                                                <rect key="frame" x="51" y="60" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="changedValueOfSwitch:" destination="xtI-QF-tid" eventType="valueChanged" id="vra-so-gKX"/>
+                                                </connections>
+                                            </switch>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="5io-Ma-2sS" firstAttribute="centerY" secondItem="Dfd-B9-nrG" secondAttribute="centerY" id="9Wm-jG-wve"/>
+                                            <constraint firstItem="5io-Ma-2sS" firstAttribute="centerX" secondItem="Dfd-B9-nrG" secondAttribute="centerX" id="aGn-3L-9c8"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="PXg-kI-QuG" firstAttribute="top" secondItem="Ml4-w5-Olb" secondAttribute="bottom" constant="8" symbolic="YES" id="1Qx-1Q-EMF"/>
                                     <constraint firstAttribute="bottom" secondItem="PXg-kI-QuG" secondAttribute="bottom" constant="20" symbolic="YES" id="6oj-u0-aZA"/>
                                     <constraint firstItem="Ml4-w5-Olb" firstAttribute="leading" secondItem="i0p-iV-TXM" secondAttribute="leading" id="7bd-ud-FP8"/>
+                                    <constraint firstItem="Dfd-B9-nrG" firstAttribute="height" secondItem="Ml4-w5-Olb" secondAttribute="height" id="A7T-Vr-Cdd"/>
                                     <constraint firstItem="PXg-kI-QuG" firstAttribute="leading" secondItem="Ml4-w5-Olb" secondAttribute="leading" id="EYf-Yk-6S7"/>
                                     <constraint firstItem="Ml4-w5-Olb" firstAttribute="top" secondItem="i0p-iV-TXM" secondAttribute="top" constant="20" symbolic="YES" id="HAp-fe-pSU"/>
                                     <constraint firstItem="8wc-KW-RlO" firstAttribute="top" secondItem="Ml4-w5-Olb" secondAttribute="top" id="HVD-mU-bPd"/>
@@ -346,11 +363,18 @@
                                     <constraint firstItem="Sol-mn-Gv7" firstAttribute="centerY" secondItem="Ml4-w5-Olb" secondAttribute="centerY" id="QPR-Vr-Yw1"/>
                                     <constraint firstAttribute="trailing" secondItem="PXg-kI-QuG" secondAttribute="trailing" constant="20" symbolic="YES" id="T0L-Rh-zbe"/>
                                     <constraint firstItem="8wc-KW-RlO" firstAttribute="height" secondItem="Ml4-w5-Olb" secondAttribute="height" id="WdB-Nt-Mgf"/>
+                                    <constraint firstItem="Dfd-B9-nrG" firstAttribute="width" secondItem="Ml4-w5-Olb" secondAttribute="width" id="ahE-5R-3Gn"/>
+                                    <constraint firstItem="Dfd-B9-nrG" firstAttribute="trailing" secondItem="PXg-kI-QuG" secondAttribute="trailing" id="crj-wg-DqS"/>
+                                    <constraint firstItem="Dfd-B9-nrG" firstAttribute="leading" secondItem="Sol-mn-Gv7" secondAttribute="trailing" constant="8" symbolic="YES" id="dnW-Xz-eY0"/>
                                     <constraint firstItem="PXg-kI-QuG" firstAttribute="leading" secondItem="i0p-iV-TXM" secondAttribute="leading" constant="20" symbolic="YES" id="fUY-j9-a3f"/>
                                     <constraint firstItem="8wc-KW-RlO" firstAttribute="width" secondItem="Ml4-w5-Olb" secondAttribute="width" id="lZc-aW-Rtk"/>
                                     <constraint firstItem="PXg-kI-QuG" firstAttribute="trailing" secondItem="8wc-KW-RlO" secondAttribute="trailing" id="mmx-b6-LIK"/>
+                                    <constraint firstItem="Dfd-B9-nrG" firstAttribute="top" secondItem="Ml4-w5-Olb" secondAttribute="top" id="zfu-7P-4Cs"/>
                                 </constraints>
                                 <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="8wc-KW-RlO"/>
+                                    </mask>
                                     <mask key="constraints">
                                         <exclude reference="T0L-Rh-zbe"/>
                                         <exclude reference="fUY-j9-a3f"/>
@@ -369,7 +393,7 @@
                             <outlet property="icon" destination="Ml4-w5-Olb" id="wVK-fB-FlR"/>
                             <outlet property="infotext" destination="Sol-mn-Gv7" id="yH4-SF-REe"/>
                             <outlet property="slider" destination="PXg-kI-QuG" id="w3o-ly-NA3"/>
-                            <outlet property="statusBtn" destination="8wc-KW-RlO" id="nG3-f0-7ud"/>
+                            <outlet property="stateSwitch" destination="5io-Ma-2sS" id="via-4O-eo9"/>
                         </connections>
                     </view>
                     <connections>

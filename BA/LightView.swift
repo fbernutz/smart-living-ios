@@ -10,24 +10,19 @@ import UIKit
 
 class LightView: UIView {
     
+    var delegate : LightViewDelegate?
+    
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var slider: UISlider?
-    @IBOutlet weak var statusBtn: UIButton?
     @IBOutlet weak var icon: UIImageView?
+    @IBOutlet weak var stateSwitch: UISwitch?
     
     @IBAction func changeValueOfSlider(sender: UISlider) {
-        print("value changed to: \(Int(sender.value))")
-        
+        delegate?.lightViewSliderChanged(sender.value)
     }
     
-//    var accessory : IAccessory? {
-//        didSet {
-//            infotext?.text = accessory!.name
-//            
-//            if let brightness = accessory?.characteristicProperties.brightness {
-//                slider?.value = brightness
-//            }
-//        }
-//    }
-
+    @IBAction func changedValueOfSwitch(sender: UISwitch) {
+        delegate?.lightViewSwitchTapped(sender.on)
+    }
+    
 }

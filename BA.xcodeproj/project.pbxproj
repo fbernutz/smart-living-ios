@@ -37,6 +37,7 @@
 		3F7232A01C206526004E7503 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72329F1C206526004E7503 /* LightView.swift */; };
 		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
 		3F88BC1A1C2412A600BD1523 /* ContextHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88BC191C2412A600BD1523 /* ContextHandlerDelegate.swift */; };
+		3F8D91761C3546BB00DCCED3 /* LightViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */; };
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
 		3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FC1C2329090031E439 /* DiverseView.swift */; };
 		3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FE1C2329170031E439 /* DiverseViewController.swift */; };
@@ -93,6 +94,7 @@
 		3F72329F1C206526004E7503 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
 		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3F88BC191C2412A600BD1523 /* ContextHandlerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandlerDelegate.swift; sourceTree = "<group>"; };
+		3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewDelegate.swift; sourceTree = "<group>"; };
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
 		3FA972FC1C2329090031E439 /* DiverseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseView.swift; sourceTree = "<group>"; };
 		3FA972FE1C2329170031E439 /* DiverseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				3F6A956E1C197CFC0095CC06 /* LightViewController.swift */,
 				3F72329F1C206526004E7503 /* LightView.swift */,
+				3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */,
 			);
 			name = Light;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
+				3F8D91761C3546BB00DCCED3 /* LightViewDelegate.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3B24901C2348240037CD24 /* EnergyView.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
