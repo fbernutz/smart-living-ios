@@ -35,6 +35,7 @@
 		3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */; };
 		3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */; };
 		3F7232A01C206526004E7503 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72329F1C206526004E7503 /* LightView.swift */; };
+		3F7797721C36E96700F3C550 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7797711C36E96700F3C550 /* Constants.swift */; };
 		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
 		3F8D91761C3546BB00DCCED3 /* LightViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */; };
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
@@ -91,6 +92,7 @@
 		3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAccessory.swift; sourceTree = "<group>"; };
 		3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		3F72329F1C206526004E7503 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
+		3F7797711C36E96700F3C550 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
 		3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewDelegate.swift; sourceTree = "<group>"; };
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */,
+				3F7797711C36E96700F3C550 /* Constants.swift */,
 			);
 			name = Modell;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */,
 				3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */,
 				3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */,
+				3F7797721C36E96700F3C550 /* Constants.swift in Sources */,
 				3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */,
 				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,

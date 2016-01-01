@@ -72,7 +72,6 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         
         self.contextHandler!.addAccessory(accessory, completionHandler: { _ in
             self.accessoryList?.removeAtIndex((self.accessoryList?.indexOf(accessory)!)!)
-//            tableView.deselectRowAtIndexPath(indexPath, animated: true)
             self.navigationController?.popViewControllerAnimated(true)
         })
     }

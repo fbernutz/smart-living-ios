@@ -20,11 +20,11 @@ let EveCharacteristic4 = "E863F117-079E-48FF-8F27-9C2605A29F52"
 protocol IAccessory {
     var name : String? { get set }
     var uniqueID : NSUUID? { get set }
-    var characteristics : [String : AnyObject] { get set }
+    var characteristics : [CharacteristicKey : AnyObject] { get set }
     var characteristicBlock : (() -> ())? { get set }
     
     func canHandle(service: HMService, name: String?) -> Bool
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () )
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () )
 }
 
 // MARK: - Lamp
@@ -34,7 +34,7 @@ class Lamp: IAccessory {
     var name : String?
     var uniqueID : NSUUID?
     var characteristicBlock : (() -> ())?
-    var characteristics = [String : AnyObject]()
+    var characteristics = [CharacteristicKey : AnyObject]()
     
     func canHandle(service: HMService, name: String?) -> Bool {
         if service.serviceType == HMServiceTypeLightbulb {
@@ -44,9 +44,9 @@ class Lamp: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
         
-        characteristics.removeAll(keepCapacity: false)
+        characteristics.removeAll()
         
         for characteristic in service.characteristics {
             
@@ -55,7 +55,7 @@ class Lamp: IAccessory {
                 
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics["name"] = value as! String
+                        self.characteristics[CharacteristicKey.serviceName] = value as! String
                         print(self.characteristics)
                         completionHandler(self.characteristics)
                     }
@@ -67,7 +67,7 @@ class Lamp: IAccessory {
                 
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics["brightness"] = value as! Float
+                        self.characteristics[CharacteristicKey.brightness] = value as! Float
                         print(self.characteristics)
                         completionHandler(self.characteristics)
                     }
@@ -79,7 +79,7 @@ class Lamp: IAccessory {
                 
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics["powerState"] = value as! NSNumber
+                        self.characteristics[CharacteristicKey.powerState] = value as! NSNumber
                         print(self.characteristics)
                         completionHandler(self.characteristics)
                     }
@@ -98,7 +98,7 @@ class WeatherStation: IAccessory {
     var uniqueID : NSUUID?
     var characteristicBlock : (() -> ())?
     
-    var characteristics = [String : AnyObject]()
+    var characteristics = [CharacteristicKey : AnyObject]()
     
     func canHandle(service: HMService, name: String?) -> Bool {
         
@@ -114,7 +114,7 @@ class WeatherStation: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
 //        let temperature: Float?   // in °C
 //        let humidity: Float?  // Luftfeuchtigkeit in %
 //        let airPressure: Float?   // Luftdruck in Pa
@@ -162,7 +162,7 @@ class EnergyController: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    var characteristics = [String : AnyObject]()
+    var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService, name: String?) -> Bool {
@@ -178,7 +178,7 @@ class EnergyController: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
 
 //        for characteristic in service.characteristics {
 //            
@@ -252,7 +252,7 @@ class DoorWindowSensor: IAccessory {
     var uniqueID : NSUUID?
     var characteristicBlock : (() -> ())?
     
-    var characteristics = [String : AnyObject]()
+    var characteristics = [CharacteristicKey : AnyObject]()
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case EveServiceType:
@@ -267,7 +267,7 @@ class DoorWindowSensor: IAccessory {
         
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
         
 //        for characteristic in service.characteristics {
 //            
@@ -305,7 +305,7 @@ class Information: IAccessory {
     var uniqueID : NSUUID?
     var characteristicBlock : (() -> ())?
     
-    var characteristics = [String : AnyObject]()
+    var characteristics = [CharacteristicKey : AnyObject]()
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation:
@@ -315,7 +315,7 @@ class Information: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
 //        for characteristic in service.characteristics {
 //            
 //            switch characteristic.characteristicType {
@@ -350,7 +350,7 @@ class Diverse: IAccessory {
     var uniqueID : NSUUID?
     var characteristicBlock : (() -> ())?
     
-    var characteristics = [String : AnyObject]()
+    var characteristics = [CharacteristicKey : AnyObject]()
     
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
@@ -361,7 +361,7 @@ class Diverse: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([String : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
         //nothing
 //        completionHandler(characteristicProperties)
     }
@@ -421,8 +421,14 @@ extension IAccessory {
     mutating func retrieveCharacteristics(service: HMService) {
         
         characteristicsForService(service, completionHandler: { characteristics in
-            print(characteristics.count, service.characteristics.count)
+            print(self.name!, characteristics.count, service.characteristics.count)
             
+            //zählen wie viele objekte rein sind und je nach typ anzahl der characteristics hinzuzählen 
+            //(aber funkt nicht, wenn Licht nur an/aus hat und keine Helligkeit)
+            
+            //counter für anzahl der objekte und je objekt service.characteristics.count
+            
+            //erkennen, wann Laden der Characteristics fertig ist
             if characteristics.count == service.characteristics.count {
                 self.characteristics = characteristics
                 
@@ -434,7 +440,7 @@ extension IAccessory {
         })
     }
     
-    func getCharacteristics() -> [String:AnyObject]? {
+    func getCharacteristics() -> [CharacteristicKey:AnyObject]? {
         if !characteristics.isEmpty {
             print(characteristics)
             return characteristics

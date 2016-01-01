@@ -20,14 +20,14 @@ class LightViewController: UIViewController, LightViewDelegate {
         }
     }
     
-    var characteristics : [String:AnyObject]? {
+    var characteristics : [CharacteristicKey:AnyObject]? {
         didSet {
             if let chars = characteristics {
                 print(chars)
                 if !chars.isEmpty {
-                    serviceName = chars.filter{ $0.0 == "name" }.first.map{ $0.1 as! String }
-                    brightness = chars.filter{ $0.0 == "brightness" }.first.map{ $0.1 as! Float }
-                    state = chars.filter{ $0.0 == "powerState" }.first.map{ $0.1 as! Bool }
+                    serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
+                    brightness = chars.filter{ $0.0 == CharacteristicKey.brightness }.first.map{ $0.1 as! Float }
+                    state = chars.filter{ $0.0 == CharacteristicKey.powerState }.first.map{ $0.1 as! Bool }
                 }
             }
         }
