@@ -71,17 +71,24 @@ class LightViewController: UIViewController, LightViewDelegate {
     // MARK: - Set Values in LightView
     
     func setCharacteristics() {
-        if let _ = serviceName {
-            
-        }
-        
+        setService(nil)
         setName(accessory?.name)
         setBrightness(brightnessValue)
         setPowerState(state)
+        
+    }
+    
+    func setService(name: String?) {
+        if let name = serviceName {
+//            lightView!.infotext!.text = name
+        } else {
+//            lightView!.infotext!.text = "Not Found"
+        }
     }
     
     func setName(name: String?) {
         if let name = name {
+            print(name)
             lightView!.infotext!.text = name
         } else {
             lightView!.infotext!.text = "Not Found"

@@ -348,12 +348,6 @@
                                                         <color key="textColor" red="0.34509803919999998" green="0.4823529412" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpO-Zg-Lv6">
-                                                        <rect key="frame" x="518" y="22" width="22" height="22"/>
-                                                        <connections>
-                                                            <action selector="addAccessory:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="mBh-OP-jJj"/>
-                                                        </connections>
-                                                    </button>
                                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="110" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Ohe-C4-0TX">
                                                         <rect key="frame" x="0.0" y="53" width="560" height="500"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -370,6 +364,14 @@
                                                                     <autoresizingMask key="autoresizingMask"/>
                                                                 </tableViewCellContentView>
                                                             </tableViewCell>
+                                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="emptyCell" id="UaY-cp-vsg">
+                                                                <rect key="frame" x="0.0" y="138" width="560" height="110"/>
+                                                                <autoresizingMask key="autoresizingMask"/>
+                                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UaY-cp-vsg" id="Vzy-ql-4DL">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="109"/>
+                                                                    <autoresizingMask key="autoresizingMask"/>
+                                                                </tableViewCellContentView>
+                                                            </tableViewCell>
                                                         </prototypes>
                                                         <variation key="default">
                                                             <mask key="constraints">
@@ -381,10 +383,25 @@
                                                             <outlet property="delegate" destination="1Ya-hT-zr4" id="FUX-MO-gVD"/>
                                                         </connections>
                                                     </tableView>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3zi-1p-Lbj">
+                                                        <rect key="frame" x="480" y="18" width="30" height="30"/>
+                                                        <state key="normal" title="@"/>
+                                                        <connections>
+                                                            <action selector="updateAccessories:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="eSa-Gb-Apy"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VpO-Zg-Lv6">
+                                                        <rect key="frame" x="518" y="22" width="22" height="22"/>
+                                                        <connections>
+                                                            <action selector="addAccessory:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="mBh-OP-jJj"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
+                                                    <constraint firstItem="VpO-Zg-Lv6" firstAttribute="leading" secondItem="3zi-1p-Lbj" secondAttribute="trailing" constant="8" id="2Zf-QX-gmK"/>
                                                     <constraint firstAttribute="bottom" secondItem="Ohe-C4-0TX" secondAttribute="bottom" constant="20" symbolic="YES" id="5QG-3m-kSW"/>
+                                                    <constraint firstItem="3zi-1p-Lbj" firstAttribute="centerY" secondItem="VpO-Zg-Lv6" secondAttribute="centerY" id="7VO-Zu-YiT"/>
                                                     <constraint firstItem="VpO-Zg-Lv6" firstAttribute="trailing" secondItem="Ohe-C4-0TX" secondAttribute="trailing" id="Ged-hT-erc"/>
                                                     <constraint firstItem="VpO-Zg-Lv6" firstAttribute="trailing" secondItem="Ohe-C4-0TX" secondAttribute="trailing" constant="-20" id="JNa-ls-6n8"/>
                                                     <constraint firstItem="GRq-s2-g5X" firstAttribute="top" secondItem="IBG-ft-Hwm" secondAttribute="top" constant="20" symbolic="YES" id="OOe-po-7Rx"/>

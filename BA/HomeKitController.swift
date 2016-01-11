@@ -24,14 +24,19 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     var primaryHome: HMHome?
     
-    var currentHomeID : NSUUID?
-    var currentRoomID : NSUUID?
-    
-    var homes = [HMHome]() {
+    var currentHomeID : NSUUID? {
         didSet {
-            
+            contextHandler?.homeID = currentHomeID
         }
     }
+    
+    var currentRoomID : NSUUID? {
+        didSet {
+            contextHandler?.roomID = currentRoomID
+        }
+    }
+    
+    var homes = [HMHome]()
     
     var rooms = [HMRoom]() {
         didSet {
@@ -113,17 +118,22 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             let localPairedAccessories: [IAccessory]? = accessories!.map{createIAccessory($0)}
             
             if let pairedAccessories = localPairedAccessories {
-                for var acc in pairedAccessories {
-                    if acc.characteristics.isEmpty {
-                        acc.characteristicBlock = { () in
-                            acc.characteristics = acc.getCharacteristics()!
-//                            print(acc.characteristics)
-                            self.pairedAccessories = pairedAccessories
-                            dispatch_async(dispatch_get_main_queue()) {
-                                completionHandler(self.pairedAccessories!)
+                if !pairedAccessories.isEmpty {
+                    for var acc in pairedAccessories {
+                        if acc.characteristics.isEmpty {
+                            acc.characteristicBlock = { () in
+                                acc.characteristics = acc.getCharacteristics()!
+                                //                            print(acc.characteristics)
+                                self.pairedAccessories = pairedAccessories
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    completionHandler(self.pairedAccessories!)
+                                }
                             }
                         }
                     }
+                } else {
+                    self.pairedAccessories = []
+                    completionHandler(self.pairedAccessories!)
                 }
             }
         }
@@ -175,9 +185,15 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             rooms += home.rooms
         }
         
+        let homeWithoutRoom = homes.filter{ $0.rooms.isEmpty }
+        
         // If one of them is still empty, create one default home and room
         if homes.isEmpty || rooms.isEmpty {
-            initialHomeSetup("Default Home",roomName: "Default Room")
+            initialHomeSetup("Default Home", roomName: "Default Room")
+        } else if !homeWithoutRoom.isEmpty {
+            for home in homeWithoutRoom {
+                initialHomeSetup(home.name, roomName: "Default Room")
+            }
         } else {
             homesAreSet()
             roomsAreSet()
@@ -217,6 +233,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             retrieveCurrentHomeAndRoom { (homeID, roomID) -> () in
                 self.contextHandler!.homeID = homeID
                 self.contextHandler!.roomID = roomID
+//                self.accessoryFactory.accessories = self.homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
             }
             
             delegate?.hasLoadedData(true)
@@ -299,17 +316,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 if let error = error {
                     print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
                 } else {
-                    // TODO
                     home!.addRoomWithName(roomName) { room, error in
                         if let error = error {
                             print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
                         } else {
+                            self.delegate?.hasCreatedDefaultHomes("Keine Daten gefunden", message: "Es wurde ein neues Zuhause mit einem neuen Raum erstellt.")
+                            
                             self.homes.append(home!)
                             self.rooms.append(room!)
                             self.homesAreSet()
                             self.roomsAreSet()
-                            
-                            self.delegate?.hasCreatedDefaultHomes("Keine Daten gefunden", message: "Es wurde ein neues Zuhause mit einem neuen Raum erstellt.")
                         }
                     }
                     self.updatePrimaryHome(home!)
@@ -323,11 +339,11 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                             if let error = error {
                                 print("Something went wrong when attempting to create our home. \(error.localizedDescription)")
                             } else {
+                                self.delegate?.hasCreatedDefaultHomes("Kein Raum im Home \(home.name) gefunden", message: "Es wurde ein neuer Raum in \(home.name) erstellt.")
+                                
                                 self.rooms.append(room!)
                                 self.homesAreSet()
                                 self.roomsAreSet()
-                                
-                                self.delegate?.hasCreatedDefaultHomes("Kein Raum gefunden", message: "Es wurde ein neuer Raum in \(home) erstellt.")
                             }
                         }
                     }

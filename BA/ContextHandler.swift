@@ -14,11 +14,32 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var accessoryStoryboard : UIStoryboard?
     var homeKitController : HomeKitController?
     
-    var homeID : NSUUID?
+    var homeID : NSUUID? {
+        didSet {
+            
+        }
+    }
     var roomID : NSUUID?
     
-    var localHomes : [Home]?
-    var localRooms : [Room]?
+    var localHomes : [Home]? {
+        didSet {
+            
+            //register notification
+            let center = NSNotificationCenter.defaultCenter()
+            let notification = NSNotification(name: "localHomes", object: self, userInfo: ["localHomes":localHomes!])
+            center.postNotification(notification)
+        }
+    }
+    
+    var localRooms : [Room]? {
+        didSet {
+            
+            //register notification
+            let center = NSNotificationCenter.defaultCenter()
+            let notification = NSNotification(name: "localRooms", object: self, userInfo: ["localRooms":localRooms!])
+            center.postNotification(notification)
+        }
+    }
     
     var viewControllerArray : [UIViewController]? = [] {
         didSet {
@@ -105,13 +126,13 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     // MARK: - Retrieve Rooms
 
     func retrieveRoom() -> String? {
-        return searchRoom(forID: homeID)
+        return searchRoom(forID: roomID) ?? "No room found"
     }
     
     func searchRoom(forID id: NSUUID?) -> String? {
         if let localRooms = localRooms {
             for rooms in localRooms {
-                if rooms.homeID == id {
+                if rooms.id == id {
                     return rooms.name
                 }
             }
@@ -134,8 +155,12 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
         var foundAccessoriesForRoom : [IAccessory]? = []
-        homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
-            foundAccessoriesForRoom = accessories
+        if (homeID != nil) && (roomID != nil) {
+            homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
+                foundAccessoriesForRoom = accessories
+            }
+        } else {
+            pairedAccessories = []
         }
         return foundAccessoriesForRoom!
     }
