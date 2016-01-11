@@ -40,7 +40,9 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     
     var viewControllerArray : [UIViewController] = [] {
         didSet {
+//            print("VCArray: \(viewControllerArray)")
             accessoriesTableView?.reloadData()
+//            accessoriesTableView?.reloadInputViews()
         }
     }
     
@@ -125,11 +127,14 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
             let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
             
             view.frame = cell.frame
-            cell.contentView.addSubview(view)
+            
+            if cell.contentView.subviews.isEmpty {
+                cell.contentView.addSubview(view)
+            }
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
+            let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
             cell.textLabel!.text = "No accessories connected"
             return cell
         }

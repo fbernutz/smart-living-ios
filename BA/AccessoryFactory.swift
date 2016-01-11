@@ -11,6 +11,8 @@ import HomeKit
 
 class AccessoryFactory {
     
+    var accessories : [HMAccessory]?
+    
     var lampService = Lamp()
     var weatherStationService = WeatherStation()
     var energyControllerService = EnergyController()
@@ -43,6 +45,10 @@ class AccessoryFactory {
         }
     }
     
+    func getHMAccessory(accessory: IAccessory) -> HMAccessory {
+        let homeKitAccessory = accessories?.filter { ($0.name == accessory.name) && ($0.uniqueIdentifier == accessory.uniqueID) }.first
+        return homeKitAccessory!
+    }
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {
 //    // sucht nach verfügbaren Services für die Accessories

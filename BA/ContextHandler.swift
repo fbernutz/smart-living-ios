@@ -20,7 +20,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var localHomes : [Home]?
     var localRooms : [Room]?
     
-    var viewControllerArray : [UIViewController]? {
+    var viewControllerArray : [UIViewController]? = [] {
         didSet {
             if viewControllerArray?.count == pairedAccessories?.count {
                 
@@ -34,23 +34,39 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     var pairedAccessories : [IAccessory]? {
         didSet {
-            if oldValue == nil {
-                viewControllerArray = retrieveViewControllerList()
-            }
+//            print(oldValue, pairedAccessories)
             
-            if let pairedAccessories = pairedAccessories, let oldValue = oldValue {
-                if pairedAccessories.count != 0 {
-                    if oldValue.count != pairedAccessories.count {
-                        
-                        //if oldValue does not contain the last paired accessory, it's a new accessory
-                        let newAccessories = oldValue.filter { $0.name == pairedAccessories.last!.name }
-                        if newAccessories.isEmpty {
-                            viewControllerArray = retrieveViewControllerList()
-                        }
-                        
-                    }
-                }
-            }
+            viewControllerArray = retrieveViewControllerList()
+            
+            //1. first time
+//            if oldValue == nil {
+//                viewControllerArray = retrieveViewControllerList()
+//                
+//            }
+//            
+//            if let pairedAccessories = pairedAccessories, let oldValue = oldValue {
+//                
+//                //2. new characteristics for paired accessory
+//                if (oldValue.count == pairedAccessories.count) && (!pairedAccessories.isEmpty) {
+//                    for accessory in pairedAccessories {
+//                        let changedAccessories = oldValue.filter { ($0.name == accessory.name) && ($0.characteristics.count != accessory.characteristics.count) }
+//                        if !changedAccessories.isEmpty {
+//                            viewControllerArray = retrieveViewControllerList()
+//                            
+//                        }
+//                    }
+//                }
+//            
+//                //3. added new accessory
+//                if (!pairedAccessories.isEmpty) && (oldValue.count != pairedAccessories.count) {
+//                    //if oldValue does not contain the last paired accessory, it's a new accessory
+//                    let newAccessories = oldValue.filter { $0.name == pairedAccessories.last!.name }
+//                    if newAccessories.isEmpty {
+//                        viewControllerArray = retrieveViewControllerList()
+//                    }
+//                    
+//                }
+//            }
         }
     }
     
@@ -125,7 +141,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     func retrieveViewControllerList() -> [UIViewController]? {
-        viewControllerArray = []
+        viewControllerArray?.removeAll()
         
         if let pairedAccessories = pairedAccessories {
             for accessory in pairedAccessories {

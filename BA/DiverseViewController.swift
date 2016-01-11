@@ -12,7 +12,25 @@ class DiverseViewController: UIViewController {
 
     @IBOutlet var diverseView: DiverseView?
     
-    var accessory : IAccessory?
+    var accessory : IAccessory? {
+        didSet {
+            if accessory?.characteristics != nil {
+                characteristics = accessory!.characteristics
+            }
+        }
+    }
+    
+    var characteristics : [CharacteristicKey:AnyObject]? {
+        didSet {
+            if let chars = characteristics {
+                if !chars.isEmpty {
+//                    serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
+//                    brightnessValue = chars.filter{ $0.0 == CharacteristicKey.brightness }.first.map{ $0.1 as! Float }
+//                    state = chars.filter{ $0.0 == CharacteristicKey.powerState }.first.map{ $0.1 as! Bool }
+                }
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

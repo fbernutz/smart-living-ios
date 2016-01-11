@@ -23,19 +23,37 @@ class LightViewController: UIViewController, LightViewDelegate {
     var characteristics : [CharacteristicKey:AnyObject]? {
         didSet {
             if let chars = characteristics {
-                print(chars)
                 if !chars.isEmpty {
+                    print("set Characteristics in VC: \((accessory?.name)!)")
                     serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
-                    brightness = chars.filter{ $0.0 == CharacteristicKey.brightness }.first.map{ $0.1 as! Float }
+                    brightnessValue = chars.filter{ $0.0 == CharacteristicKey.brightness }.first.map{ $0.1 as! Float }
                     state = chars.filter{ $0.0 == CharacteristicKey.powerState }.first.map{ $0.1 as! Bool }
                 }
             }
         }
     }
     
-    var serviceName : String?
-    var brightness : Float?
-    var state : Bool?
+    var serviceName : String? {
+        didSet {
+            if let _ = lightView {
+                setName(serviceName)
+            }
+        }
+    }
+    var brightnessValue : Float? {
+        didSet {
+            if let _ = lightView {
+                setBrightness(brightnessValue)
+            }
+        }
+    }
+    var state : Bool? {
+        didSet {
+            if let _ = lightView {
+                setPowerState(state)
+            }
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +62,7 @@ class LightViewController: UIViewController, LightViewDelegate {
         
         if let chars = characteristics {
             if !chars.isEmpty {
+                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
                 setCharacteristics()
             }
         }
@@ -52,31 +71,54 @@ class LightViewController: UIViewController, LightViewDelegate {
     // MARK: - Set Values in LightView
     
     func setCharacteristics() {
+        if let _ = serviceName {
+            
+        }
+        
         setName(accessory?.name)
-        setState(state!)
-        setSlider(brightness!)
+        setBrightness(brightnessValue)
+        setPowerState(state)
     }
     
     func setName(name: String?) {
-        lightView!.infotext!.text = name ?? "Test"
+        if let name = name {
+            lightView!.infotext!.text = name
+        } else {
+            lightView!.infotext!.text = "Not Found"
+        }
     }
     
-    func setState(state: Bool) {
-        lightView!.stateSwitch!.setOn(state, animated: false)
+    func setBrightness(value: Float?) {
+        if let value = value {
+            lightView!.slider!.value = value
+            lightView!.slider!.hidden = false
+            print("setBrightness value - \(value, lightView!.slider!.enabled)")
+        } else {
+            lightView!.slider!.value = 0
+            lightView!.slider!.hidden = true
+            print("setBrightness else - \(value, lightView!.slider!.enabled)")
+        }
     }
     
-    func setSlider(value: Float) {
-        lightView!.slider!.value = value
+    func setPowerState(state: Bool?) {
+        if let state = state {
+            lightView!.stateSwitch!.enabled = true
+            lightView!.stateSwitch!.setOn(state, animated: false)
+        } else {
+            lightView!.stateSwitch!.enabled = false
+        }
     }
     
     // MARK: - LightViewDelegate
 
     func lightViewSliderChanged(value: Float) {
         print("SliderChanged: \(Int(value))")
+//        accessory?.setCharacteristic([CharacteristicKey.brightness : value])
     }
     
     func lightViewSwitchTapped(state: Bool) {
         print("SwitchChanged: \(state)")
+//        accessory?.setCharacteristic([CharacteristicKey.powerState : state])
     }
     
 

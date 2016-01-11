@@ -51,37 +51,37 @@ class Lamp: IAccessory {
         for characteristic in service.characteristics {
             
             if characteristic.characteristicType == (HMCharacteristicTypeName as String) {
-                print("new Name")
-                
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
                         self.characteristics[CharacteristicKey.serviceName] = value as! String
-                        print(self.characteristics)
-                        completionHandler(self.characteristics)
+                        
+                        if self.characteristics.count == service.characteristics.count {
+                            completionHandler(self.characteristics)
+                        }
                     }
                 })
             }
             
             if characteristic.characteristicType == (HMCharacteristicTypeBrightness as String) {
-                print("new Brightness")
-                
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
                         self.characteristics[CharacteristicKey.brightness] = value as! Float
-                        print(self.characteristics)
-                        completionHandler(self.characteristics)
+                        
+                        if self.characteristics.count == service.characteristics.count {
+                            completionHandler(self.characteristics)
+                        }
                     }
                 })
             }
             
             if characteristic.characteristicType == (HMCharacteristicTypePowerState as String) {
-                print("new State")
-                
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
                         self.characteristics[CharacteristicKey.powerState] = value as! NSNumber
-                        print(self.characteristics)
-                        completionHandler(self.characteristics)
+                        
+                        if self.characteristics.count == service.characteristics.count {
+                            completionHandler(self.characteristics)
+                        }
                     }
                 })
             }
@@ -316,28 +316,19 @@ class Information: IAccessory {
     }
     
     func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
-//        for characteristic in service.characteristics {
-//            
-//            switch characteristic.characteristicType {
-//            case HMCharacteristicTypeName:
-//                print("Current Name")
-//                
-//                getCharacteristicValue(characteristic, completion: { value, error in
-//                    self.characteristicProperties.name = value as? String
-//                    completionHandler(self.characteristicProperties)
-//                })
-//                
-//            default:
-//                print("default")
-//                
-//                getCharacteristicValue(characteristic, completion: { value, error in
-//                    self.characteristicProperties.testVariableDefault = value
-//                    completionHandler(self.characteristicProperties)
-//                })
-//                
-//                break
-//            }
-//        }
+        for characteristic in service.characteristics {
+            if characteristic.characteristicType == (HMCharacteristicTypeName as String) {
+                getCharacteristicValue(characteristic, completion: { value, error in
+                    if let value = value {
+                        self.characteristics[CharacteristicKey.serviceName] = value as! String
+                        
+                        if self.characteristics.count == service.characteristics.count {
+                            completionHandler(self.characteristics)
+                        }
+                    }
+                })
+            }
+        }
     }
     
 }
@@ -418,17 +409,37 @@ extension IAccessory {
         }
     }
     
+    func setCharacteristic(characteristic: [CharacteristicKey : AnyObject]) {//-> (HMCharacteristic, AnyObject) {
+        let key = characteristic.map{ $0.0 }.first!
+        var value = characteristic.map{ $0.1 }.first!
+        let characteristic: HMCharacteristic?
+        
+        //find HMAccessory for IAccessory
+        
+        
+    }
+    
+    func setCharacteristicForService(characteristic: HMCharacteristic, value: AnyObject?) {
+        if characteristic.characteristicType == (HMCharacteristicTypePowerState as String) {
+            value as! Bool
+        } else if characteristic.characteristicType == (HMCharacteristicTypeBrightness as String) {
+            value as! Int
+        }
+        
+        characteristic.writeValue(value, completionHandler: { error in
+            if let error = error {
+                NSLog("Failed to update value \(error)")
+            }
+        })
+    }
+    
+    
+    
     mutating func retrieveCharacteristics(service: HMService) {
         
         characteristicsForService(service, completionHandler: { characteristics in
             print(self.name!, characteristics.count, service.characteristics.count)
             
-            //zählen wie viele objekte rein sind und je nach typ anzahl der characteristics hinzuzählen 
-            //(aber funkt nicht, wenn Licht nur an/aus hat und keine Helligkeit)
-            
-            //counter für anzahl der objekte und je objekt service.characteristics.count
-            
-            //erkennen, wann Laden der Characteristics fertig ist
             if characteristics.count == service.characteristics.count {
                 self.characteristics = characteristics
                 
@@ -442,7 +453,6 @@ extension IAccessory {
     
     func getCharacteristics() -> [CharacteristicKey:AnyObject]? {
         if !characteristics.isEmpty {
-            print(characteristics)
             return characteristics
         } else {
             return nil

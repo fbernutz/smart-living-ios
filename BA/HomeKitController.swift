@@ -9,7 +9,7 @@
 import UIKit
 import HomeKit
 
-class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDelegate {
+class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDelegate, HMAccessoryDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var contextHandler : ContextHandler?
@@ -44,7 +44,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var pairedAccessories : [IAccessory]? = [] {
         didSet {
             print("HomeKitController: \(pairedAccessories!)")
-            contextHandler?.pairedAccessories = pairedAccessories
+            contextHandler?.pairedAccessories = pairedAccessories!
         }
     }
     
@@ -110,32 +110,36 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         let accessories = homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
         
         if accessories != nil {
-            let localPairedAccessories: [IAccessory]? = accessories!.map({
-                let service = $0.services.last!
-                let name = $0.name
-                
-                var newAcc = accessoryFactory.accessoryForServices(service, name: name)!
-                newAcc.name = name
-                newAcc.uniqueID = $0.uniqueIdentifier
-                newAcc.retrieveCharacteristics(service)
-
-                return newAcc
-            })
+            let localPairedAccessories: [IAccessory]? = accessories!.map{createIAccessory($0)}
             
             if let pairedAccessories = localPairedAccessories {
                 for var acc in pairedAccessories {
                     if acc.characteristics.isEmpty {
                         acc.characteristicBlock = { () in
                             acc.characteristics = acc.getCharacteristics()!
-                            print(acc.characteristics)
+//                            print(acc.characteristics)
                             self.pairedAccessories = pairedAccessories
-                            completionHandler(self.pairedAccessories!)
+                            dispatch_async(dispatch_get_main_queue()) {
+                                completionHandler(self.pairedAccessories!)
+                            }
                         }
                     }
                 }
             }
         }
         
+    }
+    
+    func createIAccessory(homeKitAccessory: HMAccessory) -> IAccessory {
+        let service = homeKitAccessory.services.last!
+        let name = homeKitAccessory.name
+        
+        var newAcc = accessoryFactory.accessoryForServices(service, name: name)!
+        newAcc.name = name
+        newAcc.uniqueID = homeKitAccessory.uniqueIdentifier
+        newAcc.retrieveCharacteristics(service)
+        
+        return newAcc
     }
     
     //ACCESSORY LIST
@@ -375,6 +379,18 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
+    func accessory(accessory: HMAccessory, service: HMService, didUpdateValueForCharacteristic characteristic: HMCharacteristic) {
+//        if let index = service.characteristics.indexOf(characteristic) {
+//            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+//            let cell = tableView.cellForRowAtIndexPath(indexPath) as! CharacteristicCell
+//            cell.setValue(characteristic.value, notify: false)
+//        }
+        print(characteristic.value)
+        
+        //verändertes Accessory finden in pairedAccessory
+        //und dann die
+    }
+    
     func addAccessory (accessory: String, activeHomeID: NSUUID, activeRoomID: NSUUID, completionHandler: () -> () ) {
         
         let homeKitAccessory = unpairedAccessories.filter{$0.name == accessory}.first!
@@ -389,9 +405,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     if error != nil {
                         print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
                     } else {
-                        let newAccessory = self.accessoryFactory.accessoryForServices(homeKitAccessory.services.last!, name: homeKitAccessory.name)
-                        self.pairedAccessories?.append(newAccessory!)
-                        completionHandler()
+                        var newAccessory = self.createIAccessory(homeKitAccessory)
+                        
+                        if newAccessory.characteristics.isEmpty {
+                            newAccessory.characteristicBlock = { () in
+                                newAccessory.characteristics = newAccessory.getCharacteristics()!
+                                print(newAccessory.characteristics)
+                                self.pairedAccessories!.append(newAccessory)
+                                completionHandler()
+                            }
+                        }
                     }
                 })
                 
