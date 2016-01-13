@@ -52,7 +52,9 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     
     var viewControllerArray : [UIViewController] = [] {
         didSet {
-            accessoriesTableView?.reloadData()
+            dispatch_async(dispatch_get_main_queue()) {
+                self.accessoriesTableView?.reloadData()
+            }
         }
     }
     
@@ -149,24 +151,6 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        if viewControllerArray.count != 0 {
-//            let vcInRow = viewControllerArray[indexPath.row]
-//            let view = vcInRow.view
-//            let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
-//            
-//            view.frame = cell.frame
-//            
-//            if cell.contentView.subviews.isEmpty {
-//                cell.contentView.addSubview(view)
-//            }
-//            
-//            return cell
-//        } else {
-//            let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
-//            cell.textLabel!.text = "No accessories connected"
-//            return cell
-//        }
-        
         if viewControllerArray.count == 0 {
             
             let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
@@ -198,11 +182,15 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
                 break
             }
             
-            view!.frame = cell.frame
+            view!.frame = cell.contentView.frame
             
-            if cell.contentView.subviews.isEmpty {
-                cell.contentView.addSubview(view!)
+            if !cell.contentView.subviews.isEmpty {
+                for subview in cell.contentView.subviews {
+                    subview.removeFromSuperview()
+                }
             }
+            
+            cell.contentView.addSubview(view!)
             
             return cell
         }

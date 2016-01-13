@@ -99,11 +99,11 @@ class LightViewController: UIViewController, LightViewDelegate {
         if let value = value {
             lightView!.slider!.value = value
             lightView!.slider!.hidden = false
-            print("setBrightness value - \(value, lightView!.slider!.enabled)")
+            print("setBrightness value - \(value, !lightView!.slider!.hidden)")
         } else {
             lightView!.slider!.value = 0
             lightView!.slider!.hidden = true
-            print("setBrightness else - \(value, lightView!.slider!.enabled)")
+            print("setBrightness else - \(value, !lightView!.slider!.hidden)")
         }
     }
     
