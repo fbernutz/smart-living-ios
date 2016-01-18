@@ -46,8 +46,7 @@ class AccessoryFactory {
     }
     
     func getHMAccessory(accessory: IAccessory) -> HMAccessory {
-        let homeKitAccessory = accessories?.filter { ($0.name == accessory.name) && ($0.uniqueIdentifier == accessory.uniqueID) }.first
-        return homeKitAccessory!
+        return (accessories?.filter { ($0.uniqueIdentifier == accessory.uniqueID) }.first)!
     }
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {

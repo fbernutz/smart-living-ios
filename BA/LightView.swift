@@ -8,21 +8,21 @@
 
 import UIKit
 
-class LightView: UIView {
-    
-    var delegate : LightViewDelegate?
+class LightView: AccView {
     
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var slider: UISlider?
     @IBOutlet weak var icon: UIImageView?
     @IBOutlet weak var stateSwitch: UISwitch?
     
-    @IBAction func changeValueOfSlider(sender: UISlider) {
-        delegate?.lightViewSliderChanged(sender.value)
+    var delegate : AccViewDelegate?
+    
+    @IBAction override func changeValueOfSlider(sender: UISlider) {
+        delegate?.accViewSliderChanged(sender.value)
     }
     
-    @IBAction func changedValueOfSwitch(sender: UISwitch) {
-        delegate?.lightViewSwitchTapped(sender.on)
+    @IBAction override func changedValueOfSwitch(sender: UISwitch) {
+        delegate?.accViewSwitchTapped(sender.on)
     }
     
 }

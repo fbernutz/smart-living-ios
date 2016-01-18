@@ -9,9 +9,17 @@
 import Foundation
 
 enum CharacteristicKey: String {
-
+    
+    case serviceName = "serviceName"
+    
     case brightness = "brightness"
     case powerState = "powerState"
-    case serviceName = "serviceName"
+    
+    case temperature = "temperature"
+    case humidity = "humidity"
+    case pressure = "pressure"
+    
+    case doorState = "doorState"
+    case doorCounter = "doorCounter"
     
 }

@@ -8,17 +8,17 @@
 
 import UIKit
 
-class DoorWindowView: UIView {
+class DoorWindowView: AccView {
 
+    var delegate : AccViewDelegate?
+    
+    @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var stateChangedTime: UILabel?
+    @IBOutlet weak var doorStateBtn: UIButton?
     
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    @IBAction override func changeValueOfButton(sender: UIButton) {
+        delegate?.accViewButtonTapped((sender.titleLabel?.text)!)
     }
-    */
-
 }

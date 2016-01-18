@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LightViewController: UIViewController, LightViewDelegate {
+class LightViewController: UIViewController, AccViewDelegate {
     
     @IBOutlet var lightView: LightView?
     
@@ -88,7 +88,6 @@ class LightViewController: UIViewController, LightViewDelegate {
     
     func setName(name: String?) {
         if let name = name {
-            print(name)
             lightView!.infotext!.text = name
         } else {
             lightView!.infotext!.text = "Not Found"
@@ -99,11 +98,9 @@ class LightViewController: UIViewController, LightViewDelegate {
         if let value = value {
             lightView!.slider!.value = value
             lightView!.slider!.hidden = false
-            print("setBrightness value - \(value, !lightView!.slider!.hidden)")
         } else {
             lightView!.slider!.value = 0
             lightView!.slider!.hidden = true
-            print("setBrightness else - \(value, !lightView!.slider!.hidden)")
         }
     }
     
@@ -116,17 +113,19 @@ class LightViewController: UIViewController, LightViewDelegate {
         }
     }
     
-    // MARK: - LightViewDelegate
+    // MARK: - AccViewDelegate
 
-    func lightViewSliderChanged(value: Float) {
+    func accViewSliderChanged(value: Float) {
         print("SliderChanged: \(Int(value))")
 //        accessory?.setCharacteristic([CharacteristicKey.brightness : value])
     }
     
-    func lightViewSwitchTapped(state: Bool) {
+    func accViewSwitchTapped(state: Bool) {
         print("SwitchChanged: \(state)")
 //        accessory?.setCharacteristic([CharacteristicKey.powerState : state])
     }
     
+    func accViewButtonTapped(state: String) {
+    }
 
 }

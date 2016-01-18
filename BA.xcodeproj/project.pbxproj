@@ -14,6 +14,7 @@
 		3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */; };
 		3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */; };
 		3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */; };
+		3F096E171C4CE61B0015729A /* AccView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F096E161C4CE61B0015729A /* AccView.swift */; };
 		3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */; };
 		3F3566D61BF3830D0050B78C /* HomeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3566D51BF3830D0050B78C /* HomeKit.framework */; };
 		3F3B24881C2347D40037CD24 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B24871C2347D40037CD24 /* WeatherViewController.swift */; };
@@ -37,7 +38,7 @@
 		3F7232A01C206526004E7503 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72329F1C206526004E7503 /* LightView.swift */; };
 		3F7797721C36E96700F3C550 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7797711C36E96700F3C550 /* Constants.swift */; };
 		3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F84427D1BF9F53400C04B5C /* IntroViewController.swift */; };
-		3F8D91761C3546BB00DCCED3 /* LightViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */; };
+		3F8D91761C3546BB00DCCED3 /* AccViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8D91751C3546BB00DCCED3 /* AccViewDelegate.swift */; };
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
 		3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FC1C2329090031E439 /* DiverseView.swift */; };
 		3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FE1C2329170031E439 /* DiverseViewController.swift */; };
@@ -68,6 +69,7 @@
 		3F0547E31BFF55DA0061B3F0 /* Ikaros Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Light.otf"; path = "Ikaros Sans/Ikaros Light.otf"; sourceTree = "<group>"; };
 		3F0547E41BFF55DA0061B3F0 /* Ikaros Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Ikaros Regular.otf"; path = "Ikaros Sans/Ikaros Regular.otf"; sourceTree = "<group>"; };
 		3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		3F096E161C4CE61B0015729A /* AccView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccView.swift; sourceTree = "<group>"; };
 		3F0BACEB1BF0804800AF65A5 /* HomeKitController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitController.swift; sourceTree = "<group>"; };
 		3F3566D41BF3830C0050B78C /* BA.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = BA.entitlements; sourceTree = "<group>"; };
 		3F3566D51BF3830D0050B78C /* HomeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HomeKit.framework; path = System/Library/Frameworks/HomeKit.framework; sourceTree = SDKROOT; };
@@ -94,7 +96,7 @@
 		3F72329F1C206526004E7503 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
 		3F7797711C36E96700F3C550 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3F84427D1BF9F53400C04B5C /* IntroViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntroViewController.swift; sourceTree = "<group>"; };
-		3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightViewDelegate.swift; sourceTree = "<group>"; };
+		3F8D91751C3546BB00DCCED3 /* AccViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccViewDelegate.swift; sourceTree = "<group>"; };
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
 		3FA972FC1C2329090031E439 /* DiverseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseView.swift; sourceTree = "<group>"; };
 		3FA972FE1C2329170031E439 /* DiverseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseViewController.swift; sourceTree = "<group>"; };
@@ -150,6 +152,8 @@
 		3F0547E91BFF62110061B3F0 /* AccessoryViews */ = {
 			isa = PBXGroup;
 			children = (
+				3F096E161C4CE61B0015729A /* AccView.swift */,
+				3F8D91751C3546BB00DCCED3 /* AccViewDelegate.swift */,
 				3F3B24931C2348340037CD24 /* Light */,
 				3F3B24951C2348470037CD24 /* Weather */,
 				3F3B24961C23484D0037CD24 /* Energy */,
@@ -205,7 +209,6 @@
 			children = (
 				3F6A956E1C197CFC0095CC06 /* LightViewController.swift */,
 				3F72329F1C206526004E7503 /* LightView.swift */,
-				3F8D91751C3546BB00DCCED3 /* LightViewDelegate.swift */,
 			);
 			name = Light;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */,
 				3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */,
 				3F7797721C36E96700F3C550 /* Constants.swift in Sources */,
+				3F096E171C4CE61B0015729A /* AccView.swift in Sources */,
 				3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */,
 				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
@@ -397,7 +401,7 @@
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
-				3F8D91761C3546BB00DCCED3 /* LightViewDelegate.swift in Sources */,
+				3F8D91761C3546BB00DCCED3 /* AccViewDelegate.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3B24901C2348240037CD24 /* EnergyView.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,

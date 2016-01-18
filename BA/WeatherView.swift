@@ -8,17 +8,12 @@
 
 import UIKit
 
-class WeatherView: UIView {
-
+class WeatherView: AccView {
+    
     @IBOutlet weak var humidity: UILabel?
     @IBOutlet weak var pressure: UILabel?
+    @IBOutlet weak var temperature: UILabel?
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
-    }
-    */
-
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
+    
 }

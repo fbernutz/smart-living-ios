@@ -8,17 +8,16 @@
 
 import UIKit
 
-class EnergyView: UIView {
-
-    @IBOutlet weak var powerConsumption: UILabel?
+class EnergyView: AccView {
     
+    @IBOutlet weak var infotext: UILabel?
+    @IBOutlet weak var powerConsumptionText: UILabel?
+    @IBOutlet weak var powerState: UISwitch?
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    override func drawRect(rect: CGRect) {
-        // Drawing code
+    var delegate : AccViewDelegate?
+    
+    @IBAction override func changedValueOfSwitch(sender: UISwitch) {
+        delegate?.accViewSwitchTapped(sender.on)
     }
-    */
-
 }
