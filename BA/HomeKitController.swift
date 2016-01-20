@@ -160,6 +160,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         newAcc.uniqueID = homeKitAccessory.uniqueIdentifier
         newAcc.retrieveCharacteristics(service!)
         
+        homeKitAccessory.delegate = self
+        
         return newAcc
     }
     
