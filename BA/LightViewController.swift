@@ -60,10 +60,13 @@ class LightViewController: UIViewController, AccViewDelegate {
         
         lightView!.delegate = self
         
+        lightView!.loadingIndicator!.startAnimating()
+        
         if let chars = characteristics {
             if !chars.isEmpty {
                 print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
                 setCharacteristics()
+                lightView!.loadingIndicator!.stopAnimating()
             }
         }
     }
