@@ -9,7 +9,7 @@
 import UIKit
 
 class DiverseViewController: UIViewController {
-
+    
     @IBOutlet var diverseView: DiverseView?
     
     var accessory : IAccessory? {
@@ -24,24 +24,61 @@ class DiverseViewController: UIViewController {
         didSet {
             if let chars = characteristics {
                 if !chars.isEmpty {
-//                    serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
-//                    brightnessValue = chars.filter{ $0.0 == CharacteristicKey.brightness }.first.map{ $0.1 as! Float }
-//                    state = chars.filter{ $0.0 == CharacteristicKey.powerState }.first.map{ $0.1 as! Bool }
+                    print("set Characteristics in VC: \((accessory?.name)!)")
+                    serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
                 }
             }
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        diverseView!.infotext?.text = accessory?.name ?? "Test"
+    var serviceName : String? {
+        didSet {
+            if let _ = diverseView {
+                setName(serviceName)
+            }
+        }
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        diverseView!.loadingIndicator!.startAnimating()
+        
+        if let chars = characteristics {
+            if !chars.isEmpty {
+                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
+                setCharacteristics()
+                diverseView!.loadingIndicator!.stopAnimating()
+            }
+        }
+    }
+    
+    // MARK: - Set Values in LightView
+    
+    func setCharacteristics() {
+        setService(serviceName)
+        setName(accessory?.name)
+    }
+    
+    func setService(name: String?) {
+        if let _ = serviceName {
+            diverseView!.serviceName!.text = name
+        } else {
+            diverseView!.serviceName!.text = "Not Found"
+        }
+    }
+    
+    func setName(name: String?) {
+        if let name = name {
+            diverseView!.infotext!.text = name
+        } else {
+            diverseView!.infotext!.text = "Not Found"
+        }
     }
     
 }

@@ -20,6 +20,5 @@ enum CharacteristicKey: String {
     case pressure = "pressure"
     
     case doorState = "doorState"
-    case doorCounter = "doorCounter"
     
 }

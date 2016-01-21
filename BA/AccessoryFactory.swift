@@ -25,9 +25,9 @@ class AccessoryFactory {
     func accessoryForServices(service: HMService, name: String?) -> IAccessory? {
         arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, informationService, diverseService]
         
-        let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service, name: name) }.first
+        let canHandleServiceAccessory = arrayOfTypes!.filter{ $0.canHandle(service, name: name) }.first
         
-        //new instance of type
+        //create a new instance of this type
         switch canHandleServiceAccessory {
         case is Lamp:
             return Lamp()
@@ -43,10 +43,6 @@ class AccessoryFactory {
             return Diverse()
         default: return nil
         }
-    }
-    
-    func getHMAccessory(accessory: IAccessory) -> HMAccessory {
-        return (accessories?.filter { ($0.uniqueIdentifier == accessory.uniqueID) }.first)!
     }
     
 //    func serviceForAccessory(accessory: IAccessory) -> HMService? {

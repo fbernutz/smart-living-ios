@@ -1,6 +1,6 @@
 //
 //  AccessoryViewController.swift
-//  HomeKit01
+//  BA
 //
 //  Created by Felizia Bernutz on 22.05.15.
 //  Copyright (c) 2015 Felizia Bernutz. All rights reserved.
@@ -12,20 +12,16 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     
     var contextHandler: ContextHandler?
     var controller : HomeKitController?
-    var searchingTitle = "Searching..."
-    var discoveredTitle = "Discovered"
+    
+    let searchingTitle = "Searching..."
+    let discoveredTitle = "Discovered"
     
     var tempArray: [String] = []
     
-    var accessoryList : [String]? {
+    var accessoryList : [String] = [] {
         didSet {
             tableView?.reloadData()
         }
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
     }
     
     override func viewDidLoad() {

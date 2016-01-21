@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DoorWindowViewController: UIViewController, AccViewDelegate {
+class DoorWindowViewController: UIViewController {
 
     @IBOutlet var doorWindowView: DoorWindowView?
  
@@ -65,8 +65,6 @@ class DoorWindowViewController: UIViewController, AccViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        doorWindowView!.delegate = self
-        
         doorWindowView!.loadingIndicator!.startAnimating()
         
         if let chars = characteristics {
@@ -88,7 +86,7 @@ class DoorWindowViewController: UIViewController, AccViewDelegate {
     }
     
     func setService(name: String?) {
-        if let name = serviceName {
+        if let _ = serviceName {
             //            lightView!.infotext!.text = name
         } else {
             //            lightView!.infotext!.text = "Not Found"
@@ -123,18 +121,6 @@ class DoorWindowViewController: UIViewController, AccViewDelegate {
         } else {
             doorWindowView!.stateChangedTime?.text = "Not found"
         }
-    }
-    
-    
-    // MARK: - AccViewDelegate
-    
-    func accViewSliderChanged(value: Float) {
-    }
-    
-    func accViewSwitchTapped(state: Bool) {
-    }
-    
-    func accViewButtonTapped(state: String) {
     }
 
 }

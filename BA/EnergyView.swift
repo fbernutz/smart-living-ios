@@ -10,12 +10,13 @@ import UIKit
 
 class EnergyView: AccView {
     
+    var delegate : AccViewDelegate?
+    
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var powerConsumptionText: UILabel?
     @IBOutlet weak var powerState: UISwitch?
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     
-    var delegate : AccViewDelegate?
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     
     @IBAction override func changedValueOfSwitch(sender: UISwitch) {
         delegate?.accViewSwitchTapped(sender.on)

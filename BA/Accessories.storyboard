@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -206,7 +206,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hwK-d3-dHx">
                                         <rect key="frame" x="450" y="0.0" width="150" height="150"/>
                                         <subviews>
-                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aao-qh-Mmr">
+                                            <switch hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Aao-qh-Mmr">
                                                 <rect key="frame" x="51" y="60" width="51" height="31"/>
                                                 <connections>
                                                     <action selector="changedValueOfSwitch:" destination="8Xn-Nb-P5S" eventType="valueChanged" id="HEh-ru-pdF"/>
@@ -341,9 +341,6 @@
                                         <rect key="frame" x="450" y="0.0" width="150" height="150"/>
                                         <fontDescription key="fontDescription" name="Ikaros-Regular" family="Ikaros Sans" pointSize="26"/>
                                         <state key="normal" title=" "/>
-                                        <connections>
-                                            <action selector="changeValueOfButton:" destination="VM4-y7-by2" eventType="touchUpInside" id="tXT-B0-tYW"/>
-                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -519,10 +516,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CcV-Ae-yfY">
-                                <rect key="frame" x="20" y="270" width="560" height="61"/>
+                                <rect key="frame" x="20" y="255.5" width="560" height="89"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VIY-RP-oSK">
-                                        <rect key="frame" x="20" y="20" width="520" height="21"/>
+                                        <rect key="frame" x="20" y="20" width="520" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZWo-cF-8Jt">
+                                        <rect key="frame" x="20" y="48.5" width="520" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -530,22 +533,59 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="VIY-RP-oSK" secondAttribute="trailing" constant="20" symbolic="YES" id="FVd-NV-J4Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="ZWo-cF-8Jt" secondAttribute="trailing" constant="20" symbolic="YES" id="IhW-Me-vTW"/>
                                     <constraint firstAttribute="trailing" secondItem="VIY-RP-oSK" secondAttribute="trailing" constant="20" symbolic="YES" id="JZq-dd-wOP"/>
+                                    <constraint firstItem="VIY-RP-oSK" firstAttribute="top" secondItem="CcV-Ae-yfY" secondAttribute="top" constant="20" symbolic="YES" id="JhB-0y-SHK"/>
                                     <constraint firstItem="VIY-RP-oSK" firstAttribute="top" secondItem="CcV-Ae-yfY" secondAttribute="top" constant="20" symbolic="YES" id="Lek-2C-dNR"/>
+                                    <constraint firstItem="ZWo-cF-8Jt" firstAttribute="leading" secondItem="CcV-Ae-yfY" secondAttribute="leading" constant="20" symbolic="YES" id="NvD-IF-K8m"/>
+                                    <constraint firstItem="ZWo-cF-8Jt" firstAttribute="trailing" secondItem="VIY-RP-oSK" secondAttribute="trailing" id="O9j-dc-aT6"/>
                                     <constraint firstAttribute="bottom" secondItem="VIY-RP-oSK" secondAttribute="bottom" constant="20" symbolic="YES" id="Oqe-8S-0BK"/>
+                                    <constraint firstItem="ZWo-cF-8Jt" firstAttribute="leading" secondItem="VIY-RP-oSK" secondAttribute="leading" id="Oth-BI-44U"/>
+                                    <constraint firstItem="VIY-RP-oSK" firstAttribute="leading" secondItem="CcV-Ae-yfY" secondAttribute="leading" constant="20" symbolic="YES" id="QCd-cV-0XI"/>
+                                    <constraint firstAttribute="bottom" secondItem="ZWo-cF-8Jt" secondAttribute="bottom" constant="20" symbolic="YES" id="gOC-Z3-p6v"/>
+                                    <constraint firstItem="ZWo-cF-8Jt" firstAttribute="top" secondItem="VIY-RP-oSK" secondAttribute="bottom" constant="8" symbolic="YES" id="mze-g0-eLO"/>
+                                    <constraint firstItem="VIY-RP-oSK" firstAttribute="bottom" secondItem="ZWo-cF-8Jt" secondAttribute="top" constant="8" symbolic="YES" id="stb-6h-DAo"/>
                                     <constraint firstItem="VIY-RP-oSK" firstAttribute="leading" secondItem="CcV-Ae-yfY" secondAttribute="leading" constant="20" symbolic="YES" id="umc-sv-Kyv"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="JZq-dd-wOP"/>
+                                        <exclude reference="Lek-2C-dNR"/>
+                                        <exclude reference="Oqe-8S-0BK"/>
+                                        <exclude reference="stb-6h-DAo"/>
+                                        <exclude reference="umc-sv-Kyv"/>
+                                        <exclude reference="O9j-dc-aT6"/>
+                                        <exclude reference="Oth-BI-44U"/>
+                                    </mask>
+                                </variation>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="yn4-0B-Ztw">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                                <color key="color" red="0.15686274510000001" green="0.32156862749999998" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="CcV-Ae-yfY" secondAttribute="trailing" id="2cd-ir-Z2N"/>
+                            <constraint firstItem="CcV-Ae-yfY" firstAttribute="centerX" secondItem="RO5-tz-FuA" secondAttribute="centerX" id="A7t-FA-jId"/>
+                            <constraint firstItem="CcV-Ae-yfY" firstAttribute="centerY" secondItem="RO5-tz-FuA" secondAttribute="centerY" id="AKy-De-fTu"/>
                             <constraint firstItem="CcV-Ae-yfY" firstAttribute="centerX" secondItem="RO5-tz-FuA" secondAttribute="centerX" id="DLh-me-L6w"/>
                             <constraint firstItem="CcV-Ae-yfY" firstAttribute="centerY" secondItem="RO5-tz-FuA" secondAttribute="centerY" id="Suq-x8-8J6"/>
+                            <constraint firstItem="yn4-0B-Ztw" firstAttribute="centerY" secondItem="CcV-Ae-yfY" secondAttribute="centerY" id="bpo-zf-Kia"/>
+                            <constraint firstItem="yn4-0B-Ztw" firstAttribute="centerX" secondItem="CcV-Ae-yfY" secondAttribute="centerX" id="cnq-An-V5w"/>
                             <constraint firstItem="CcV-Ae-yfY" firstAttribute="leading" secondItem="RO5-tz-FuA" secondAttribute="leadingMargin" id="say-cr-f7R"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="DLh-me-L6w"/>
+                                <exclude reference="Suq-x8-8J6"/>
+                            </mask>
+                        </variation>
                         <connections>
                             <outlet property="infotext" destination="VIY-RP-oSK" id="L1R-VA-hZR"/>
+                            <outlet property="loadingIndicator" destination="yn4-0B-Ztw" id="sdB-Lm-Wd7"/>
+                            <outlet property="serviceName" destination="ZWo-cF-8Jt" id="Ezo-Cz-Pqh"/>
                         </connections>
                     </view>
                     <connections>

@@ -9,8 +9,6 @@
 import UIKit
 
 class DoorWindowView: AccView {
-
-    var delegate : AccViewDelegate?
     
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var stateChangedTime: UILabel?
@@ -18,7 +16,4 @@ class DoorWindowView: AccView {
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     
-    @IBAction override func changeValueOfButton(sender: UIButton) {
-        delegate?.accViewButtonTapped((sender.titleLabel?.text)!)
-    }
 }

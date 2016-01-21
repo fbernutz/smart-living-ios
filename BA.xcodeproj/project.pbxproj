@@ -24,7 +24,6 @@
 		3F3B24901C2348240037CD24 /* EnergyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B248F1C2348240037CD24 /* EnergyView.swift */; };
 		3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3B24911C2348300037CD24 /* DoorWindowView.swift */; };
 		3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */; };
-		3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */; };
 		3F3DB8221BBE750800854DE5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8201BBE750800854DE5 /* Main.storyboard */; };
 		3F3DB8251BBE750800854DE5 /* BA.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */; };
 		3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F3DB8261BBE750800854DE5 /* Assets.xcassets */; };
@@ -81,7 +80,6 @@
 		3F3B24911C2348300037CD24 /* DoorWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorWindowView.swift; sourceTree = "<group>"; };
 		3F3DB8191BBE750800854DE5 /* BA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BA.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverviewViewController.swift; sourceTree = "<group>"; };
 		3F3DB8211BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F3DB8241BBE750800854DE5 /* BA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BA.xcdatamodel; sourceTree = "<group>"; };
 		3F3DB8261BBE750800854DE5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -177,7 +175,6 @@
 				3F0547E91BFF62110061B3F0 /* AccessoryViews */,
 				3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */,
 				3F84427D1BF9F53400C04B5C /* IntroViewController.swift */,
-				3F3DB81E1BBE750800854DE5 /* OverviewViewController.swift */,
 				3FEB51CC1C07345D00715FDD /* DiscoveryViewController.swift */,
 				3F0254B41C29904D002F6B3E /* ImprintViewController.swift */,
 				3F0254B61C29907A002F6B3E /* FAQViewController.swift */,
@@ -391,7 +388,6 @@
 				3F7797721C36E96700F3C550 /* Constants.swift in Sources */,
 				3F096E171C4CE61B0015729A /* AccView.swift in Sources */,
 				3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */,
-				3F3DB81F1BBE750800854DE5 /* OverviewViewController.swift in Sources */,
 				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
 				3F3B248E1C2348180037CD24 /* WeatherView.swift in Sources */,
 				3F0254B51C29904D002F6B3E /* ImprintViewController.swift in Sources */,
@@ -471,6 +467,8 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -510,6 +508,8 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_LABEL = YES;
+				GCC_WARN_UNUSED_PARAMETER = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

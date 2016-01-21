@@ -31,7 +31,6 @@ class WeatherViewController: UIViewController {
                     pressure = chars.filter{ $0.0 == CharacteristicKey.pressure }.first.map{ $0.1 as! Float }
                     humidity = chars.filter{ $0.0 == CharacteristicKey.humidity }.first.map{ $0.1 as! Float }
                     temp = chars.filter{ $0.0 == CharacteristicKey.temperature }.first.map{ $0.1 as! Float }
-                    
                 }
             }
         }
@@ -94,7 +93,7 @@ class WeatherViewController: UIViewController {
     }
     
     func setService(name: String?) {
-        if let name = serviceName {
+        if let _ = serviceName {
             //            lightView!.infotext!.text = name
         } else {
             //            lightView!.infotext!.text = "Not Found"
@@ -103,7 +102,7 @@ class WeatherViewController: UIViewController {
     
     func setName(name: String?) {
         if let name = name {
-            weatherView?.humidity?.text = accessory?.name
+            weatherView?.humidity?.text = name
         } else {
             weatherView?.humidity?.text = "Not Found"
         }

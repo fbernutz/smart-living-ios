@@ -24,6 +24,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     }
     
     @IBAction func updateAccessories(sender: UIButton) {
+        //TODO:
 //        contextHandler!.retrieveViewControllerList()
         accessoriesTableView?.reloadData()
     }
@@ -73,8 +74,8 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         
         spinner?.startAnimating()
         
-        //    listen for notification
         
+        //    listen for notification
         let center = NSNotificationCenter.defaultCenter()
         let queue = NSOperationQueue.mainQueue()
         
@@ -102,7 +103,7 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     
     func hasLoadedData(status: Bool) {
         if status == true {
-            print("loading successful")
+            print("homekit structure loading successful")
             
             loadData()
             

@@ -84,7 +84,7 @@ class LightViewController: UIViewController, AccViewDelegate {
     }
     
     func setService(name: String?) {
-        if let name = serviceName {
+        if let _ = serviceName {
 //            lightView!.infotext!.text = name
         } else {
 //            lightView!.infotext!.text = "Not Found"

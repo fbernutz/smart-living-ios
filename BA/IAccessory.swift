@@ -9,57 +9,11 @@
 import UIKit
 import HomeKit
 
-let EveServiceType = "E863F007-079E-48FF-8F27-9C2605A29F52"
-//3 Services von Eve in HomeKitApp
-//00000043-0000-1000-8000-0026BB765291
-//00000043-0000-1000-8000-0026BB765291
-//E863F007-079E-48FF-8F27-9C2605A29F52
 
-let EveCharacteristic1 = "E863F11C-079E-48FF-8F27-9C2605A29F52"
-let EveCharacteristic2 = "E863F121-079E-48FF-8F27-9C2605A29F52"
-let EveCharacteristic3 = "E863F116-079E-48FF-8F27-9C2605A29F52"
-let EveCharacteristic4 = "E863F117-079E-48FF-8F27-9C2605A29F52"
+let EveEnergy = HMServiceTypeOutlet
+let EveWeather = "E863F001-079E-48FF-8F27-9C2605A29F52"
+let EveDoorWindow = "E863F003-079E-48FF-8F27-9C2605A29F52"
 
-//EVE ENERGY 3 service types
-//0000003E-0000-1000-8000-0026BB765291 -> HMServiceTypeAccessoryInformation
-//00000047-0000-1000-8000-0026BB765291 -> HMServiceTypeOutlet
-//E863F007-079E-48FF-8F27-9C2605A29F52 -> siehe andere
-
-//Characteristics für den 2. Service
-//Eve Energy: E863F11E-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F112-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: 00000025-0000-1000-8000-0026BB765291 // -> HMCharacteristicTypePowerState
-//Eve Energy: 00000026-0000-1000-8000-0026BB765291 // -> HMCharacteristicTypeOutletInUse
-//Eve Energy: E863F10A-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F126-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F10D-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F110-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F10C-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F127-079E-48FF-8F27-9C2605A29F52
-//Eve Energy: E863F10E-079E-48FF-8F27-9C2605A29F52
-
-//EVE DOOR 3 service types
-//0000003E-0000-1000-8000-0026BB765291 -> HMServiceTypeAccessoryInformation
-//E863F003-079E-48FF-8F27-9C2605A29F52
-//E863F007-079E-48FF-8F27-9C2605A29F52 -> siehe andere
-
-
-//EVE WEATHER 3 service types
-//0000003E-0000-1000-8000-0026BB765291 -> HMServiceTypeAccessoryInformation
-//E863F001-079E-48FF-8F27-9C2605A29F52
-//E863F007-079E-48FF-8F27-9C2605A29F52 -> siehe andere
-
-//Characteristics
-//Eve Weather: E863F11E-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: E863F112-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: E863F11B-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: 00000011-0000-1000-8000-0026BB765291 -> Temperatur
-//Eve Weather: E863F111-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: E863F124-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: 00000010-0000-1000-8000-0026BB765291 -> Luftfeuchtigkeit
-//Eve Weather: E863F12A-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: E863F12B-079E-48FF-8F27-9C2605A29F52
-//Eve Weather: E863F10F-079E-48FF-8F27-9C2605A29F52
 
 protocol IAccessory {
     var name : String? { get set }
@@ -68,7 +22,7 @@ protocol IAccessory {
     var characteristicBlock : (() -> ())? { get set }
     
     func canHandle(service: HMService, name: String?) -> Bool
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () )
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () )
 }
 
 // MARK: - Lamp
@@ -77,8 +31,8 @@ class Lamp: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    var characteristicBlock : (() -> ())?
     var characteristics = [CharacteristicKey : AnyObject]()
+    var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService, name: String?) -> Bool {
         if service.serviceType == HMServiceTypeLightbulb {
@@ -88,7 +42,7 @@ class Lamp: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
         
         characteristics.removeAll()
         
@@ -140,14 +94,14 @@ class WeatherStation: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    var characteristicBlock : (() -> ())?
     var characteristics = [CharacteristicKey : AnyObject]()
+    var characteristicBlock : (() -> ())?
     var charCounter = 0
     
     func canHandle(service: HMService, name: String?) -> Bool {
         
         switch service.serviceType {
-        case "E863F001-079E-48FF-8F27-9C2605A29F52":
+        case EveWeather:
             if name == "Eve Weather" {
                 return true
             } else {
@@ -159,13 +113,11 @@ class WeatherStation: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
         
         characteristics.removeAll()
         
         for characteristic in service.characteristics {
-            
-//            print("Eve Weather: \(characteristic.characteristicType)")
             
             if characteristic.characteristicType == (HMCharacteristicTypeCurrentTemperature as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
@@ -222,7 +174,7 @@ class EnergyController: IAccessory {
     
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
-        case HMServiceTypeOutlet:
+        case EveEnergy:
             if name == "Eve Energy" {
                 return true
             } else {
@@ -233,13 +185,11 @@ class EnergyController: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
         
         characteristics.removeAll()
         
         for characteristic in service.characteristics {
-            
-//            print("Eve Energy: \(characteristic.characteristicType)")
             
             if characteristic.characteristicType == (HMCharacteristicTypePowerState as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
@@ -250,7 +200,6 @@ class EnergyController: IAccessory {
                 })
             }
         }
-        
     }
     
 }
@@ -261,14 +210,14 @@ class DoorWindowSensor: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
-    var characteristicBlock : (() -> ())?
     var characteristics = [CharacteristicKey : AnyObject]()
+    var characteristicBlock : (() -> ())?
     
     func canHandle(service: HMService, name: String?) -> Bool {
         
         switch service.serviceType {
             
-        case "E863F003-079E-48FF-8F27-9C2605A29F52":
+        case EveDoorWindow:
             if name == "Eve Door" {
                 return true
             } else {
@@ -280,13 +229,11 @@ class DoorWindowSensor: IAccessory {
         
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
         
         characteristics.removeAll()
         
         for characteristic in service.characteristics {
-            
-            print("Eve Door: \(characteristic.characteristicType)")
             
             if characteristic.characteristicType == (HMCharacteristicTypeCurrentDoorState as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
@@ -317,9 +264,9 @@ class Information: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    var characteristics = [CharacteristicKey : AnyObject]()
     func canHandle(service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation:
@@ -329,8 +276,12 @@ class Information: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+        
+        characteristics.removeAll()
+        
         for characteristic in service.characteristics {
+            
             if characteristic.characteristicType == (HMCharacteristicTypeName as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
@@ -342,6 +293,7 @@ class Information: IAccessory {
                     }
                 })
             }
+            
         }
     }
     
@@ -353,12 +305,10 @@ class Diverse: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    var characteristics = [CharacteristicKey : AnyObject]()
-    
     func canHandle(service: HMService, name: String?) -> Bool {
-        print(service.serviceType)
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation, HMServiceTypeHumiditySensor, HMServiceTypeLightbulb, HMServiceTypeSwitch, HMServiceTypeTemperatureSensor, HMServiceTypeOutlet:
             return false
@@ -367,8 +317,10 @@ class Diverse: IAccessory {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: ([CharacteristicKey : AnyObject]) -> () ) {
-        //nothing
+    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+        characteristics.removeAll()
+        characteristics[CharacteristicKey.serviceName] = service.name
+        completionHandler(self.characteristics)
     }
     
 }
@@ -423,19 +375,6 @@ extension IAccessory {
             }
         }
     }
-    
-//    func setCharacteristic(characteristic: HMCharacteristic, value: AnyObject?){
-//        
-//        characteristic.writeValue(value, completionHandler: { error in
-//            if let error = error {
-//                NSLog("Failed to update value \(error)")
-//            }
-//        })
-//        
-////        self.characteristics[CharacteristicKey.doorState] = value as! Bool
-//        
-//    }
-    
     
     mutating func retrieveCharacteristics(service: HMService) {
         

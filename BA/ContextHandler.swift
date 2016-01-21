@@ -14,16 +14,11 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var accessoryStoryboard : UIStoryboard?
     var homeKitController : HomeKitController?
     
-    var homeID : NSUUID? {
-        didSet {
-            
-        }
-    }
+    var homeID : NSUUID?
     var roomID : NSUUID?
     
     var localHomes : [Home]? {
         didSet {
-            
             //register notification
             let center = NSNotificationCenter.defaultCenter()
             let notification = NSNotification(name: "localHomes", object: self, userInfo: ["localHomes":localHomes!])
@@ -33,7 +28,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     var localRooms : [Room]? {
         didSet {
-            
             //register notification
             let center = NSNotificationCenter.defaultCenter()
             let notification = NSNotification(name: "localRooms", object: self, userInfo: ["localRooms":localRooms!])
@@ -44,7 +38,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     var viewControllerArray : [UIViewController]? = [] {
         didSet {
             if viewControllerArray?.count == pairedAccessories?.count {
-                
                 //register notification
                 let center = NSNotificationCenter.defaultCenter()
                 let notification = NSNotification(name: "vcArray", object: self, userInfo: ["VCArray":viewControllerArray!])
@@ -55,39 +48,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     var pairedAccessories : [IAccessory]? {
         didSet {
-//            print(oldValue, pairedAccessories)
-            
             viewControllerArray = retrieveViewControllerList()
-            
-            //1. first time
-//            if oldValue == nil {
-//                viewControllerArray = retrieveViewControllerList()
-//                
-//            }
-//            
-//            if let pairedAccessories = pairedAccessories, let oldValue = oldValue {
-//                
-//                //2. new characteristics for paired accessory
-//                if (oldValue.count == pairedAccessories.count) && (!pairedAccessories.isEmpty) {
-//                    for accessory in pairedAccessories {
-//                        let changedAccessories = oldValue.filter { ($0.name == accessory.name) && ($0.characteristics.count != accessory.characteristics.count) }
-//                        if !changedAccessories.isEmpty {
-//                            viewControllerArray = retrieveViewControllerList()
-//                            
-//                        }
-//                    }
-//                }
-//            
-//                //3. added new accessory
-//                if (!pairedAccessories.isEmpty) && (oldValue.count != pairedAccessories.count) {
-//                    //if oldValue does not contain the last paired accessory, it's a new accessory
-//                    let newAccessories = oldValue.filter { $0.name == pairedAccessories.last!.name }
-//                    if newAccessories.isEmpty {
-//                        viewControllerArray = retrieveViewControllerList()
-//                    }
-//                    
-//                }
-//            }
         }
     }
     
@@ -111,15 +72,13 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     func searchHome(forID id: NSUUID) -> String {
+        
         if let localHomes = localHomes {
-            for homes in localHomes {
-                if homes.id == id {
-                    return homes.name!
-                }
-            }
+            let homeName = localHomes.filter{ $0.id == id }.first!.name
+            return homeName!
         }
         
-        return ""
+        return "No home found"
     }
     
     
@@ -130,13 +89,12 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     func searchRoom(forID id: NSUUID?) -> String? {
+        
         if let localRooms = localRooms {
-            for rooms in localRooms {
-                if rooms.id == id {
-                    return rooms.name
-                }
-            }
+            let roomName = localRooms.filter{ $0.id == id }.first!.name
+            return roomName!
         }
+        
         return nil
     }
     
@@ -228,7 +186,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Add new accessory
     
-    func addAccessory(accessory: String, completionHandler: () -> () ) {
+    func addNewAccessory(accessory: String, completionHandler: () -> () ) {
         homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!, completionHandler: completionHandler)
     }
     

@@ -80,7 +80,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     }
     
     func setService(name: String?) {
-        if let name = serviceName {
+        if let _ = serviceName {
             //            lightView!.infotext!.text = name
         } else {
             //            lightView!.infotext!.text = "Not Found"
@@ -89,7 +89,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     
     func setName(name: String?) {
         if let name = name {
-            energyView!.infotext!.text = accessory?.name
+            energyView!.infotext!.text = name
         } else {
             energyView!.infotext!.text = "Not Found"
         }
@@ -97,9 +97,11 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     
     func setPowerState(state: Bool?) {
         if let state = state {
+            energyView!.powerState!.hidden = false
             energyView!.powerState!.enabled = true
             energyView!.powerState!.setOn(state, animated: false)
         } else {
+            energyView!.powerState!.hidden = true
             energyView!.powerState!.enabled = false
         }
     }
