@@ -11,7 +11,9 @@ import UIKit
 class WeatherViewController: UIViewController {
 
     @IBOutlet var weatherView: WeatherView?
-
+    
+    var contextHandler: ContextHandler?
+    
     var accessory : IAccessory? {
         didSet {
             if accessory?.characteristics != nil {

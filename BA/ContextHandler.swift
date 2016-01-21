@@ -123,7 +123,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     
-    // MARK: - Retrieve Rooms
+    // MARK: - Retrieve rooms
 
     func retrieveRoom() -> String? {
         return searchRoom(forID: roomID) ?? "No room found"
@@ -141,7 +141,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     }
     
     
-    // MARK: - Retrieve paired accessories
+    // MARK: - Retrieve paired accessories for room
     
     func retrieveAccessories() -> [IAccessory]? {
         let accessoriesInRoom = searchAccessoriesForRoom(homeID, roomID: roomID)
@@ -182,6 +182,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         case is Lamp:
             let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as? LightViewController
             controller!.accessory = accessory
+            controller!.contextHandler = self
             viewControllerArray?.append(controller!)
             break
         case is WeatherStation:
@@ -192,6 +193,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         case is EnergyController:
             let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as? EnergyViewController
             controller!.accessory = accessory
+            controller!.contextHandler = self
             viewControllerArray?.append(controller!)
             break
         case is DoorWindowSensor:

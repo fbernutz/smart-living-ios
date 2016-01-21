@@ -22,6 +22,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     lazy var homeHelper = HomeHelper()
     lazy var accessoryFactory = AccessoryFactory()
     var services = [HMService]()
+    var dictKeyToHomeKitType: [CharacteristicKey : String]?
     
     var primaryHome: HMHome?
     
@@ -74,6 +75,13 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         homeManager.delegate = self
         accessoryBrowser.delegate = self
         homeHelper.homeKitController = self
+        
+        dictKeyToHomeKitType = [.brightness : HMCharacteristicTypeBrightness,
+            .powerState : HMCharacteristicTypePowerState,
+            .serviceName : HMCharacteristicTypeName,
+            .temperature : HMCharacteristicTypeTemperatureUnits,
+            .humidity : HMCharacteristicTypeTargetRelativeHumidity,
+            .doorState : HMCharacteristicTypeTargetDoorState]
     }
     
     // MARK: - Start and stop searching for new accessories
@@ -111,6 +119,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             accessoryBlock = { () in self.getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)}
         }
     }
+    
+    //MARK: IAccessory
     
     private func getIAccessories(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
         homeKitAccessories = homes.filter({ $0.uniqueIdentifier == homeID }).first?.rooms.filter({ $0.uniqueIdentifier == roomID }).first?.accessories
@@ -165,7 +175,16 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         return newAcc
     }
     
-    //ACCESSORY LIST
+    private func getIAccessory(accessory: HMAccessory) -> IAccessory {
+        return (pairedAccessories?.filter{ $0.uniqueID == accessory.uniqueIdentifier }.first)!
+    }
+    
+    func getHMAccessory(accessory: IAccessory) -> HMAccessory {
+        return (homeKitAccessories?.filter{ ($0.uniqueIdentifier == accessory.uniqueID) }.first)!
+    }
+    
+    
+    //MARK: Accessory List
     
     func retrieveNewAccessories(completionHandler : ([IAccessory]) -> ()) {
         if !unpairedAccessories.isEmpty {
@@ -176,7 +195,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     func getNewIAccessories(completionHandler : ([IAccessory]) -> ()) {
-        let arrayOfIAccessories = unpairedAccessories.map({ accessoryFactory.accessoryForServices($0.services[1], name: $0.name)! })
+        let arrayOfIAccessories = unpairedAccessories.map{ accessoryFactory.accessoryForServices($0.services[1], name: $0.name)! }
         completionHandler(arrayOfIAccessories)
     }
     
@@ -186,7 +205,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     //        return nil
     //    }
     
-        // MARK: - Home Delegate
+    // MARK: - Home Functions
     
     //homeManager finished loading the home data
     func homeManagerDidUpdateHomes(manager: HMHomeManager) {
@@ -279,6 +298,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         completion(homeID: currentHomeID!, roomID: currentRoomID!)
     }
+    
+    // MARK: - HomeKit Delegate
     
     func homeManager(manager: HMHomeManager, didAddHome home: HMHome) {
         homes.append(home)
@@ -408,10 +429,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func accessory(accessory: HMAccessory, service: HMService, didUpdateValueForCharacteristic characteristic: HMCharacteristic) {
-        print(characteristic.value)
-    }
-    
     func addAccessory (accessory: String, activeHomeID: NSUUID, activeRoomID: NSUUID, completionHandler: () -> () ) {
         
         let homeKitAccessory = unpairedAccessories.filter{$0.name == accessory}.first!
@@ -444,49 +461,57 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     
-    func getHMAccessory(accessory: IAccessory) -> HMAccessory {
-        return (homeKitAccessories?.filter { ($0.uniqueIdentifier == accessory.uniqueID) }.first)!
+    //MARK: - Changed characteristic values
+    
+    //TODO:
+    func accessory(accessory: HMAccessory, service: HMService, didUpdateValueForCharacteristic characteristic: HMCharacteristic) {
+        print(characteristic.value)
+        
+        //find iAccessory for HMAccessory
+        let iAccessory = getIAccessory(accessory)
+        
+        let key = dictKeyToHomeKitType?.filter{ $0.1 == characteristic.characteristicType }.first.map{ $0.0 }
+        let value = characteristic.value
+        
+        //set new values in iAccessory
+//        setNewValues(iAccessory, characteristic: [key!:value!])
+        
+        //write changed iAccessory to pairedAccessories
+        
+        
     }
     
     func setNewValues(accessory: IAccessory, characteristic: [CharacteristicKey : AnyObject]) {
-        var hmCharacteristic: HMCharacteristic?
-        let hmAccessory : HMAccessory?
-        let characteristicKey : CharacteristicKey?
-        let characteristicValue : AnyObject
-        let hmService : HMService?
-        
-        //unique id
-        hmAccessory = getHMAccessory(accessory)
-        
-        //characteristic type
-        characteristicKey = characteristic.map{ $0.0 }.first!
-        
-        //characteristic value
-        characteristicValue = characteristic.map{ $0.1 }.first!
-        
-        //service
-        hmService = hmAccessory!.services.last
 
+        let hmAccessory = getHMAccessory(accessory)
+        let characteristicKey = characteristic.map{ $0.0 }.first!
+        var characteristicValue = characteristic.map{ $0.1 }.first!
+        let hmService = hmAccessory.services.filter{ ($0.serviceType == HMServiceTypeOutlet) || ($0.serviceType == HMServiceTypeLightbulb) }.first
+        let homeKitType = dictKeyToHomeKitType!.filter{ $0.0 == characteristicKey }.first.map{ $0.1 }
         
-//        for char in hmService!.characteristics {
-//            switch characteristicKey! {
-//            case .brightness:
-//                if char.characteristicType == (HMCharacteristicTypeBrightness as String) {
-//                    hmCharacteristic = char
-//                }
-//            case .powerState:
-//                if char.characteristicType == (HMCharacteristicTypePowerState as String) {
-//                    hmCharacteristic = char
-//                }
-//            case .serviceName:
-//                if char.characteristicType == (HMCharacteristicTypeName as String) {
-//                    hmCharacteristic = char
-//                }
-//            }
-//        }
+        if homeKitType == (HMCharacteristicTypeBrightness as String){
+            characteristicValue = characteristicValue as! Int
+        } else if homeKitType == (HMCharacteristicTypePowerState as String){
+            characteristicValue = characteristicValue as! Bool
+        }
         
-        //setCharacteristics
-        accessory.setCharacteristic(hmService!, characteristicKey: characteristicKey!, value: characteristicValue)
+        let characteristic = hmService!.characteristics.filter{ $0.characteristicType == homeKitType }.first
+        
+        characteristic!.writeValue(characteristicValue, completionHandler: { error in
+            if let error = error {
+                NSLog("Failed to update value \(error)")
+            }
+        })
+        
+    }
+    
+    func setCharacteristic(characteristic: HMCharacteristic, value: AnyObject?) {
+        
+        characteristic.writeValue(value, completionHandler: { error in
+            if let error = error {
+                NSLog("Failed to update value \(error)")
+            }
+        })
         
     }
     

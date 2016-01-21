@@ -398,6 +398,7 @@ extension HMCharacteristic {
 }
 
 extension IAccessory {
+    
     func getCharacteristicValue(characteristic: HMCharacteristic, completion: (AnyObject?, NSError?) -> () ) {
         if !characteristic.isReadable() {
             completion(nil, NSError(domain: "not readable", code: 1, userInfo: nil))
@@ -423,38 +424,17 @@ extension IAccessory {
         }
     }
     
-//    func setCharacteristic(characteristic: [CharacteristicKey : AnyObject]) {//-> (HMCharacteristic, AnyObject) {
-//        let key = characteristic.map{ $0.0 }.first!
-//        var value = characteristic.map{ $0.1 }.first!
-//        let characteristic: HMCharacteristic?
+//    func setCharacteristic(characteristic: HMCharacteristic, value: AnyObject?){
 //        
-//        //find HMAccessory for IAccessory
+//        characteristic.writeValue(value, completionHandler: { error in
+//            if let error = error {
+//                NSLog("Failed to update value \(error)")
+//            }
+//        })
 //        
+////        self.characteristics[CharacteristicKey.doorState] = value as! Bool
 //        
 //    }
-    
-    func setCharacteristic(service: HMService, characteristicKey: CharacteristicKey, value: AnyObject?) {
-        var characteristic : HMCharacteristic?
-        
-        for char in service.characteristics {
-            if char.characteristicType == (HMCharacteristicTypePowerState as String) {
-                value as! Bool
-            } else if char.characteristicType == (HMCharacteristicTypeBrightness as String) {
-                value as! Int
-            } else if char.characteristicType == (HMCharacteristicTypeName as String) {
-                value as! String
-            }
-            
-            characteristic = char
-        }
-        
-        characteristic!.writeValue(value, completionHandler: { error in
-            if let error = error {
-                NSLog("Failed to update value \(error)")
-            }
-        })
-    }
-    
     
     
     mutating func retrieveCharacteristics(service: HMService) {

@@ -12,6 +12,8 @@ class LightViewController: UIViewController, AccViewDelegate {
     
     @IBOutlet var lightView: LightView?
     
+    var contextHandler: ContextHandler?
+    
     var accessory : IAccessory? {
         didSet {
             if accessory?.characteristics != nil {
@@ -119,13 +121,11 @@ class LightViewController: UIViewController, AccViewDelegate {
     // MARK: - AccViewDelegate
 
     func accViewSliderChanged(value: Float) {
-        print("SliderChanged: \(Int(value))")
-//        accessory?.setCharacteristic([CharacteristicKey.brightness : value])
+        contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.brightness:value])
     }
     
     func accViewSwitchTapped(state: Bool) {
-        print("SwitchChanged: \(state)")
-//        accessory?.setCharacteristic([CharacteristicKey.powerState : state])
+        contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state])
     }
     
     func accViewButtonTapped(state: String) {

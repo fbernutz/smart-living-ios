@@ -12,6 +12,8 @@ class EnergyViewController: UIViewController, AccViewDelegate {
 
     @IBOutlet var energyView: EnergyView?
     
+    var contextHandler: ContextHandler?
+    
     var accessory : IAccessory? {
         didSet {
             if accessory?.characteristics != nil {
@@ -105,8 +107,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     // MARK: - AccViewDelegate
     
     func accViewSwitchTapped(state: Bool) {
-        print("SwitchChanged: \(state)")
-        //        accessory?.setCharacteristic([CharacteristicKey.powerState : state])
+        contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state])
     }
     
     func accViewSliderChanged(value: Float) {
