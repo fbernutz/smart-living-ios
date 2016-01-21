@@ -463,21 +463,20 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     //MARK: - Changed characteristic values
     
-    //TODO:
     func accessory(accessory: HMAccessory, service: HMService, didUpdateValueForCharacteristic characteristic: HMCharacteristic) {
-        print(characteristic.value)
-        
-        //find iAccessory for HMAccessory
-        let iAccessory = getIAccessory(accessory)
         
         let key = dictKeyToHomeKitType?.filter{ $0.1 == characteristic.characteristicType }.first.map{ $0.0 }
         let value = characteristic.value
         
-        //set new values in iAccessory
-//        setNewValues(iAccessory, characteristic: [key!:value!])
+        //1 find iAccessory for HMAccessory
+        var iAccessory = getIAccessory(accessory)
         
-        //write changed iAccessory to pairedAccessories
+        //2 set new values for iAccessory
+        iAccessory.characteristics[key!] = value
         
+        //3 write changed iAccessory to pairedAccessories
+        let index = pairedAccessories!.indexOf({ $0.uniqueID == iAccessory.uniqueID })
+        pairedAccessories![index!] = iAccessory
         
     }
     
