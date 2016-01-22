@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+   AccessoryChars.plist
+   BA
+
+   Created by Felizia Bernutz on 22.01.16.
+   Copyright (c) 2016 Felizia Bernutz. All rights reserved.
+-->
+<plist version="1.0">
+<dict>
+	<key>doorCounter</key>
+	<integer>0</integer>
+	<key>oldState</key>
+	<false/>
+</dict>
+</plist>

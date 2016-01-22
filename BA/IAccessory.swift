@@ -116,6 +116,7 @@ class WeatherStation: IAccessory {
     func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
         
         characteristics.removeAll()
+        charCounter = 0
         
         for characteristic in service.characteristics {
             
@@ -244,15 +245,6 @@ class DoorWindowSensor: IAccessory {
                 })
             }
             
-            //TODO: Door counter -> nicht über Char machen?
-//            if characteristic.characteristicType == (HMCharacteristicTypeCurrentDoorState as String) {
-//                getCharacteristicValue(characteristic, completion: { value, error in
-//                    if let value = value {
-//                        self.characteristics[CharacteristicKey.doorCounter] = value as! Int
-//                        completionHandler(self.characteristics)
-//                    }
-//                })
-//            }
         }
     }
     

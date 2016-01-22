@@ -110,7 +110,7 @@ class WeatherViewController: UIViewController {
     
     func setTemperature(value: Float?) {
         if let value = value {
-            let roundedValue = roundToPlaces(Double(value), places: 1)
+            let roundedValue = roundToPlaces(Double(value), places: 2)
             weatherView?.temperature?.text = "\(roundedValue)°C"
         } else {
             weatherView?.temperature?.text = "temp?"
@@ -119,7 +119,7 @@ class WeatherViewController: UIViewController {
     
     func setHumidity(value: Float?) {
         if let value = value {
-            weatherView?.humidity?.text = "\(Int(value))%"
+            weatherView?.humidity?.text = "\(value)%"
         } else {
             weatherView?.humidity?.text = "humidity?"
         }

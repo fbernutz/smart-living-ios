@@ -24,9 +24,11 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     }
     
     @IBAction func updateAccessories(sender: UIButton) {
-        //TODO:
-//        contextHandler!.retrieveViewControllerList()
-        accessoriesTableView?.reloadData()
+        spinner?.startAnimating()
+        
+        controller!.reloadAccessories { _ in
+            self.spinner?.stopAnimating()
+        }
     }
     
     @IBAction func changeHome(sender: UIButton) {

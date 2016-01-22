@@ -41,6 +41,7 @@
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
 		3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FC1C2329090031E439 /* DiverseView.swift */; };
 		3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FE1C2329170031E439 /* DiverseViewController.swift */; };
+		3FD2AC9D1C52298800EB07EA /* AccessoryChars.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */; };
 		3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105B91BE2B5A000E381F6 /* CustomButton.swift */; };
 		3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BB1BE2B77300E381F6 /* Colours.swift */; };
 		3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BD1BE2C45500E381F6 /* BeaconController.swift */; };
@@ -98,6 +99,7 @@
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
 		3FA972FC1C2329090031E439 /* DiverseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseView.swift; sourceTree = "<group>"; };
 		3FA972FE1C2329170031E439 /* DiverseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseViewController.swift; sourceTree = "<group>"; };
+		3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AccessoryChars.plist; sourceTree = "<group>"; };
 		3FE105B91BE2B5A000E381F6 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3FE105BB1BE2B77300E381F6 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		3FE105BD1BE2C45500E381F6 /* BeaconController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconController.swift; sourceTree = "<group>"; };
@@ -287,6 +289,7 @@
 				3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */,
 				3F3DB82B1BBE750800854DE5 /* Info.plist */,
 				3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */,
+				3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 			files = (
 				3F0547E61BFF55DA0061B3F0 /* Ikaros Regular.otf in Resources */,
 				3F3DB82A1BBE750800854DE5 /* LaunchScreen.storyboard in Resources */,
+				3FD2AC9D1C52298800EB07EA /* AccessoryChars.plist in Resources */,
 				3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */,
 				3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */,
 				3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */,

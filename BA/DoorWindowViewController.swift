@@ -11,7 +11,9 @@ import UIKit
 class DoorWindowViewController: UIViewController {
 
     @IBOutlet var doorWindowView: DoorWindowView?
- 
+    
+    var dict: NSMutableDictionary?
+    
     var accessory : IAccessory? {
         didSet {
             if accessory?.characteristics != nil {
@@ -27,7 +29,8 @@ class DoorWindowViewController: UIViewController {
                     print("set Characteristics in VC: \((accessory?.name)!)")
                     serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
                     state = chars.filter{ $0.0 == CharacteristicKey.doorState }.first.map{ $0.1 as! Bool }
-                    time = NSDate() //TODO: last edited time
+                    //TODO: last edited time
+                    //time = NSDate()
                 }
             }
         }
@@ -41,10 +44,24 @@ class DoorWindowViewController: UIViewController {
         }
     }
     
+    var oldState : Bool?
+    
     var state : Bool? {
         didSet {
             if let _ = doorWindowView {
                 setDoorState(state)
+            }
+        }
+    }
+    
+    var doorCounter : Int? {
+        didSet {
+            if var counter = doorCounter, let state = state, let old = oldState {
+                if state != old {
+                    counter++
+                    setDict(counter, state: state, dict: dict!)
+                    setDoorCounter(counter)
+                }
             }
         }
     }
@@ -67,6 +84,13 @@ class DoorWindowViewController: UIViewController {
         
         doorWindowView!.loadingIndicator!.startAnimating()
         
+        if dict == nil {
+            dict = getDict()
+        }
+        
+        oldState = getOldValue(dict!)
+        doorCounter = getCounter(dict!)
+        
         if let chars = characteristics {
             if !chars.isEmpty {
                 print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
@@ -76,13 +100,65 @@ class DoorWindowViewController: UIViewController {
         }
     }
     
+    // MARK: - Read and write plist
+    
+    func getDict() -> NSMutableDictionary {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("AccessoryChars.plist")
+        
+        let fileManager = NSFileManager.defaultManager()
+        
+        // Check if file exists
+        if(!fileManager.fileExistsAtPath(path))
+        {
+            // If it doesn't, copy it from the default file in the Resources folder
+            if let bundlePath = NSBundle.mainBundle().pathForResource("AccessoryChars", ofType: "plist") {
+                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
+                print("Bundle Accessories.plist file is --> \(resultDictionary?.description)")
+                do {
+                    try fileManager.copyItemAtPath(bundlePath, toPath: path)
+                } catch _ {
+                }
+                print("copy")
+            }
+        }
+        
+        if let dict = NSMutableDictionary(contentsOfFile: path) {
+            return dict
+        }
+        
+        return NSMutableDictionary(contentsOfFile: path)!
+    }
+    
+    func getCounter(dict: NSMutableDictionary) -> Int {
+        let counter = dict.objectForKey("doorCounter") as! Int
+        return counter
+    }
+    
+    func getOldValue(dict: NSMutableDictionary) -> Bool {
+        let oldValue = dict.objectForKey("oldState") as! Bool
+        return oldValue
+    }
+    
+    func setDict(counter: Int, state: Bool, dict: NSMutableDictionary) {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("AccessoryChars.plist")
+        
+        dict["oldState"] = state
+        dict["doorCounter"] = counter
+        dict.writeToFile(path, atomically: true)
+    }
+    
     // MARK: - Set Values in LightView
     
     func setCharacteristics() {
         setService(nil)
         setName(accessory?.name)
         setDoorState(state)
-        setLastTime(time)
+//        setLastTime(time)
+        setDoorCounter(doorCounter)
     }
     
     func setService(name: String?) {
@@ -122,5 +198,13 @@ class DoorWindowViewController: UIViewController {
             doorWindowView!.stateChangedTime?.text = "Not found"
         }
     }
-
+    
+    func setDoorCounter(counter: Int?) {
+        if let counter = counter {
+            doorWindowView!.stateChangedTime?.text = "\(counter)"
+        } else {
+            doorWindowView!.stateChangedTime?.text = "Not found"
+        }
+    }
+    
 }

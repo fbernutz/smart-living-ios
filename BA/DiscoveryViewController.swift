@@ -18,7 +18,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     
     var tempArray: [String] = []
     
-    var accessoryList : [String] = [] {
+    var accessoryList : [String]? {
         didSet {
             tableView?.reloadData()
         }
@@ -66,7 +66,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let accessory = accessoryList![indexPath.row]
         
-        self.contextHandler!.addAccessory(accessory, completionHandler: { _ in
+        self.contextHandler!.addNewAccessory(accessory, completionHandler: { _ in
             self.accessoryList?.removeAtIndex((self.accessoryList?.indexOf(accessory)!)!)
             self.navigationController?.popViewControllerAnimated(true)
         })

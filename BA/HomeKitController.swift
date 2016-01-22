@@ -167,15 +167,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //set delegate to detect changes HMAccessory
         homeKitAccessory.delegate = self
         
-        if hmName.rangeOfString("Eve") != nil {
-            for service in homeKitAccessory.services {
-                if (service.serviceType == HMServiceTypeOutlet) || (service.serviceType == "E863F003-079E-48FF-8F27-9C2605A29F52") || (service.serviceType == "E863F001-079E-48FF-8F27-9C2605A29F52") {
-                    hmService = service
-                }
-            }
-        } else {
-            hmService = homeKitAccessory.services.last!
-        }
+        hmService = retrieveHMService(homeKitAccessory)
         
         var newAcc = accessoryFactory.accessoryForServices(hmService!, name: hmName)!
         newAcc.name = hmName
@@ -186,6 +178,20 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         return newAcc
     }
+    
+    func retrieveHMService(accessory: HMAccessory) -> HMService {
+        
+        if accessory.name.rangeOfString("Eve") != nil {
+            for service in accessory.services {
+                if (service.serviceType == HMServiceTypeOutlet) || (service.serviceType == "E863F003-079E-48FF-8F27-9C2605A29F52") || (service.serviceType == "E863F001-079E-48FF-8F27-9C2605A29F52") {
+                    return service
+                }
+            }
+        }
+        
+        return accessory.services.last!
+    }
+    
     
     private func getIAccessory(hmAccessory: HMAccessory) -> IAccessory {
         return pairedAccessories!.filter{ $0.uniqueID! == hmAccessory.uniqueIdentifier }.first!
@@ -473,22 +479,73 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     
+    
     //MARK: - Changed characteristic values
+    
+    func reloadAccessories(completionHandler: () -> ()) {
+        print("reloading characteristics")
+        var hmService: HMService?
+        var counter = 0
+        for var acc in pairedAccessories! {
+            //1 find HMService for IAccessory
+            let hmAcc = getHMAccessory(acc)
+            hmService = retrieveHMService(hmAcc)
+            
+            //2 loading characteristic for IAccessory started
+            acc.retrieveCharacteristics(hmService!)
+            
+            if acc.characteristics.isEmpty {
+                acc.characteristicBlock = { () in
+                    
+                    //3 get and save loaded characteristics
+                    acc.characteristics = acc.getCharacteristics()!
+                    
+                    //4 save new loaded IAccessory with characteristics in pairedAccessories
+                    let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
+                    self.pairedAccessories![index!] = acc
+                    counter++
+                    
+                    if counter == self.pairedAccessories?.count {
+                        print("\(counter) aktualisierte Accessories")
+                        completionHandler()
+                    }
+                }
+            } else {
+                //3 get and save loaded characteristics
+                acc.characteristics = acc.getCharacteristics()!
+                
+                //4 save new loaded IAccessory with characteristics in pairedAccessories
+                let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
+                self.pairedAccessories![index!] = acc
+                counter++
+                
+                if counter == self.pairedAccessories?.count {
+                    print("\(counter) aktualisierte Accessories")
+                    completionHandler()
+                }
+            }
+        }
+    }
     
     func accessory(accessory: HMAccessory, service: HMService, didUpdateValueForCharacteristic characteristic: HMCharacteristic) {
         
-        let key = dictKeyToHomeKitType?.filter{ $0.1 == characteristic.characteristicType }.first.map{ $0.0 }
+        let key = dictKeyToHomeKitType!.filter{ $0.1 == characteristic.characteristicType }.first.map{ $0.0 }
         let value = characteristic.value
         
         //1 find IAccessory for HMAccessory
         var iAccessory = getIAccessory(accessory)
         
-        //2 set new values for IAccessory
-        iAccessory.characteristics[key!] = value
-        
-        //3 write changed IAccessory to pairedAccessories
-        let index = pairedAccessories!.indexOf({ $0.uniqueID == iAccessory.uniqueID })
-        pairedAccessories![index!] = iAccessory
+        if let key = key {
+            if value !== iAccessory.characteristics[key] {
+            
+                //2 set new values for IAccessory, but NUR WENN DER WERT WIRKLCIH EIN ANDERER IST
+                iAccessory.characteristics[key] = value
+                
+                //3 write changed IAccessory to pairedAccessories
+                let index = pairedAccessories!.indexOf({ $0.uniqueID == iAccessory.uniqueID })
+                pairedAccessories![index!] = iAccessory
+            }
+        }
         
     }
     
