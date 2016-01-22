@@ -171,7 +171,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Add new accessory
     
-    func addNewAccessory(accessory: String, completionHandler: () -> () ) {
+    func addNewAccessory(accessory: String, completionHandler: (success: Bool, error: NSError?) -> () ) {
         homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!, completionHandler: completionHandler)
     }
     

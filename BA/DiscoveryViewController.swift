@@ -16,7 +16,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     let searchingTitle = "Searching..."
     let discoveredTitle = "Discovered"
     
-    var tempArray: [String] = []
+    var isAddingAccessory : Bool = false
     
     var accessoryList : [String]? = [] {
         didSet {
@@ -31,7 +31,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         controller!.accessoryDelegate = self
         
         title = searchingTitle
-        
+        accessoryList = controller!.discoveredAccessories()
         
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -45,7 +45,9 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        controller?.stopSearching()
+        if !isAddingAccessory {
+            controller?.stopSearching()
+        }
     }
     
     // MARK: - Table Delegate
@@ -67,9 +69,17 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let accessory = accessoryList![indexPath.row]
         
-        self.contextHandler!.addNewAccessory(accessory, completionHandler: { _ in
-            self.accessoryList?.removeAtIndex((self.accessoryList?.indexOf(accessory)!)!)
-            self.navigationController?.popViewControllerAnimated(true)
+        isAddingAccessory = true
+        
+        self.contextHandler!.addNewAccessory(accessory, completionHandler: { success, error in
+            if success {
+                self.isAddingAccessory = false
+                self.accessoryList?.removeAtIndex((self.accessoryList?.indexOf(accessory)!)!)
+                self.navigationController?.popViewControllerAnimated(true)
+            } else {
+                self.isAddingAccessory = false
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
         })
     }
     
@@ -86,11 +96,11 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     
     // MARK: - HomeKitController Delegates
     
-    func hasLoadedNewAccessoriesList(stillLoading: Bool) {
-        
-        accessoryList = controller!.discoveredAccessories()
-        
+    func hasLoadedNewAccessory(name: String, stillLoading: Bool) {
         if stillLoading {
+            if !accessoryList!.contains(name) {
+                accessoryList!.append(name)
+            }
             title = searchingTitle
         } else {
             title = discoveredTitle

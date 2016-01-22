@@ -54,7 +54,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var accessoryBlock : (() -> ())?
     var homesBlock : (() -> ())?
     
-    var timer : NSTimer?
+    
     // MARK: - Setup
     
     override init() {
@@ -76,14 +76,10 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func startSearchingForAccessories() {
         accessoryBrowser.startSearchingForNewAccessories()
-        timer = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
-        accessoryDelegate?.hasLoadedNewAccessoriesList(true)
     }
     
     func stopSearching() {
-        timer?.invalidate()
         accessoryBrowser.stopSearchingForNewAccessories()
-        accessoryDelegate?.hasLoadedNewAccessoriesList(false)
     }
     
     func discoveredAccessories() -> [String] {
@@ -320,6 +316,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func accessoryBrowser(browser: HMAccessoryBrowser, didFindNewAccessory accessory: HMAccessory) {
         unpairedAccessories.append(accessory)
+        accessoryDelegate?.hasLoadedNewAccessory(accessory.name, stillLoading: true)
     }
     
     func accessoryBrowser(browser: HMAccessoryBrowser, didRemoveNewAccessory accessory: HMAccessory) {
@@ -417,19 +414,21 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func addAccessory(accessoryName: String, activeHomeID: NSUUID, activeRoomID: NSUUID, completionHandler: () -> () ) {
+    func addAccessory(accessoryName: String, activeHomeID: NSUUID, activeRoomID: NSUUID, completionHandler: (success: Bool, error: NSError?) -> () ) {
         
         let homeKitAccessory = unpairedAccessories.filter{ $0.name == accessoryName }.first!
         let activeHome = homes.filter{ $0.uniqueIdentifier == activeHomeID }.first!
         let activeRoom = homes.filter{ $0.uniqueIdentifier == activeHomeID }.first!.rooms.filter{ $0.uniqueIdentifier == activeRoomID }.first!
         
-        activeHome.addAccessory(homeKitAccessory, completionHandler: { (error) -> Void in
+        activeHome.addAccessory(homeKitAccessory, completionHandler: { error in
             if error != nil {
                 print("Something went wrong when attempting to add an accessory to \(activeHome.name). \(error!.localizedDescription)")
+                completionHandler(success: false, error: error)
             } else {
-                activeHome.assignAccessory(homeKitAccessory, toRoom: activeRoom, completionHandler: { (error) -> Void in
+                activeHome.assignAccessory(homeKitAccessory, toRoom: activeRoom, completionHandler: { error in
                     if error != nil {
                         print("Something went wrong when attempting to add an accessory to \(activeRoom.name). \(error!.localizedDescription)")
+                        completionHandler(success: false, error: error)
                     } else {
                         
                         //1 create a new IAccessories for paired HMAccessories
@@ -444,7 +443,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                                 
                                 //4 append new IAccessory with characteristics in pairedAccessories
                                 self.pairedAccessories!.append(newAccessory)
-                                completionHandler()
+                                completionHandler(success: true, error: nil)
                             }
                         } else {
                             //3 get and save loaded characteristics
@@ -452,7 +451,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                             
                             //4 append new IAccessory with characteristics in pairedAccessories
                             self.pairedAccessories!.append(newAccessory)
-                            completionHandler()
+                            completionHandler(success: true, error: nil)
                         }
                         
                     }
