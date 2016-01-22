@@ -339,6 +339,10 @@ extension HMCharacteristic {
         return containsProperty(HMCharacteristicPropertyWritable)
     }
     
+    func supportsEventNotification() -> Bool {
+        return containsProperty(HMCharacteristicPropertySupportsEventNotification)
+    }
+    
 }
 
 extension IAccessory {

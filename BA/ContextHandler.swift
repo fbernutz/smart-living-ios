@@ -169,21 +169,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
     }
     
-    // MARK: - Retrieve unpaired accessory list
-    
-    func searchNewAccessories() -> [IAccessory] {
-        var foundAccessoriesForRoom : [IAccessory]?
-        homeKitController!.retrieveNewAccessories() { (accessories) -> () in
-            foundAccessoriesForRoom = accessories
-        }
-        
-        if let foundAccessoriesForRoom = foundAccessoriesForRoom {
-            return foundAccessoriesForRoom
-        } else {
-            return []
-        }
-    }
-    
     // MARK: - Add new accessory
     
     func addNewAccessory(accessory: String, completionHandler: () -> () ) {

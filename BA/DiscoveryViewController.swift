@@ -18,7 +18,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     
     var tempArray: [String] = []
     
-    var accessoryList : [String]? {
+    var accessoryList : [String]? = [] {
         didSet {
             tableView?.reloadData()
         }
@@ -31,6 +31,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         controller!.accessoryDelegate = self
         
         title = searchingTitle
+        
         
         self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
@@ -72,18 +73,6 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         })
     }
     
-    // MARK: - HomeKitController Delegates
-    
-    func hasLoadedNewAccessoriesList(accessoryNames: [String], stillLoading: Bool) {
-        if stillLoading {
-            tempArray += accessoryNames
-            accessoryList = tempArray
-        } else {
-            title = discoveredTitle
-            accessoryList = accessoryNames
-        }
-    }
-    
     func refresh(sender: AnyObject) {
         if title == discoveredTitle {
             controller?.startSearchingForAccessories()
@@ -92,6 +81,19 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
             tableView?.reloadData()
         } else {
             refreshControl?.endRefreshing()
+        }
+    }
+    
+    // MARK: - HomeKitController Delegates
+    
+    func hasLoadedNewAccessoriesList(stillLoading: Bool) {
+        
+        accessoryList = controller!.discoveredAccessories()
+        
+        if stillLoading {
+            title = searchingTitle
+        } else {
+            title = discoveredTitle
         }
     }
     

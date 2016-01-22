@@ -15,5 +15,5 @@ protocol HomeKitControllerDelegate {
 }
 
 protocol HomeKitControllerNewAccessoriesDelegate {
-    func hasLoadedNewAccessoriesList(accessoryNames: [String], stillLoading: Bool)
+    func hasLoadedNewAccessoriesList(stillLoading: Bool)
 }

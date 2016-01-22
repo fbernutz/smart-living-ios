@@ -59,8 +59,8 @@ class DoorWindowViewController: UIViewController {
             if var counter = doorCounter, let state = state, let old = oldState {
                 if state != old {
                     counter++
-                    setDict(counter, state: state, dict: dict!)
                     setDoorCounter(counter)
+                    setDict(counter, state: state, dict: dict!)
                 }
             }
         }

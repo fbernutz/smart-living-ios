@@ -49,18 +49,12 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    var unpairedAccessories = [HMAccessory]() {
-        didSet {
-            let newAccessoryArray = unpairedAccessories.map{ $0.name }.last
-            accessoryDelegate?.hasLoadedNewAccessoriesList([newAccessoryArray!], stillLoading: true)
-        }
-    }
+    var unpairedAccessories = [HMAccessory]()
     
     var accessoryBlock : (() -> ())?
-    var newAccessoryBlock : (() -> ())?
     var homesBlock : (() -> ())?
     
-    
+    var timer : NSTimer?
     // MARK: - Setup
     
     override init() {
@@ -82,27 +76,20 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func startSearchingForAccessories() {
         accessoryBrowser.startSearchingForNewAccessories()
-        NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
-        
-        if !unpairedAccessories.isEmpty {
-            let newAccessoryArray = unpairedAccessories.map{ $0.name }
-            accessoryDelegate?.hasLoadedNewAccessoriesList(newAccessoryArray, stillLoading: true)
-        }
+        timer = NSTimer.scheduledTimerWithTimeInterval(7.0, target: self, selector: "stopSearching", userInfo: nil, repeats: false)
+        accessoryDelegate?.hasLoadedNewAccessoriesList(true)
     }
     
     func stopSearching() {
+        timer?.invalidate()
         accessoryBrowser.stopSearchingForNewAccessories()
-        
-        if !unpairedAccessories.isEmpty {
-            let newAccessoryArray = unpairedAccessories.map{ $0.name }
-            accessoryDelegate?.hasLoadedNewAccessoriesList(newAccessoryArray, stillLoading: false)
-        }
-        
-        if let block = newAccessoryBlock {
-            block()
-            newAccessoryBlock = nil
-        }
+        accessoryDelegate?.hasLoadedNewAccessoriesList(false)
     }
+    
+    func discoveredAccessories() -> [String] {
+        return accessoryBrowser.discoveredAccessories.map{ $0.name }
+    }
+    
     
     // MARK: - Retrieve IAccessory
     
@@ -176,8 +163,22 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //the search for characteristics starts here
         newAcc.retrieveCharacteristics(hmService!)
         
+//        setNotificationsEnabled(hmService!, notificationsEnabled: true)
+        
         return newAcc
     }
+    
+//    func setNotificationsEnabled(hmService: HMService, notificationsEnabled: Bool) {
+//        for characteristic in hmService.characteristics {
+//            if characteristic.supportsEventNotification() {
+//                characteristic.enableNotification(notificationsEnabled) { error in
+//                    if let error = error {
+//                        print("HomeKit: Error enabling notification on charcteristic '\(characteristic)': \(error.localizedDescription)")
+//                    }
+//                }
+//            }
+//        }
+//    }
     
     func retrieveHMService(accessory: HMAccessory) -> HMService {
         
@@ -200,23 +201,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     private func getHMAccessory(iAccessory: IAccessory) -> HMAccessory {
         return homeKitAccessories!.filter{ $0.uniqueIdentifier == iAccessory.uniqueID }.first!
     }
-    
-    
-    //MARK: Accessory List
-    
-    func retrieveNewAccessories(completionHandler : [IAccessory] -> ()) {
-        if !unpairedAccessories.isEmpty {
-            getNewIAccessories(completionHandler)
-        } else {
-            newAccessoryBlock = { () in self.getNewIAccessories(completionHandler) }
-        }
-    }
-    
-    func getNewIAccessories(completionHandler : [IAccessory] -> ()) {
-        let iAccessories = unpairedAccessories.map{ accessoryFactory.accessoryForServices($0.services[1], name: $0.name)! }
-        completionHandler(iAccessories)
-    }
-    
     
     // MARK: - Home Functions
     
@@ -477,7 +461,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             }
         })
     }
-    
     
     
     //MARK: - Changed characteristic values
