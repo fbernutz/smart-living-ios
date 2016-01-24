@@ -8,11 +8,14 @@
 
 import UIKit
 
-class DetailViewController: UIViewController, HomeKitControllerDelegate, UITableViewDataSource, UITableViewDelegate {
+class DetailViewController: UIViewController, HomeKitControllerDelegate, UITableViewDataSource, UITableViewDelegate, ContextHandlerDelegate {
     
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     var contextHandler : ContextHandler?
     var controller : HomeKitController?
+    
+    var major: Int?
+    var minor: Int?
     
     @IBOutlet weak var spinner: UIActivityIndicatorView?
     @IBOutlet weak var homeName: UILabel?
@@ -36,6 +39,26 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         self.presentViewController(sheet, animated: true, completion: nil)
         
         spinner?.startAnimating()
+    }
+    
+    @IBAction func addBeacon(sender: UIButton) {
+        let alert = UIAlertController(title: "Beacon hinzufügen", message: "Verbinde das näheste Beacon mit \(room!).", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Abbrechen", style: .Cancel, handler: nil))
+        alert.addAction(UIAlertAction (title: "Hinzufügen", style: .Default) { action in
+            
+            self.minor = self.contextHandler!.minorBeacon
+            self.major = self.contextHandler!.majorBeacon
+            
+            let beaconRoom = BeaconRoomConnector(major: self.major!, minor: self.minor!, home: self.home!, room: self.room!)
+            
+            self.contextHandler!.saveData(beaconRoom)
+            
+            print("AccessoryVC: beacon \(self.major!), \(self.minor!) connected to \(self.room!)")
+            
+            self.alertBeaconAdded()
+        })
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     var localHomes : [Home]?
@@ -74,6 +97,8 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         }
         controller!.delegate = self
         
+        contextHandler!.contextDelegate = self
+        
         spinner?.startAnimating()
         
         
@@ -98,6 +123,10 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
                 self.localRooms = localRooms
             }
         }
+        
+        center.addObserverForName("roomID", object: contextHandler, queue: queue) { notification in
+            self.loadData()
+        }
     }
     
     
@@ -105,10 +134,6 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
     
     func hasLoadedData(status: Bool) {
         if status == true {
-            print("homekit structure loading successful")
-            
-            loadData()
-            
             spinner?.stopAnimating()
         } else {
             print("loading failed")
@@ -217,9 +242,8 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
             let roomsInHome = localRooms!.filter{ $0.homeID == home.id }.map{ room in
                 sheet.addAction(UIAlertAction(title: "\(home.name!) > \(room.name!)", style: UIAlertActionStyle.Default)
                     { action in
-                        self.controller?.currentHomeID = home.id
-                        self.controller?.currentRoomID = room.id
-                        self.loadData()
+                        self.controller!.currentHomeID = home.id
+                        self.controller!.currentRoomID = room.id
                         
                         self.spinner?.stopAnimating()
                     }
@@ -233,4 +257,55 @@ class DetailViewController: UIViewController, HomeKitControllerDelegate, UITable
         
         return sheet
     }
+    
+    //MARK: - Beacon Functions
+    
+    func roomForBeacon(manager: ContextHandler, connectorArray: [BeaconRoomConnector], major: Int, minor: Int) {
+        
+        let plistResult = connectorArray.filter{ $0.major == major && $0.minor == minor }.first
+        
+        self.major = major
+        self.minor = minor
+        
+        if let plistHome = plistResult?.home, let plistRoom = plistResult?.room {
+            controller!.findHMRoomForBeacon(plistHome, room: plistRoom) { success, homeID, roomID in
+                if success {
+                    if self.room != plistRoom {
+                        self.alertShowBeaconRoom(homeID!, roomID: roomID!, message: "Bist du im >\(plistRoom)< in >\(plistHome)<? Willst du die dafür relevanten Accessories sehen?")
+                    } else {
+                        //TODO: 
+                        //Beacon wurde aus aktuellem Raum gefunden
+                        //hier: evtl. Beacon-Button farbig anzeigen
+                    }
+                }
+            }
+        } else {
+            print ("no home and room found for this beacon")
+        }
+    }
+    
+    func alertShowBeaconRoom (homeID: NSUUID, roomID: NSUUID, message : String) {
+        let alert = UIAlertController(title: "Beacon gefunden", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ja", style: UIAlertActionStyle.Default)
+            { action in
+                self.controller!.currentHomeID = homeID
+                self.controller!.currentRoomID = roomID
+            }
+        )
+        alert.addAction(UIAlertAction(title: "Nein", style: UIAlertActionStyle.Cancel, handler: nil))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func alertBeaconAdded() {
+        let alert = UIAlertController(title: "Beacon hinzugefügt", message: "Das Beacon \(major!), \(minor!) wurde erfolgreich zu \(home!), \(room!) hinzugefügt.", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel)
+            { action in
+                // TODO: Beacon Button ausblenden oder anzeigen, dass verbunden
+            }
+        )
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
 }

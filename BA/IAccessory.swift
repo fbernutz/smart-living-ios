@@ -375,7 +375,7 @@ extension IAccessory {
     mutating func retrieveCharacteristics(service: HMService) {
         
         characteristicsForService(service, completionHandler: { characteristics in
-            print(self.name!, characteristics.count, service.characteristics.count)
+            print("\(self.name!): \(characteristics.count) von \(service.characteristics.count) Chars")
             
 //            if characteristics.count == service.characteristics.count {
                 self.characteristics = characteristics

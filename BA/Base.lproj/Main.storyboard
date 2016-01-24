@@ -184,19 +184,19 @@
                                                 <rect key="frame" x="20" y="20" width="560" height="100"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uu1-Lc-Yd4">
-                                                        <rect key="frame" x="20" y="20" width="66" height="31"/>
+                                                        <rect key="frame" x="20" y="20" width="65.5" height="31.5"/>
                                                         <fontDescription key="fontDescription" name="Ikaros-Regular" family="Ikaros Sans" pointSize="25"/>
                                                         <color key="textColor" red="0.34509803919999998" green="0.4823529412" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-1X-Pd2">
-                                                        <rect key="frame" x="20" y="59" width="540" height="21"/>
+                                                        <rect key="frame" x="20" y="59" width="540" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPS-1P-Ope">
-                                                        <rect key="frame" x="501" y="21" width="51" height="30"/>
+                                                        <rect key="frame" x="489" y="21" width="51" height="30"/>
                                                         <state key="normal" title="change"/>
                                                         <variation key="heightClass=compact" misplaced="YES">
                                                             <rect key="frame" x="501" y="32" width="51" height="30"/>
@@ -214,7 +214,7 @@
                                                     <constraint firstItem="Uu1-Lc-Yd4" firstAttribute="leading" secondItem="7OU-SH-nHU" secondAttribute="leading" constant="20" symbolic="YES" id="TFw-EC-zZ1"/>
                                                     <constraint firstItem="9rT-1X-Pd2" firstAttribute="top" secondItem="Uu1-Lc-Yd4" secondAttribute="bottom" constant="8" symbolic="YES" id="YpD-Qf-mI1"/>
                                                     <constraint firstItem="Uu1-Lc-Yd4" firstAttribute="top" secondItem="7OU-SH-nHU" secondAttribute="top" constant="20" symbolic="YES" id="Zxl-YV-Hz5"/>
-                                                    <constraint firstAttribute="trailing" secondItem="zPS-1P-Ope" secondAttribute="trailing" constant="8" id="o4j-V7-yqX"/>
+                                                    <constraint firstAttribute="trailing" secondItem="zPS-1P-Ope" secondAttribute="trailing" constant="20" symbolic="YES" id="o4j-V7-yqX"/>
                                                     <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Uu1-Lc-Yd4" secondAttribute="trailing" constant="20" symbolic="YES" id="quK-RB-J1f"/>
                                                     <constraint firstItem="zPS-1P-Ope" firstAttribute="centerY" secondItem="Uu1-Lc-Yd4" secondAttribute="centerY" id="wIB-Wz-xmQ"/>
                                                     <constraint firstAttribute="trailing" secondItem="9rT-1X-Pd2" secondAttribute="trailing" id="wff-wA-aSD"/>
@@ -235,12 +235,21 @@
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nXP-lH-YY7">
+                                                        <rect key="frame" x="488" y="20" width="52" height="30"/>
+                                                        <state key="normal" title="Beacon"/>
+                                                        <connections>
+                                                            <action selector="addBeacon:" destination="1Ya-hT-zr4" eventType="touchUpInside" id="MF8-Am-u30"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstItem="h39-kL-PwX" firstAttribute="top" secondItem="PA7-WI-4z6" secondAttribute="top" constant="20" symbolic="YES" id="6yZ-hI-IhK"/>
+                                                    <constraint firstAttribute="trailing" secondItem="nXP-lH-YY7" secondAttribute="trailing" constant="20" symbolic="YES" id="85R-oT-fNs"/>
                                                     <constraint firstItem="qia-4F-yDl" firstAttribute="top" secondItem="h39-kL-PwX" secondAttribute="bottom" constant="8" symbolic="YES" id="BCK-cC-6Qf"/>
                                                     <constraint firstItem="qia-4F-yDl" firstAttribute="bottom" secondItem="h39-kL-PwX" secondAttribute="top" constant="8" symbolic="YES" id="Dq0-EK-RaP"/>
+                                                    <constraint firstItem="nXP-lH-YY7" firstAttribute="top" secondItem="h39-kL-PwX" secondAttribute="top" id="XSO-dM-kUB"/>
                                                     <constraint firstAttribute="height" constant="100" id="XuX-bF-zbu"/>
                                                     <constraint firstAttribute="trailing" secondItem="qia-4F-yDl" secondAttribute="trailing" constant="20" symbolic="YES" id="Zjj-Jj-hr1"/>
                                                     <constraint firstItem="qia-4F-yDl" firstAttribute="leading" secondItem="h39-kL-PwX" secondAttribute="leading" id="dvM-wa-5pR"/>

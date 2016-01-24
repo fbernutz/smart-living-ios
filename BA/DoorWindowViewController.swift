@@ -26,7 +26,6 @@ class DoorWindowViewController: UIViewController {
         didSet {
             if let chars = characteristics {
                 if !chars.isEmpty {
-                    print("set Characteristics in VC: \((accessory?.name)!)")
                     serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
                     state = chars.filter{ $0.0 == CharacteristicKey.doorState }.first.map{ $0.1 as! Bool }
                     //TODO: last edited time
@@ -100,7 +99,7 @@ class DoorWindowViewController: UIViewController {
         }
     }
     
-    // MARK: - Read and write plist
+    // MARK: - Read and write door counter plist
     
     func getDict() -> NSMutableDictionary {
         let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray

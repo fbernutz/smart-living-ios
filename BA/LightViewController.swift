@@ -26,7 +26,6 @@ class LightViewController: UIViewController, AccViewDelegate {
         didSet {
             if let chars = characteristics {
                 if !chars.isEmpty {
-                    print("set Characteristics in VC: \((accessory?.name)!)")
                     serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
                     brightnessValue = chars.filter{ $0.0 == CharacteristicKey.brightness }.first.map{ $0.1 as! Float }
                     state = chars.filter{ $0.0 == CharacteristicKey.powerState }.first.map{ $0.1 as! Bool }
@@ -80,7 +79,6 @@ class LightViewController: UIViewController, AccViewDelegate {
         setName(accessory?.name)
         setBrightness(brightnessValue)
         setPowerState(state)
-        
     }
     
     func setService(name: String?) {

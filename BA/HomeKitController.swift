@@ -30,6 +30,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var homes = [HMHome]()
     var rooms = [HMRoom]()
     
+    var beaconHome: HMHome?
+    var beaconRoom: HMRoom?
+    
     var currentHomeID : NSUUID? {
         didSet {
             contextHandler?.homeID = currentHomeID
@@ -261,8 +264,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             })
             
             retrieveCurrentHomeAndRoom { homeID, roomID in
-                self.contextHandler!.homeID = homeID
-                self.contextHandler!.roomID = roomID
+                self.currentHomeID = homeID
+                self.currentRoomID = roomID
             }
             
             delegate?.hasLoadedData(true)
@@ -285,10 +288,10 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     func retrieveCurrentHomeAndRoom(completionHandler completion: (homeID: NSUUID, roomID: NSUUID) -> ()){
         let homeWithRoom = homes.filter{ !$0.rooms.isEmpty }.first
         
-        currentHomeID = homeWithRoom!.uniqueIdentifier
-        currentRoomID = homeWithRoom!.rooms.first!.uniqueIdentifier
+        let homeID = homeWithRoom!.uniqueIdentifier
+        let roomID = homeWithRoom!.rooms.first!.uniqueIdentifier
         
-        completion(homeID: currentHomeID!, roomID: currentRoomID!)
+        completion(homeID: homeID, roomID: roomID)
     }
     
     // MARK: - HomeKit Delegates
@@ -465,9 +468,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     //MARK: - Changed characteristic values
     
     func reloadAccessories(completionHandler: () -> ()) {
-        print("reloading characteristics")
         var hmService: HMService?
         var counter = 0
+        
         for var acc in pairedAccessories! {
             //1 find HMService for IAccessory
             let hmAcc = getHMAccessory(acc)
@@ -488,7 +491,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     counter++
                     
                     if counter == self.pairedAccessories?.count {
-                        print("\(counter) aktualisierte Accessories")
                         completionHandler()
                     }
                 }
@@ -502,7 +504,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 counter++
                 
                 if counter == self.pairedAccessories?.count {
-                    print("\(counter) aktualisierte Accessories")
                     completionHandler()
                 }
             }
@@ -528,7 +529,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 pairedAccessories![index!] = iAccessory
             }
         }
-        
     }
     
     func setNewValues(accessory: IAccessory, characteristic: [CharacteristicKey : AnyObject]) {
@@ -562,5 +562,31 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
     }
     
+    
+    //MARK: - Beacon Functions
+    
+    func findHMRoomForBeacon(home: String, room: String, completionHandler: (success: Bool, homeID: NSUUID?, roomID: NSUUID?) -> () ) {
+        
+        //1 find HMHome for home name as beaconHome
+        beaconHome = homes.filter{ $0.name == home }.first
+        
+        if let bHome = beaconHome {
+            
+            //2 find HMRoom for room name as beaconRoom
+            beaconRoom = bHome.rooms.filter{ $0.name == room }.first
+            
+            if let bRoom = beaconRoom {
+                
+                //3 completionHandler: successfull, homeID and roomID
+                completionHandler(success: true, homeID: bHome.uniqueIdentifier, roomID: bRoom.uniqueIdentifier)
+                
+            } else {
+                completionHandler(success: false, homeID: bHome.uniqueIdentifier, roomID: nil)
+            }
+        } else {
+            completionHandler(success: false, homeID: nil, roomID: nil)
+        }
+        
+    }
     
 }

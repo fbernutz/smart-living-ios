@@ -9,13 +9,21 @@
 import UIKit
 import HomeKit
 
-class ContextHandler: NSObject, HMHomeManagerDelegate {
+class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate {
     
     var accessoryStoryboard : UIStoryboard?
     var homeKitController : HomeKitController?
     
     var homeID : NSUUID?
-    var roomID : NSUUID?
+    
+    var roomID : NSUUID? {
+        didSet {
+            //register notification
+            let center = NSNotificationCenter.defaultCenter()
+            let notification = NSNotification(name: "roomID", object: self, userInfo: ["roomID":roomID!])
+            center.postNotification(notification)
+        }
+    }
     
     var localHomes : [Home]? {
         didSet {
@@ -52,6 +60,16 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
     }
     
+    var beaconRoomConnectorArray: [BeaconRoomConnector] = []
+    var newDict: NSDictionary?
+    var newPlistArray: [NSDictionary] = []
+    var majorBeacon: Int?
+    var minorBeacon: Int?
+    var isBeaconFound: Bool? = false
+    
+    var contextDelegate: ContextHandlerDelegate?
+    var beaconController = BeaconController()
+    
     
     override init() {
         super.init()
@@ -62,6 +80,8 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         homeKitController!.contextHandler = self
         
         accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
+        
+        startSearchingForBeacons()
     }
     
     
@@ -83,7 +103,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
     
     
     // MARK: - Retrieve rooms
-
+    
     func retrieveRoom() -> String? {
         return searchRoom(forID: roomID) ?? "No room found"
     }
@@ -169,10 +189,114 @@ class ContextHandler: NSObject, HMHomeManagerDelegate {
         }
     }
     
-    // MARK: - Add new accessory
+    // MARK: - Adding a new accessory
     
     func addNewAccessory(accessory: String, completionHandler: (success: Bool, error: NSError?) -> () ) {
         homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!, completionHandler: completionHandler)
+    }
+    
+    
+    // MARK: - Beacon functions
+    
+    func startSearchingForBeacons() {
+        beaconController.delegate = self
+        beaconController.checkAuthorization()
+    }
+    
+    func beaconFound(manager: BeaconController, major: Int, minor: Int){
+        isBeaconFound = true
+        
+        majorBeacon = major
+        minorBeacon = minor
+        
+        loadSavedData()
+        // TODO: hier zurückgeben lassen ob für das gefunden Beacon schon ein Raum gesetzt wurde und evtl. von selbst anbieten das Beacon zu setzen
+        // und vorher überprüfen ob für den Raum schon ein Beacon gesetzt wurde
+        
+        contextDelegate?.roomForBeacon(self, connectorArray: beaconRoomConnectorArray, major: major, minor: minor)
+    }
+    
+    // MARK: - Read and write beacon&room plist
+    
+    func loadSavedData() {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("HomeKitData.plist")
+        
+        let fileManager = NSFileManager.defaultManager()
+        
+        // Check if file exists
+        if !fileManager.fileExistsAtPath(path)
+        {
+            // If it doesn't, copy it from the default file in the Resources folder
+            if let bundlePath = NSBundle.mainBundle().pathForResource("HomeKitData", ofType: "plist") {
+                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
+                print("Bundle HomeKitData.plist file is --> \(resultDictionary?.description)")
+                do {
+                    try fileManager.copyItemAtPath(bundlePath, toPath: path)
+                } catch _ {
+                }
+                print("copy")
+            }
+        }
+        
+        beaconRoomConnectorArray.removeAll(keepCapacity: false)
+        
+        newPlistArray = NSArray(contentsOfFile: path) as! [NSDictionary]
+        
+        if !newPlistArray.isEmpty {
+            let objects = newPlistArray.map{ BeaconRoomConnector(dict: $0) }
+            beaconRoomConnectorArray = objects
+        } else {
+            //TODO: 
+            //keine Beacons verbunden
+        }
+    }
+    
+    func saveData(object: BeaconRoomConnector) {
+        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
+        let documentsDirectory = paths.objectAtIndex(0) as! NSString
+        let path = documentsDirectory.stringByAppendingPathComponent("HomeKitData.plist")
+        
+        newDict = object.dictionaryForEntity()
+        
+        if let dict = newDict {
+            
+            let beaconConnected = beaconRoomConnectorArray.filter{ $0.major == object.major && $0.minor == object.minor }
+            let roomConnected = beaconRoomConnectorArray.filter{ $0.home == object.home && $0.room == object.room }
+            
+            if !beaconConnected.isEmpty && !roomConnected.isEmpty {
+                //Beacon ist mit diesem Raum schon verknüpft, nichts weiter tun
+                print("Beacon ist mit diesem Raum schon verknüpft, nichts weiter tun")
+            } else if roomConnected.isEmpty {
+                //Beacon wurde schon in einem anderen Raum verwendet
+                //"Sie haben dieses Beacon schon mit einem anderen Raum verknüpft. Möchten Sie dieses Beacon für diesen Raum verwenden?"
+                print("Sie haben dieses Beacon schon mit einem anderen Raum verknüpft. Möchten Sie dieses Beacon für diesen Raum verwenden?")
+            } else if beaconConnected.isEmpty {
+                //Raum wurde schon mit einem anderen Beacon verknüpft
+                //"Sie haben diesen Raum schon mit einem anderen Beacon verknüpft. Möchten Sie dieses Beacon für diesen Raum verwenden?"
+                print("Sie haben diesen Raum schon mit einem anderen Beacon verknüpft. Möchten Sie dieses Beacon für diesen Raum verwenden?")
+            } else {
+                //Raum und Beacon sind noch nicht verknüpft
+                //"Möchten Sie dieses Beacon für diesen Raum verwenden?"
+                print("Möchten Sie dieses Beacon für diesen Raum verwenden?")
+//                newPlistArray.append(dict)
+            }
+            
+            
+            if !newPlistArray.contains(dict) {
+                newPlistArray.append(dict)
+            } else {
+                let index = newPlistArray.indexOf(dict)
+                newPlistArray[index!] = dict
+            }
+            
+            beaconRoomConnectorArray.append(object)
+        }
+        
+        print(beaconRoomConnectorArray)
+        print(newPlistArray)
+        (newPlistArray as NSArray).writeToFile(path, atomically: true)
     }
     
 }

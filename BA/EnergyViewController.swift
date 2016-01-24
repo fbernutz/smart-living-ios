@@ -26,7 +26,6 @@ class EnergyViewController: UIViewController, AccViewDelegate {
         didSet {
             if let chars = characteristics {
                 if !chars.isEmpty {
-                    print("set Characteristics in VC: \((accessory?.name)!)")
                     serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
                     state = chars.filter{ $0.0 == CharacteristicKey.powerState }.first.map{ $0.1 as! Bool }
                 }

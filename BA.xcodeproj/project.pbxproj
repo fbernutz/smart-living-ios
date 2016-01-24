@@ -42,6 +42,10 @@
 		3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FC1C2329090031E439 /* DiverseView.swift */; };
 		3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FE1C2329170031E439 /* DiverseViewController.swift */; };
 		3FD2AC9D1C52298800EB07EA /* AccessoryChars.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */; };
+		3FD2ACA11C53782600EB07EA /* BeaconControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9E1C53782600EB07EA /* BeaconControllerDelegate.swift */; };
+		3FD2ACA21C53782600EB07EA /* BeaconRoomConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9F1C53782600EB07EA /* BeaconRoomConnector.swift */; };
+		3FD2ACA31C53782600EB07EA /* ContextHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2ACA01C53782600EB07EA /* ContextHandlerDelegate.swift */; };
+		3FD2ACA51C537C5900EB07EA /* HomeKitData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2ACA41C537C5900EB07EA /* HomeKitData.plist */; };
 		3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105B91BE2B5A000E381F6 /* CustomButton.swift */; };
 		3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BB1BE2B77300E381F6 /* Colours.swift */; };
 		3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BD1BE2C45500E381F6 /* BeaconController.swift */; };
@@ -100,6 +104,10 @@
 		3FA972FC1C2329090031E439 /* DiverseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseView.swift; sourceTree = "<group>"; };
 		3FA972FE1C2329170031E439 /* DiverseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseViewController.swift; sourceTree = "<group>"; };
 		3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AccessoryChars.plist; sourceTree = "<group>"; };
+		3FD2AC9E1C53782600EB07EA /* BeaconControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconControllerDelegate.swift; sourceTree = "<group>"; };
+		3FD2AC9F1C53782600EB07EA /* BeaconRoomConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconRoomConnector.swift; sourceTree = "<group>"; };
+		3FD2ACA01C53782600EB07EA /* ContextHandlerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandlerDelegate.swift; sourceTree = "<group>"; };
+		3FD2ACA41C537C5900EB07EA /* HomeKitData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HomeKitData.plist; sourceTree = "<group>"; };
 		3FE105B91BE2B5A000E381F6 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		3FE105BB1BE2B77300E381F6 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		3FE105BD1BE2C45500E381F6 /* BeaconController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconController.swift; sourceTree = "<group>"; };
@@ -136,6 +144,9 @@
 				3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */,
 				3F6AFBD21C0C6C4300AC1766 /* IAccessory.swift */,
 				3FE105BD1BE2C45500E381F6 /* BeaconController.swift */,
+				3FD2AC9E1C53782600EB07EA /* BeaconControllerDelegate.swift */,
+				3FD2AC9F1C53782600EB07EA /* BeaconRoomConnector.swift */,
+				3FD2ACA01C53782600EB07EA /* ContextHandlerDelegate.swift */,
 			);
 			name = Services;
 			sourceTree = "<group>";
@@ -287,9 +298,10 @@
 			children = (
 				3F3DB8261BBE750800854DE5 /* Assets.xcassets */,
 				3F3DB8281BBE750800854DE5 /* LaunchScreen.storyboard */,
-				3F3DB82B1BBE750800854DE5 /* Info.plist */,
 				3F3DB8231BBE750800854DE5 /* BA.xcdatamodeld */,
+				3F3DB82B1BBE750800854DE5 /* Info.plist */,
 				3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */,
+				3FD2ACA41C537C5900EB07EA /* HomeKitData.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -369,6 +381,7 @@
 				3F6A956D1C197CA20095CC06 /* Accessories.storyboard in Resources */,
 				3F0547E51BFF55DA0061B3F0 /* Ikaros Light.otf in Resources */,
 				3F3DB8271BBE750800854DE5 /* Assets.xcassets in Resources */,
+				3FD2ACA51C537C5900EB07EA /* HomeKitData.plist in Resources */,
 				3F3DB8221BBE750800854DE5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -380,12 +393,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FD2ACA11C53782600EB07EA /* BeaconControllerDelegate.swift in Sources */,
 				3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */,
 				3F7232A01C206526004E7503 /* LightView.swift in Sources */,
 				3F0254B71C29907A002F6B3E /* FAQViewController.swift in Sources */,
 				3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */,
 				3F6A956F1C197CFC0095CC06 /* LightViewController.swift in Sources */,
 				3F3B248C1C2347F80037CD24 /* DoorWindowViewController.swift in Sources */,
+				3FD2ACA31C53782600EB07EA /* ContextHandlerDelegate.swift in Sources */,
 				3F84427E1BF9F53400C04B5C /* IntroViewController.swift in Sources */,
 				3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */,
 				3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */,
@@ -397,6 +412,7 @@
 				3F0254B51C29904D002F6B3E /* ImprintViewController.swift in Sources */,
 				3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */,
 				3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */,
+				3FD2ACA21C53782600EB07EA /* BeaconRoomConnector.swift in Sources */,
 				3F6AFBD31C0C6C4300AC1766 /* IAccessory.swift in Sources */,
 				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
