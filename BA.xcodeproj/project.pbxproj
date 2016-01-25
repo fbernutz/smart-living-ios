@@ -41,6 +41,8 @@
 		3F94D2A31BFC847D00F5B880 /* ContextHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */; };
 		3FA972FD1C2329090031E439 /* DiverseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FC1C2329090031E439 /* DiverseView.swift */; };
 		3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FA972FE1C2329170031E439 /* DiverseViewController.swift */; };
+		3FC8BD431C5622EF00DEFC96 /* FAQModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8BD421C5622EF00DEFC96 /* FAQModel.swift */; };
+		3FC8BD451C562A3C00DEFC96 /* FAQCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC8BD441C562A3C00DEFC96 /* FAQCell.swift */; };
 		3FD2AC9D1C52298800EB07EA /* AccessoryChars.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */; };
 		3FD2ACA11C53782600EB07EA /* BeaconControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9E1C53782600EB07EA /* BeaconControllerDelegate.swift */; };
 		3FD2ACA21C53782600EB07EA /* BeaconRoomConnector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2AC9F1C53782600EB07EA /* BeaconRoomConnector.swift */; };
@@ -103,6 +105,8 @@
 		3F94D2A21BFC847D00F5B880 /* ContextHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandler.swift; sourceTree = "<group>"; };
 		3FA972FC1C2329090031E439 /* DiverseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseView.swift; sourceTree = "<group>"; };
 		3FA972FE1C2329170031E439 /* DiverseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiverseViewController.swift; sourceTree = "<group>"; };
+		3FC8BD421C5622EF00DEFC96 /* FAQModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQModel.swift; sourceTree = "<group>"; };
+		3FC8BD441C562A3C00DEFC96 /* FAQCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FAQCell.swift; sourceTree = "<group>"; };
 		3FD2AC9C1C52298800EB07EA /* AccessoryChars.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AccessoryChars.plist; sourceTree = "<group>"; };
 		3FD2AC9E1C53782600EB07EA /* BeaconControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconControllerDelegate.swift; sourceTree = "<group>"; };
 		3FD2AC9F1C53782600EB07EA /* BeaconRoomConnector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconRoomConnector.swift; sourceTree = "<group>"; };
@@ -129,6 +133,7 @@
 		3F0547DA1BFF31BE0061B3F0 /* Modell */ = {
 			isa = PBXGroup;
 			children = (
+				3FC8BD421C5622EF00DEFC96 /* FAQModel.swift */,
 				3F0547DB1BFF31E30061B3F0 /* LocalStructure.swift */,
 				3F7797711C36E96700F3C550 /* Constants.swift */,
 			);
@@ -189,8 +194,7 @@
 				3F0547E71BFF61D00061B3F0 /* DetailViewController.swift */,
 				3F84427D1BF9F53400C04B5C /* IntroViewController.swift */,
 				3FEB51CC1C07345D00715FDD /* DiscoveryViewController.swift */,
-				3F0254B41C29904D002F6B3E /* ImprintViewController.swift */,
-				3F0254B61C29907A002F6B3E /* FAQViewController.swift */,
+				3FC8BD481C56401400DEFC96 /* Settings */,
 			);
 			name = ViewController;
 			sourceTree = "<group>";
@@ -306,6 +310,16 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		3FC8BD481C56401400DEFC96 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				3F0254B41C29904D002F6B3E /* ImprintViewController.swift */,
+				3F0254B61C29907A002F6B3E /* FAQViewController.swift */,
+				3FC8BD441C562A3C00DEFC96 /* FAQCell.swift */,
+			);
+			name = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -393,6 +407,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FC8BD431C5622EF00DEFC96 /* FAQModel.swift in Sources */,
 				3FD2ACA11C53782600EB07EA /* BeaconControllerDelegate.swift in Sources */,
 				3F0547DF1BFF354B0061B3F0 /* HomeHelper.swift in Sources */,
 				3F7232A01C206526004E7503 /* LightView.swift in Sources */,
@@ -420,6 +435,7 @@
 				3F8D91761C3546BB00DCCED3 /* AccViewDelegate.swift in Sources */,
 				3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */,
 				3F3B24901C2348240037CD24 /* EnergyView.swift in Sources */,
+				3FC8BD451C562A3C00DEFC96 /* FAQCell.swift in Sources */,
 				3F3DB81D1BBE750800854DE5 /* AppDelegate.swift in Sources */,
 				3F0547E81BFF61D00061B3F0 /* DetailViewController.swift in Sources */,
 				3FA972FF1C2329170031E439 /* DiverseViewController.swift in Sources */,

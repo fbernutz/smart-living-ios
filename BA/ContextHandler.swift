@@ -68,7 +68,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     var isBeaconFound: Bool? = false
     
     var contextDelegate: ContextHandlerDelegate?
-    var beaconController = BeaconController()
+    var beaconController: BeaconController?
     
     
     override init() {
@@ -81,7 +81,11 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         
         accessoryStoryboard = UIStoryboard(name: "Accessories", bundle: nil)
         
-        startSearchingForBeacons()
+        if beaconController == nil {
+            beaconController = BeaconController()
+        }
+        beaconController!.delegate = self
+        beaconController!.checkAuthorization()
     }
     
     
@@ -197,11 +201,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     
     
     // MARK: - Beacon functions
-    
-    func startSearchingForBeacons() {
-        beaconController.delegate = self
-        beaconController.checkAuthorization()
-    }
     
     func beaconFound(manager: BeaconController, major: Int, minor: Int){
         isBeaconFound = true

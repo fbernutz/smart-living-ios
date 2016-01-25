@@ -10,5 +10,9 @@ import UIKit
 
 class ImprintViewController: UIViewController {
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Impressum"
+    }
     
 }
