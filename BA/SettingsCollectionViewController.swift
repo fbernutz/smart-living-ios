@@ -19,7 +19,7 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
 
         title = "Weiteres"
         
-        settings = ["Impressum", "FAQ", "Galerie"]
+        settings = ["Impressum", "FAQ", "Info"]
     }
 
     // MARK: UICollectionViewDataSource
@@ -47,11 +47,11 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            performSegueWithIdentifier(settings[indexPath.row], sender: self)
+            performSegueWithIdentifier("Impressum", sender: self)
         case 1:
-            performSegueWithIdentifier(settings[indexPath.row], sender: self)
+            performSegueWithIdentifier("FAQ", sender: self)
         case 2:
-            performSegueWithIdentifier(settings[indexPath.row], sender: self)
+            performSegueWithIdentifier("Galerie", sender: self)
         default: break
         }
     }
@@ -59,11 +59,11 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     //MARK: - Prepare for Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == settings[0] {
+        if segue.identifier == "Impressum" {
             let _ = segue.destinationViewController as! ImprintViewController
-        } else if segue.identifier == settings[1] {
+        } else if segue.identifier == "FAQ" {
             let _ = segue.destinationViewController as! FAQViewController
-        } else if segue.identifier == settings[2] {
+        } else if segue.identifier == "Galerie" {
             let _ = segue.destinationViewController as! GalleryViewController
         }
     }

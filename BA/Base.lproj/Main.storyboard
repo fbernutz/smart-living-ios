@@ -184,20 +184,20 @@
                                                 <rect key="frame" x="20" y="20" width="560" height="100"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Home" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uu1-Lc-Yd4">
-                                                        <rect key="frame" x="20" y="20" width="66" height="32"/>
+                                                        <rect key="frame" x="20" y="20" width="65.5" height="31.5"/>
                                                         <fontDescription key="fontDescription" name="Ikaros-Regular" family="Ikaros Sans" pointSize="25"/>
                                                         <color key="textColor" red="0.34509803919999998" green="0.4823529412" blue="0.49803921569999998" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9rT-1X-Pd2">
-                                                        <rect key="frame" x="20" y="59" width="540" height="21"/>
+                                                        <rect key="frame" x="20" y="59" width="540" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPS-1P-Ope">
-                                                        <rect key="frame" x="489" y="21" width="51" height="30"/>
-                                                        <state key="normal" title="change"/>
+                                                        <rect key="frame" x="475" y="21" width="65" height="30"/>
+                                                        <state key="normal" title="wechseln"/>
                                                         <variation key="heightClass=compact" misplaced="YES">
                                                             <rect key="frame" x="501" y="32" width="51" height="30"/>
                                                         </variation>
@@ -727,16 +727,16 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xBf-zl-YWP">
-                                <rect key="frame" x="20" y="28" width="560" height="564"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xBf-zl-YWP">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="xBf-zl-YWP" firstAttribute="leading" secondItem="lv5-YH-9TV" secondAttribute="leading" constant="20" symbolic="YES" id="GSD-U1-VTR"/>
-                            <constraint firstItem="OYe-xh-rA1" firstAttribute="top" secondItem="xBf-zl-YWP" secondAttribute="bottom" constant="8" symbolic="YES" id="Qq8-Pv-IpD"/>
-                            <constraint firstItem="xBf-zl-YWP" firstAttribute="top" secondItem="Ekr-7K-54b" secondAttribute="bottom" constant="8" symbolic="YES" id="fAL-jy-IZR"/>
-                            <constraint firstAttribute="trailing" secondItem="xBf-zl-YWP" secondAttribute="trailing" constant="20" symbolic="YES" id="jMt-yI-J3g"/>
+                            <constraint firstItem="xBf-zl-YWP" firstAttribute="leading" secondItem="lv5-YH-9TV" secondAttribute="leading" id="GSD-U1-VTR"/>
+                            <constraint firstItem="OYe-xh-rA1" firstAttribute="top" secondItem="xBf-zl-YWP" secondAttribute="bottom" id="Qq8-Pv-IpD"/>
+                            <constraint firstItem="xBf-zl-YWP" firstAttribute="top" secondItem="Ekr-7K-54b" secondAttribute="bottom" id="fAL-jy-IZR"/>
+                            <constraint firstAttribute="trailing" secondItem="xBf-zl-YWP" secondAttribute="trailing" id="jMt-yI-J3g"/>
                         </constraints>
                     </view>
                     <connections>

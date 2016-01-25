@@ -13,17 +13,16 @@ class GalleryViewController: UIViewController, UIPageViewControllerDataSource {
     private var pageViewController: UIPageViewController?
     private var index : Int?
     
-    private let contentImages = ["workflow_introduction_01.png",
-        "workflow_introduction_02.png",
-        "workflow_introduction_03.png",
-        "workflow_introduction_04.png",
-        "workflow_introduction_05.png",
-        "workflow_introduction_06.png"]
+    private let contentImages = ["workflow-1.png",
+        "workflow-2.png",
+        "workflow-3.png",
+        "workflow-4.png",
+        "workflow-5.png"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Galerie"
+        title = "Info"
         
         createPageViewController()
         setupPageControl()
