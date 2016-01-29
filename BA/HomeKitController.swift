@@ -162,22 +162,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //the search for characteristics starts here
         newAcc.retrieveCharacteristics(hmService!)
         
-//        setNotificationsEnabled(hmService!, notificationsEnabled: true)
-        
         return newAcc
     }
-    
-//    func setNotificationsEnabled(hmService: HMService, notificationsEnabled: Bool) {
-//        for characteristic in hmService.characteristics {
-//            if characteristic.supportsEventNotification() {
-//                characteristic.enableNotification(notificationsEnabled) { error in
-//                    if let error = error {
-//                        print("HomeKit: Error enabling notification on charcteristic '\(characteristic)': \(error.localizedDescription)")
-//                    }
-//                }
-//            }
-//        }
-//    }
     
     func retrieveHMService(accessory: HMAccessory) -> HMService {
         
