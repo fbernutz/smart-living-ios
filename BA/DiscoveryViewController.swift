@@ -13,8 +13,8 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     var contextHandler: ContextHandler?
     var controller : HomeKitController?
     
-    let searchingTitle = "Searching..."
-    let discoveredTitle = "Discovered"
+    let searchingTitle = "Auf der Suche..."
+    let discoveredTitle = "Tada!"
     
     var isAddingAccessory : Bool = false
     
@@ -33,7 +33,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         title = searchingTitle
         accessoryList = controller!.discoveredAccessories()
         
-        self.refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -85,12 +85,16 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
     
     func refresh(sender: AnyObject) {
         if title == discoveredTitle {
-            controller?.startSearchingForAccessories()
+            controller!.startSearchingForAccessories()
             title = searchingTitle
-            refreshControl?.endRefreshing()
+            if self.refreshControl!.refreshing {
+                self.refreshControl!.endRefreshing()
+            }
             tableView?.reloadData()
         } else {
-            refreshControl?.endRefreshing()
+            if self.refreshControl!.refreshing {
+            self.refreshControl!.endRefreshing()
+            }
         }
     }
     

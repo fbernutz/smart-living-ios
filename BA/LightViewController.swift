@@ -109,10 +109,10 @@ class LightViewController: UIViewController, AccViewDelegate {
     
     func setPowerState(state: Bool?) {
         if let state = state {
-            lightView!.stateSwitch!.enabled = true
+            lightView!.stateSwitch!.hidden = false
             lightView!.stateSwitch!.setOn(state, animated: false)
         } else {
-            lightView!.stateSwitch!.enabled = false
+            lightView!.stateSwitch!.hidden = true
         }
     }
     

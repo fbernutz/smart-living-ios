@@ -193,12 +193,22 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         }
     }
     
+    // TODO: fertig mit Characteristic darstellen
+//    func accessoryCharacteristicLoaded(accessory: IAccessory) {
+//        var countAccessories = 0
+//        countAccessories++
+//        
+//        if viewControllerArray?.count == countAccessories {
+//            
+//        }
+//    }
+    
+    
     // MARK: - Adding a new accessory
     
     func addNewAccessory(accessory: String, completionHandler: (success: Bool, error: NSError?) -> () ) {
         homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!, completionHandler: completionHandler)
     }
-    
     
     // MARK: - Beacon functions
     

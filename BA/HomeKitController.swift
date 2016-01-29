@@ -150,7 +150,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         var hmService : HMService?
         let hmName = homeKitAccessory.name
         
-        //set delegate to detect changes HMAccessory
+        //set delegate to detect changes to HMAccessory
         homeKitAccessory.delegate = self
         
         hmService = retrieveHMService(homeKitAccessory)
@@ -422,6 +422,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                         
                         //1 create a new IAccessories for paired HMAccessories
                         var newAccessory = self.createIAccessory(homeKitAccessory)
+                        
+                        self.homeKitAccessories?.append(homeKitAccessory)
                         
                         //2 for new IAccessory check if its characteristics is empty
                         if newAccessory.characteristics.isEmpty {

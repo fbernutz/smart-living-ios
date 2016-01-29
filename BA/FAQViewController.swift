@@ -13,36 +13,31 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
     @IBOutlet weak var questionsLabel: UILabel?
     @IBOutlet weak var answersLabel: UILabel?
     
-    var filteredTableData = [FAQ]()
-    var resultSearchController = UISearchController()
-    
+    lazy var filteredTableData = [FAQ]()
+    lazy var resultSearchController = UISearchController(searchResultsController: nil)
     lazy var faq = FAQModel().provideFAQs()
-    private var showAnswers : [Bool] = [false, false, false, false, false, false, false, false]
+    
+    private var showAnswers : [Bool] = [false, false, false, false, false, false, false, false, false]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "FAQ"
         
-        self.tableView.rowHeight = UITableViewAutomaticDimension
-        self.tableView.estimatedRowHeight = 44.0
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.estimatedRowHeight = 44.0
         
-        self.resultSearchController = ({
-            let controller = UISearchController(searchResultsController: nil)
-            controller.searchResultsUpdater = self
-            controller.dimsBackgroundDuringPresentation = false
-            controller.searchBar.sizeToFit()
-            
-            self.tableView.tableHeaderView = controller.searchBar
-            
-            return controller
-        })()
+        // Set up search controller
+        resultSearchController.searchResultsUpdater = self
+        resultSearchController.dimsBackgroundDuringPresentation = false
+        resultSearchController.searchBar.sizeToFit()
+        tableView.tableHeaderView = resultSearchController.searchBar
         
         // Reload the table
-        self.tableView.reloadData()
+        tableView.reloadData()
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (self.resultSearchController.active) {
+        if resultSearchController.active {
             return self.filteredTableData.count
         }
         else {
@@ -54,7 +49,7 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
         let row = indexPath.row
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FAQCell
         
-        if (self.resultSearchController.active) {
+        if resultSearchController.active {
             cell.questionLabel?.text = filteredTableData[row].question
             cell.answerLabel?.text = filteredTableData[row].answer
             return cell
@@ -62,7 +57,7 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
         else {
             cell.questionLabel?.text = faq[row].question
             cell.answerLabel?.text = faq[row].answer
-            cell.setCollapsed(!showAnswers[row])
+//            cell.setCollapsed(!showAnswers[row])
             return cell
         }
         
@@ -107,7 +102,7 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
     
     //MARK: - Search Controller
     
-    func updateSearchResultsForSearchController(searchController: UISearchController){
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
         filteredTableData.removeAll(keepCapacity: false)
         
         filteredTableData = faq.filter{
