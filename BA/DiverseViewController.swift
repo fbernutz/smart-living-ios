@@ -38,6 +38,8 @@ class DiverseViewController: UIViewController {
         }
     }
     
+    var size : CGFloat?
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -55,6 +57,9 @@ class DiverseViewController: UIViewController {
                 diverseView!.loadingIndicator!.stopAnimating()
             }
         }
+        
+        
+        size = diverseView?.cView?.frame.size.height
     }
     
     // MARK: - Set Values in LightView
@@ -66,17 +71,19 @@ class DiverseViewController: UIViewController {
     
     func setService(name: String?) {
         if let _ = serviceName {
-            diverseView!.serviceName!.text = name
+            diverseView?.serviceName?.hidden = false
+            diverseView?.serviceName?.text = name
         } else {
-            diverseView!.serviceName!.text = "Not Found"
+            diverseView?.serviceName?.hidden = true
         }
     }
     
     func setName(name: String?) {
         if let name = name {
-            diverseView!.infotext!.text = name
+            diverseView?.infotext?.hidden = false
+            diverseView?.infotext?.text = name
         } else {
-            diverseView!.infotext!.text = "Not Found"
+            diverseView?.infotext?.hidden = true
         }
     }
     

@@ -49,6 +49,8 @@ class EnergyViewController: UIViewController, AccViewDelegate {
         }
     }
     
+    var size : CGFloat?
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -68,6 +70,9 @@ class EnergyViewController: UIViewController, AccViewDelegate {
                 energyView!.loadingIndicator!.stopAnimating()
             }
         }
+        
+        
+        size = energyView?.cView?.frame.size.height
     }
     
     // MARK: - Set Values in LightView
@@ -88,20 +93,19 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     
     func setName(name: String?) {
         if let name = name {
-            energyView!.infotext!.text = name
+            energyView?.infotext?.hidden = false
+            energyView?.infotext?.text = name
         } else {
-            energyView!.infotext!.text = "Not Found"
+            energyView?.infotext?.hidden = true
         }
     }
     
     func setPowerState(state: Bool?) {
         if let state = state {
             energyView!.powerState!.hidden = false
-            energyView!.powerState!.enabled = true
             energyView!.powerState!.setOn(state, animated: false)
         } else {
             energyView!.powerState!.hidden = true
-            energyView!.powerState!.enabled = false
         }
     }
     

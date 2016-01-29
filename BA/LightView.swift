@@ -10,10 +10,12 @@ import UIKit
 
 class LightView: AccView {
     
+    @IBOutlet weak var cView: UIView?
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var slider: UISlider?
     @IBOutlet weak var icon: UIImageView?
     @IBOutlet weak var stateSwitch: UISwitch?
+    @IBOutlet weak var brightness: UILabel?
     
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
     

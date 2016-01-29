@@ -12,6 +12,7 @@ class EnergyView: AccView {
     
     var delegate : AccViewDelegate?
     
+    @IBOutlet weak var cView: UIView?
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var powerConsumptionText: UILabel?
     @IBOutlet weak var powerState: UISwitch?

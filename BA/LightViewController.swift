@@ -56,6 +56,8 @@ class LightViewController: UIViewController, AccViewDelegate {
         }
     }
     
+    var size : CGFloat?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -70,6 +72,8 @@ class LightViewController: UIViewController, AccViewDelegate {
                 lightView!.loadingIndicator!.stopAnimating()
             }
         }
+        
+        size = lightView?.cView?.frame.size.height
     }
     
     // MARK: - Set Values in LightView
@@ -77,8 +81,13 @@ class LightViewController: UIViewController, AccViewDelegate {
     func setCharacteristics() {
         setService(nil)
         setName(accessory?.name)
-        setBrightness(brightnessValue)
         setPowerState(state)
+        
+        if state == true {
+            setBrightness(brightnessValue)
+        } else {
+            setBrightness(0)
+        }
     }
     
     func setService(name: String?) {
@@ -91,9 +100,10 @@ class LightViewController: UIViewController, AccViewDelegate {
     
     func setName(name: String?) {
         if let name = name {
-            lightView!.infotext!.text = name
+            lightView?.infotext?.hidden = false
+            lightView?.infotext?.text = name
         } else {
-            lightView!.infotext!.text = "Not Found"
+            lightView?.infotext?.hidden = false
         }
     }
     
@@ -101,9 +111,11 @@ class LightViewController: UIViewController, AccViewDelegate {
         if let value = value {
             lightView!.slider!.value = value
             lightView!.slider!.hidden = false
+            lightView!.brightness!.text = "Helligkeit: \(Int(value))%"
+            lightView!.brightness!.hidden = false
         } else {
-            lightView!.slider!.value = 0
             lightView!.slider!.hidden = true
+            lightView!.brightness!.hidden = true
         }
     }
     
@@ -111,6 +123,7 @@ class LightViewController: UIViewController, AccViewDelegate {
         if let state = state {
             lightView!.stateSwitch!.hidden = false
             lightView!.stateSwitch!.setOn(state, animated: false)
+            
         } else {
             lightView!.stateSwitch!.hidden = true
         }
@@ -119,10 +132,16 @@ class LightViewController: UIViewController, AccViewDelegate {
     // MARK: - AccViewDelegate
 
     func accViewSliderChanged(value: Float) {
+        lightView!.brightness!.text = "Helligkeit: \(Int(value))%"
         contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.brightness:value])
     }
     
     func accViewSwitchTapped(state: Bool) {
+        if state == true {
+            setBrightness(brightnessValue)
+        } else {
+            setBrightness(0)
+        }
         contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state])
     }
     

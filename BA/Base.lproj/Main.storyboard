@@ -464,7 +464,7 @@
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Room" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxU-g5-vwx">
-                                    <rect key="frame" x="88" y="24" width="52" height="20"/>
+                                    <rect key="frame" x="88" y="26" width="52" height="20"/>
                                     <fontDescription key="fontDescription" name="Ikaros-Regular" family="Ikaros Sans" pointSize="20"/>
                                     <color key="textColor" red="0.15686274510000001" green="0.32156862749999998" blue="0.55294117649999996" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -472,16 +472,30 @@
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
-                                <constraint firstItem="oxU-g5-vwx" firstAttribute="centerY" secondItem="4qI-Fh-Cdk" secondAttribute="centerY" id="3Bs-8u-WBk"/>
+                                <constraint firstItem="oxU-g5-vwx" firstAttribute="baseline" secondItem="4qI-Fh-Cdk" secondAttribute="baseline" id="1qA-FN-dcE"/>
+                                <constraint firstItem="oxU-g5-vwx" firstAttribute="centerY" secondItem="4qI-Fh-Cdk" secondAttribute="centerY" constant="2" id="3Bs-8u-WBk"/>
                                 <constraint firstItem="4qI-Fh-Cdk" firstAttribute="top" secondItem="057-Dz-N43" secondAttribute="top" constant="20" symbolic="YES" id="59h-vJ-erk"/>
                                 <constraint firstItem="4qI-Fh-Cdk" firstAttribute="leading" secondItem="057-Dz-N43" secondAttribute="leading" constant="20" symbolic="YES" id="7jw-43-Msf"/>
+                                <constraint firstItem="oxU-g5-vwx" firstAttribute="height" secondItem="4qI-Fh-Cdk" secondAttribute="height" id="9Dp-60-uAg"/>
+                                <constraint firstItem="oxU-g5-vwx" firstAttribute="top" secondItem="4qI-Fh-Cdk" secondAttribute="top" id="B1J-lc-F0N"/>
                                 <constraint firstItem="oxU-g5-vwx" firstAttribute="leading" secondItem="3oe-z7-2li" secondAttribute="trailing" constant="4" id="FBr-T4-fRG"/>
                                 <constraint firstItem="3oe-z7-2li" firstAttribute="centerY" secondItem="4qI-Fh-Cdk" secondAttribute="centerY" constant="-4" id="K7v-zx-niG"/>
                                 <constraint firstItem="3oe-z7-2li" firstAttribute="leading" secondItem="4qI-Fh-Cdk" secondAttribute="trailing" constant="4" id="QFr-l4-3MB"/>
                                 <constraint firstAttribute="trailing" secondItem="C59-z9-Imj" secondAttribute="trailing" constant="20" symbolic="YES" id="R33-3M-eeN"/>
                                 <constraint firstItem="C59-z9-Imj" firstAttribute="centerY" secondItem="4qI-Fh-Cdk" secondAttribute="centerY" constant="10" id="VYn-Jf-qC1"/>
                                 <constraint firstAttribute="bottom" secondItem="4qI-Fh-Cdk" secondAttribute="bottom" constant="20" symbolic="YES" id="bQ2-rw-PxM"/>
+                                <constraint firstItem="oxU-g5-vwx" firstAttribute="baseline" secondItem="4qI-Fh-Cdk" secondAttribute="baseline" id="eF5-cd-cPJ"/>
+                                <constraint firstItem="oxU-g5-vwx" firstAttribute="bottom" secondItem="4qI-Fh-Cdk" secondAttribute="bottom" id="jMY-yu-2NA"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="1qA-FN-dcE"/>
+                                    <exclude reference="9Dp-60-uAg"/>
+                                    <exclude reference="B1J-lc-F0N"/>
+                                    <exclude reference="eF5-cd-cPJ"/>
+                                    <exclude reference="jMY-yu-2NA"/>
+                                </mask>
+                            </variation>
                             <connections>
                                 <outlet property="changeRoomButton" destination="C59-z9-Imj" id="YDn-2e-N3A"/>
                                 <outlet property="homeName" destination="4qI-Fh-Cdk" id="K7s-Ql-06Q"/>
@@ -497,7 +511,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="accessoryCell" id="g1t-YL-89a">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="accessoryCell" id="g1t-YL-89a">
                                 <rect key="frame" x="0.0" y="225.5" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="g1t-YL-89a" id="VMm-fi-r04">
@@ -515,8 +529,8 @@
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="contactAdd" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w7Y-5r-SKx">
                                             <rect key="frame" x="20" y="11" width="22" height="22"/>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weitere hinzufügen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HCp-15-7rG">
-                                            <rect key="frame" x="50" y="11" width="149" height="20.5"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Weitere Geräte hinzufügen" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HCp-15-7rG">
+                                            <rect key="frame" x="50" y="11" width="205" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
@@ -546,8 +560,8 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0g1-2Z-Uc7">
-                                            <rect key="frame" x="20" y="7" width="133" height="30"/>
-                                            <state key="normal" title="Beacon hinzufügen"/>
+                                            <rect key="frame" x="20" y="7" width="136" height="30"/>
+                                            <state key="normal" title="iBeacon hinzufügen"/>
                                             <connections>
                                                 <action selector="addBeacon:" destination="Hvk-TA-Y4R" eventType="touchUpInside" id="9Oi-ms-8qP"/>
                                             </connections>

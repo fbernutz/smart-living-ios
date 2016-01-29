@@ -157,36 +157,39 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let row = indexPath.row
         
-//        if viewControllerArray.count != 0 {
-//            let vcInRow = viewControllerArray[indexPath.row]
-//            var view : UIView?
-//            
-//            switch vcInRow {
-//            case is LightViewController:
-//                view = vcInRow.view as! LightView
-//                break
-//            case is WeatherViewController:
-//                view = vcInRow.view as! WeatherView
-//                break
-//            case is EnergyViewController:
-//                view = vcInRow.view as! EnergyView
-//                break
-//            case is DoorWindowViewController:
-//                view = vcInRow.view as! DoorWindowView
-//                break
-//            case is DiverseViewController:
-//                view = vcInRow.view as! DiverseView
-//                break
-//            default:
-//                break
-//            }
-//            print(view!.frame)
-//            let size = view!.frame.height
-//            print(size)
-//            return size
-//        }
-        
+        if viewControllerArray.count != 0 {
+            if row < viewControllerArray.count {
+                let vcInRow = viewControllerArray[row]
+                
+                switch vcInRow {
+                case is LightViewController:
+                    let vc = vcInRow as! LightViewController
+                    return vc.size!
+                case is WeatherViewController:
+                    let vc = vcInRow as! WeatherViewController
+                    return vc.size!
+                case is EnergyViewController:
+                    let vc = vcInRow as! EnergyViewController
+                    return vc.size!
+                case is DoorWindowViewController:
+                    let vc = vcInRow as! DoorWindowViewController
+                    return vc.size!
+                case is DiverseViewController:
+                    let vc = vcInRow as! DiverseViewController
+                    return vc.size!
+                default:
+                    break
+                }
+                
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                let size = cell.contentView.frame.size.height
+                return size
+            }
+        }
+    
         return 100
     }
     

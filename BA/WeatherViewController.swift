@@ -67,6 +67,8 @@ class WeatherViewController: UIViewController {
         }
     }
     
+    var size : CGFloat?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -79,6 +81,9 @@ class WeatherViewController: UIViewController {
                 weatherView!.loadingIndicator!.stopAnimating()
             }
         }
+        
+        
+        size = weatherView?.cView?.frame.size.height
     }
     
     // MARK: - Set Values in LightView
@@ -101,34 +106,38 @@ class WeatherViewController: UIViewController {
     
     func setName(name: String?) {
         if let name = name {
-            weatherView?.humidity?.text = name
+            weatherView?.name?.hidden = false
+            weatherView?.name?.text = name
         } else {
-            weatherView?.humidity?.text = "Not Found"
+            weatherView?.name?.hidden = true
         }
     }
     
     func setTemperature(value: Float?) {
         if let value = value {
-            let roundedValue = roundToPlaces(Double(value), places: 2)
-            weatherView?.temperature?.text = "\(roundedValue)°C"
+            weatherView?.temperature?.hidden = false
+            let roundedValue = roundToPlaces(Double(value), places: 1)
+            weatherView?.temperature?.text = "\(roundedValue) °C"
         } else {
-            weatherView?.temperature?.text = "temp?"
+            weatherView?.temperature?.hidden = true
         }
     }
     
     func setHumidity(value: Float?) {
         if let value = value {
-            weatherView?.humidity?.text = "\(value)%"
+            weatherView?.humidity?.hidden = false
+            weatherView?.humidity?.text = "Luftfeuchtigkeit: \(value) %"
         } else {
-            weatherView?.humidity?.text = "humidity?"
+            weatherView?.humidity?.hidden = true
         }
     }
     
     func setPressure(value: Float?) {
         if let value = value {
-            weatherView?.pressure?.text = "\(value) mbar"
+            weatherView?.pressure?.hidden = false
+            weatherView?.pressure?.text = "Luftdruck: \(value) mbar"
         } else {
-            weatherView?.pressure?.text = "pressure?"
+            weatherView?.pressure?.hidden = true
         }
     }
 

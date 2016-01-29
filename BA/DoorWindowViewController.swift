@@ -73,6 +73,8 @@ class DoorWindowViewController: UIViewController {
         }
     }
     
+    var size : CGFloat?
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -97,6 +99,9 @@ class DoorWindowViewController: UIViewController {
                 doorWindowView!.loadingIndicator!.stopAnimating()
             }
         }
+        
+        
+        size = doorWindowView?.cView?.frame.size.height
     }
     
     // MARK: - Read and write door counter plist
@@ -170,39 +175,41 @@ class DoorWindowViewController: UIViewController {
     
     func setName(name: String?) {
         if let name = name {
-            doorWindowView!.infotext!.text = name
+            doorWindowView?.infotext?.hidden = false
+            doorWindowView?.infotext?.text = name
         } else {
-            doorWindowView!.infotext!.text = "Not Found"
+            doorWindowView?.infotext?.hidden = true
         }
     }
     
     func setDoorState(state: Bool?) {
         if let state = state {
-            doorWindowView!.doorStateBtn!.enabled = true
+            doorWindowView?.doorStateBtn?.hidden = false
             if !state {
-                doorWindowView!.doorStateBtn!.setTitle("Offen", forState: .Normal)
+                doorWindowView?.doorStateBtn?.setTitle("Offen", forState: .Normal)
             } else {
-                doorWindowView!.doorStateBtn!.setTitle("Zu", forState: .Normal)
+                doorWindowView?.doorStateBtn?.setTitle("Zu", forState: .Normal)
             }
         } else {
-            doorWindowView!.doorStateBtn!.enabled = false
-            doorWindowView!.doorStateBtn!.setTitle("No", forState: .Normal)
+            doorWindowView?.doorStateBtn?.hidden = true
         }
     }
     
     func setLastTime(time: NSDate?) {
         if let time = time {
-            doorWindowView!.stateChangedTime?.text = "\(time)"
+            doorWindowView?.stateChangedTime?.hidden = false
+            doorWindowView?.stateChangedTime?.text = "\(time)"
         } else {
-            doorWindowView!.stateChangedTime?.text = "Not found"
+            doorWindowView?.stateChangedTime?.hidden = true
         }
     }
     
     func setDoorCounter(counter: Int?) {
         if let counter = counter {
-            doorWindowView!.stateChangedTime?.text = "\(counter)"
+            doorWindowView?.stateChangedTime?.hidden = false
+            doorWindowView?.stateChangedTime?.text = "\(counter)x"
         } else {
-            doorWindowView!.stateChangedTime?.text = "Not found"
+            doorWindowView?.stateChangedTime?.hidden = true
         }
     }
     
