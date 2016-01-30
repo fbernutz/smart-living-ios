@@ -22,7 +22,7 @@ class GalleryViewController: UIViewController, UIPageViewControllerDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Info"
+        title = "Info-Galerie"
         
         createPageViewController()
         setupPageControl()

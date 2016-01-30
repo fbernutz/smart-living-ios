@@ -93,7 +93,8 @@ class WeatherViewController: UIViewController {
         setName(accessory?.name)
         setTemperature(temp)
         setHumidity(humidity)
-        setPressure(pressure)
+        setPressure(1018)
+//        setPressure(pressure)
     }
     
     func setService(name: String?) {
@@ -135,7 +136,7 @@ class WeatherViewController: UIViewController {
     func setPressure(value: Float?) {
         if let value = value {
             weatherView?.pressure?.hidden = false
-            weatherView?.pressure?.text = "Luftdruck: \(value) mbar"
+            weatherView?.pressure?.text = "Luftdruck: \(value) hPa"
         } else {
             weatherView?.pressure?.hidden = true
         }

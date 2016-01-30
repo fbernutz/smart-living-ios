@@ -142,6 +142,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     completionHandler(self.pairedAccessories!)
                 }
             }
+        } else {
+            homeKitAccessories = []
         }
         
     }
@@ -179,12 +181,12 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     
-    private func getIAccessory(hmAccessory: HMAccessory) -> IAccessory {
-        return pairedAccessories!.filter{ $0.uniqueID! == hmAccessory.uniqueIdentifier }.first!
+    private func getIAccessory(hmAccessory: HMAccessory) -> IAccessory? {
+        return pairedAccessories!.filter{ $0.uniqueID! == hmAccessory.uniqueIdentifier }.first
     }
     
-    private func getHMAccessory(iAccessory: IAccessory) -> HMAccessory {
-        return homeKitAccessories!.filter{ $0.uniqueIdentifier == iAccessory.uniqueID }.first!
+    private func getHMAccessory(iAccessory: IAccessory) -> HMAccessory? {
+        return homeKitAccessories!.filter{ $0.uniqueIdentifier == iAccessory.uniqueID }.first
     }
     
     // MARK: - Home Functions
@@ -462,14 +464,28 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         for var acc in pairedAccessories! {
             //1 find HMService for IAccessory
             let hmAcc = getHMAccessory(acc)
-            hmService = retrieveHMService(hmAcc)
-            
-            //2 loading characteristic for IAccessory started
-            acc.retrieveCharacteristics(hmService!)
-            
-            if acc.characteristics.isEmpty {
-                acc.characteristicBlock = { () in
-                    
+            if let hmAcc = hmAcc {
+                hmService = retrieveHMService(hmAcc)
+                
+                //2 loading characteristic for IAccessory started
+                acc.retrieveCharacteristics(hmService!)
+                
+                if acc.characteristics.isEmpty {
+                    acc.characteristicBlock = { () in
+                        
+                        //3 get and save loaded characteristics
+                        acc.characteristics = acc.getCharacteristics()!
+                        
+                        //4 save new loaded IAccessory with characteristics in pairedAccessories
+                        let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
+                        self.pairedAccessories![index!] = acc
+                        counter++
+                        
+                        if counter == self.pairedAccessories?.count {
+                            completionHandler()
+                        }
+                    }
+                } else {
                     //3 get and save loaded characteristics
                     acc.characteristics = acc.getCharacteristics()!
                     
@@ -483,17 +499,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     }
                 }
             } else {
-                //3 get and save loaded characteristics
-                acc.characteristics = acc.getCharacteristics()!
-                
-                //4 save new loaded IAccessory with characteristics in pairedAccessories
-                let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
-                self.pairedAccessories![index!] = acc
-                counter++
-                
-                if counter == self.pairedAccessories?.count {
-                    completionHandler()
-                }
+                completionHandler()
             }
         }
     }
@@ -506,15 +512,15 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //1 find IAccessory for HMAccessory
         var iAccessory = getIAccessory(accessory)
         
-        if let key = key {
-            if value !== iAccessory.characteristics[key] {
+        if key != nil && iAccessory != nil {
+            if value !== iAccessory!.characteristics[key!] {
             
                 //2 set new values for IAccessory, but NUR WENN DER WERT WIRKLCIH EIN ANDERER IST
-                iAccessory.characteristics[key] = value
+                iAccessory!.characteristics[key!] = value
                 
                 //3 write changed IAccessory to pairedAccessories
-                let index = pairedAccessories!.indexOf({ $0.uniqueID == iAccessory.uniqueID })
-                pairedAccessories![index!] = iAccessory
+                let index = pairedAccessories!.indexOf({ $0.uniqueID == iAccessory!.uniqueID })
+                pairedAccessories![index!] = iAccessory!
             }
         }
     }
@@ -527,26 +533,29 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //1 find HMAccessory for IAccessory
         let hmAccessory = getHMAccessory(accessory)
         
-        //2 find HMCharacteristicType for CharacteristicKey
-        let homeKitType = dictKeyToHomeKitType!.filter{ $0.0 == characteristicKey }.first.map{ $0.1 }
-        
-        //3 change CharacteristicValue to correct type
-        if homeKitType == (HMCharacteristicTypeBrightness as String){
-            characteristicValue = characteristicValue as! Int
-        } else if homeKitType == (HMCharacteristicTypePowerState as String){
-            characteristicValue = characteristicValue as! Bool
-        }
-        
-        //4 find HMCharacteristic to write new value
-        let hmService = hmAccessory.services.filter{ ($0.serviceType == HMServiceTypeOutlet) || ($0.serviceType == HMServiceTypeLightbulb) }.first
-        let characteristic = hmService!.characteristics.filter{ $0.characteristicType == homeKitType }.first
-        
-        //5 write new value on HMCharacteristic
-        characteristic!.writeValue(characteristicValue, completionHandler: { error in
-            if let error = error {
-                NSLog("Failed to update value \(error)")
+        if let hmAccessory = hmAccessory {
+            
+            //2 find HMCharacteristicType for CharacteristicKey
+            let homeKitType = dictKeyToHomeKitType!.filter{ $0.0 == characteristicKey }.first.map{ $0.1 }
+            
+            //3 change CharacteristicValue to correct type
+            if homeKitType == (HMCharacteristicTypeBrightness as String){
+                characteristicValue = characteristicValue as! Int
+            } else if homeKitType == (HMCharacteristicTypePowerState as String){
+                characteristicValue = characteristicValue as! Bool
             }
-        })
+            
+            //4 find HMCharacteristic to write new value
+            let hmService = hmAccessory.services.filter{ ($0.serviceType == HMServiceTypeOutlet) || ($0.serviceType == HMServiceTypeLightbulb) }.first
+            let characteristic = hmService!.characteristics.filter{ $0.characteristicType == homeKitType }.first
+            
+            //5 write new value on HMCharacteristic
+            characteristic!.writeValue(characteristicValue, completionHandler: { error in
+                if let error = error {
+                    NSLog("Failed to update value \(error)")
+                }
+            })
+        }
         
     }
     

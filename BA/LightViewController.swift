@@ -83,10 +83,12 @@ class LightViewController: UIViewController, AccViewDelegate {
         setName(accessory?.name)
         setPowerState(state)
         
-        if state == true {
-            setBrightness(brightnessValue)
-        } else {
-            setBrightness(0)
+        if let brightness = brightnessValue {
+            if state == true {
+                setBrightness(brightness)
+            } else {
+                setBrightness(0)
+            }
         }
     }
     
@@ -137,10 +139,12 @@ class LightViewController: UIViewController, AccViewDelegate {
     }
     
     func accViewSwitchTapped(state: Bool) {
-        if state == true {
-            setBrightness(brightnessValue)
-        } else {
-            setBrightness(0)
+        if let brightness = brightnessValue {
+            if state == true {
+                setBrightness(brightness)
+            } else {
+                setBrightness(0)
+            }
         }
         contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state])
     }

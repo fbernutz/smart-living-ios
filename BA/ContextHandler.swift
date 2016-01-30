@@ -218,10 +218,6 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         majorBeacon = major
         minorBeacon = minor
         
-//        loadSavedData()
-        // TODO: hier zurückgeben lassen ob für das gefunden Beacon schon ein Raum gesetzt wurde und evtl. von selbst anbieten das Beacon zu setzen
-        // und vorher überprüfen ob für den Raum schon ein Beacon gesetzt wurde
-        
         contextDelegate?.roomForBeacon(self, connectorArray: beaconRoomConnectorArray, major: major, minor: minor)
     }
     

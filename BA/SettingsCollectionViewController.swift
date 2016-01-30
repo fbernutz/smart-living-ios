@@ -19,7 +19,7 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
 
         title = "Mehr"
         
-        settings = ["Impressum", "FAQ", "Info"]
+        settings = ["Impressum", "FAQs", "Info-Galerie", "Einstellungen"]
     }
 
     // MARK: UICollectionViewDataSource
@@ -52,6 +52,11 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
             performSegueWithIdentifier("FAQ", sender: self)
         case 2:
             performSegueWithIdentifier("Galerie", sender: self)
+        case 3:
+            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+            if let url = settingsUrl {
+                UIApplication.sharedApplication().openURL(url)
+            }
         default: break
         }
     }

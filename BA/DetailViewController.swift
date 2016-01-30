@@ -133,10 +133,10 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         contextHandler!.retrieveAccessories()
         
         let beacon = contextHandler!.isBeaconConnected(home!, room: room!)
-        if beacon.major != nil && beacon.minor != nil {
+        if let major = beacon.major, let minor =  beacon.minor {
             beaconConnected = true
-            major = beacon.major
-            minor = beacon.minor
+            self.major = major
+            self.minor = minor
         }
         
         if self.refreshControl!.refreshing {
@@ -200,8 +200,17 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
                     default:
                         break
                     }
-                    
                 } else {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    let size = cell.contentView.frame.size.height
+                    return size
+                }
+            } else {
+                if row == 0 {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
+                    let size = cell.contentView.frame.size.height
+                    return size
+                } else if row == 1 {
                     let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
                     let size = cell.contentView.frame.size.height
                     return size
@@ -230,7 +239,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
             if viewControllerArray.count == 0 {
             if row == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
-                cell.textLabel!.text = "No accessories connected"
+                cell.textLabel!.text = "Keine Geräte verfügbar."
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!

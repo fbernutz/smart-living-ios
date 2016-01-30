@@ -66,7 +66,7 @@ class FAQModel {
     
     private func creatingActionSet() -> FAQ {
         let qString = "Was sind Action Sets und wofür kann man sie benutzen?"
-        let aString = "Mit Action Sets kannst du durch einen Auslöser eine Kette von Aktionen hervorrufen. Auslöser können unter anderem eine Statusänderung eines Gerätes sein, die Uhrzeit (wie Sonnenuntergang) oder das Betreten oder Verlassen eines bestimmten Bereichs - auch Geofence - genannt, was entweder über GPS-Koordinaten oder durch iBeacons erkannt werden kann. Denkbar ist dann zum Beispiel nach Sonnenuntergang alle Lichter in den am meisten genutzten Zimmern einzuschalten oder beim Verlassen des Hauses alle nicht dauerhaft genutzte Geräte auszuschalten."
+        let aString = "Mit Action Sets kannst du durch einen Auslöser eine Kette von Aktionen hervorrufen. Auslöser können unter anderem eine Statusänderung eines Gerätes sein, die Uhrzeit (wie die Zeit des Sonnenaufgangs) oder das Betreten oder Verlassen eines bestimmten Bereichs - auch Geofence - genannt, das entweder über GPS-Koordinaten oder durch iBeacons erkannt werden kann. Denkbar ist dann zum Beispiel nach Sonnenuntergang alle Lichter in den am meisten genutzten Zimmern einzuschalten oder beim Verlassen des Hauses alle nicht dauerhaft genutzte Geräte auszuschalten."
         return FAQ(question: qString, answer: aString)
     }
     
