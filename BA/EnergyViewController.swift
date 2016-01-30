@@ -72,7 +72,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
         }
         
         
-        size = energyView?.cView?.frame.size.height
+        size = energyView!.cView!.frame.size.height
     }
     
     // MARK: - Set Values in LightView

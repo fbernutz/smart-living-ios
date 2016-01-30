@@ -101,7 +101,7 @@ class DoorWindowViewController: UIViewController {
         }
         
         
-        size = doorWindowView?.cView?.frame.size.height
+        size = doorWindowView!.cView!.frame.size.height
     }
     
     // MARK: - Read and write door counter plist

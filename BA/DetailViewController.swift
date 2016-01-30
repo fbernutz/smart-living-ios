@@ -19,6 +19,11 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     var major: Int?
     var minor: Int?
     
+    var beaconConnected : Bool = false {
+        didSet {
+            tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+        }
+    }
     
     var localHomes : [Home]?
     var localRooms : [Room]?
@@ -127,6 +132,13 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         room = contextHandler!.retrieveRoom()
         contextHandler!.retrieveAccessories()
         
+        let beacon = contextHandler!.isBeaconConnected(home!, room: room!)
+        if beacon.major != nil && beacon.minor != nil {
+            beaconConnected = true
+            major = beacon.major
+            minor = beacon.minor
+        }
+        
         if self.refreshControl!.refreshing {
             self.refreshControl!.endRefreshing()
         }
@@ -141,15 +153,19 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     // MARK: - TableView Delegates
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if viewControllerArray.count != 0 {
-            return viewControllerArray.count + 1
-        } else {
-            return 1 + 1
+        if section == 0 {
+            if viewControllerArray.count != 0 {
+                return viewControllerArray.count + 1
+            } else {
+                return 1 + 1
+            }
         }
+        
+        return 1
     }
     
     override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -158,33 +174,46 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let row = indexPath.row
+        let section = indexPath.section
         
-        if viewControllerArray.count != 0 {
-            if row < viewControllerArray.count {
-                let vcInRow = viewControllerArray[row]
-                
-                switch vcInRow {
-                case is LightViewController:
-                    let vc = vcInRow as! LightViewController
-                    return vc.size!
-                case is WeatherViewController:
-                    let vc = vcInRow as! WeatherViewController
-                    return vc.size!
-                case is EnergyViewController:
-                    let vc = vcInRow as! EnergyViewController
-                    return vc.size!
-                case is DoorWindowViewController:
-                    let vc = vcInRow as! DoorWindowViewController
-                    return vc.size!
-                case is DiverseViewController:
-                    let vc = vcInRow as! DiverseViewController
-                    return vc.size!
-                default:
-                    break
+        if section == 0 {
+            if viewControllerArray.count != 0 {
+                if row < viewControllerArray.count {
+                    let vcInRow = viewControllerArray[row]
+                    
+                    switch vcInRow {
+                    case is LightViewController:
+                        let vc = vcInRow as! LightViewController
+                        if let size = vc.size { return size } else { 100 }
+                    case is WeatherViewController:
+                        let vc = vcInRow as! WeatherViewController
+                        if let size = vc.size { return size } else { 100 }
+                    case is EnergyViewController:
+                        let vc = vcInRow as! EnergyViewController
+                        if let size = vc.size { return size } else { 100 }
+                    case is DoorWindowViewController:
+                        let vc = vcInRow as! DoorWindowViewController
+                        if let size = vc.size { return size } else { 100 }
+                    case is DiverseViewController:
+                        let vc = vcInRow as! DiverseViewController
+                        if let size = vc.size { return size } else { 100 }
+                    default:
+                        break
+                    }
+                    
+                } else {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    let size = cell.contentView.frame.size.height
+                    return size
                 }
-                
+            }
+        } else if section == 1 {
+            if beaconConnected {
+                let cell = tableView.dequeueReusableCellWithIdentifier("beaconCell")! as! BeaconCell
+                let size = cell.contentView.frame.size.height
+                return size
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                let cell = tableView.dequeueReusableCellWithIdentifier("addBeaconCell")! as! BeaconCell
                 let size = cell.contentView.frame.size.height
                 return size
             }
@@ -195,8 +224,10 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let row = indexPath.row
+        let section = indexPath.section
         
-        if viewControllerArray.count == 0 {
+        if section == 0 {
+            if viewControllerArray.count == 0 {
             if row == 0 {
                 let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
                 cell.textLabel!.text = "No accessories connected"
@@ -206,79 +237,111 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
                 return cell
             }
         } else {
-            if row < viewControllerArray.count {
-                let vcInRow = viewControllerArray[row]
-                let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
-                var view: UIView?
-                
-                switch vcInRow {
-                case is LightViewController:
-                    view = vcInRow.view as! LightView
-                    break
-                case is WeatherViewController:
-                    view = vcInRow.view as! WeatherView
-                    break
-                case is EnergyViewController:
-                    view = vcInRow.view as! EnergyView
-                    break
-                case is DoorWindowViewController:
-                    view = vcInRow.view as! DoorWindowView
-                    break
-                case is DiverseViewController:
-                    view = vcInRow.view as! DiverseView
-                    break
-                default:
-                    break
-                }
-                
-                view!.frame = cell.contentView.frame
-                
-                if !cell.contentView.subviews.isEmpty {
-                    for subview in cell.contentView.subviews {
-                        subview.removeFromSuperview()
+                if row < viewControllerArray.count {
+                    let vcInRow = viewControllerArray[row]
+                    let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
+                    var view: UIView?
+                    
+                    switch vcInRow {
+                    case is LightViewController:
+                        view = vcInRow.view as! LightView
+                        break
+                    case is WeatherViewController:
+                        view = vcInRow.view as! WeatherView
+                        break
+                    case is EnergyViewController:
+                        view = vcInRow.view as! EnergyView
+                        break
+                    case is DoorWindowViewController:
+                        view = vcInRow.view as! DoorWindowView
+                        break
+                    case is DiverseViewController:
+                        view = vcInRow.view as! DiverseView
+                        break
+                    default:
+                        break
                     }
+                    
+                    view!.frame = cell.contentView.frame
+                    
+                    if !cell.contentView.subviews.isEmpty {
+                        for subview in cell.contentView.subviews {
+                            subview.removeFromSuperview()
+                        }
+                    }
+                    
+                    cell.contentView.addSubview(view!)
+                    
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    return cell
                 }
-                
-                cell.contentView.addSubview(view!)
-                
+            }
+        } else {
+            if beaconConnected {
+                let cell = tableView.dequeueReusableCellWithIdentifier("beaconCell")! as! BeaconCell
+                cell.parentTableView = self
+                cell.major = major
+                cell.minor = minor
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                let cell = tableView.dequeueReusableCellWithIdentifier("addBeaconCell")! as! BeaconCell
                 return cell
             }
-            
         }
+        
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row >= viewControllerArray.count {
-            performSegueWithIdentifier("showAllAccessoriesSegue", sender: self)
+        let section = indexPath.section
+        
+        if section == 0 {
+            if indexPath.row >= viewControllerArray.count {
+                performSegueWithIdentifier("showAllAccessoriesSegue", sender: self)
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            } else {
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
         } else {
-            tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            if beaconConnected {
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            } else {
+                let cell = tableView.dequeueReusableCellWithIdentifier("beaconCell")! as! BeaconCell
+                cell.parentTableView = self
+                cell.major = major
+                cell.minor = minor
+                cell.addBeacon()
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
         }
     }
     
     //TableView Section Header
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Verbundene Geräte"
+        if section == 0 {
+            return "Verbundene Geräte"
+        } else {
+            return "Verknüpftes iBeacon"
+        }
     }
     
     //TableView Section  Footer
     
-    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let cell = tableView.dequeueReusableCellWithIdentifier("footerCell")! as! FooterCell
-        
-        cell.backgroundColor = Colours.lightGray()
-        
-        cell.parentTableView = self
-        
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 50.0
-    }
+//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("footerCell")! as! FooterCell
+//        
+//        cell.backgroundColor = Colours.lightGray()
+//        
+//        cell.parentTableView = self
+//        
+//        return cell
+//    }
+//    
+//    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 50.0
+//    }
     
     
     //Editing TableView
@@ -310,7 +373,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     //MARK: - Beacon Functions
     
     func roomForBeacon(manager: ContextHandler, connectorArray: [BeaconRoomConnector], major: Int, minor: Int) {
-        
         let plistResult = connectorArray.filter{ $0.major == major && $0.minor == minor }.first
         
         self.major = major
@@ -329,6 +391,8 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
                 }
             }
         } else {
+            beaconConnected = false
+            
             print ("no home and room found for this beacon")
         }
     }
@@ -345,7 +409,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         
         self.presentViewController(alert, animated: true, completion: nil)
     }
-    
 
 }
 

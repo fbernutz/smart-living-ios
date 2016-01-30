@@ -218,7 +218,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         majorBeacon = major
         minorBeacon = minor
         
-        loadSavedData()
+//        loadSavedData()
         // TODO: hier zurückgeben lassen ob für das gefunden Beacon schon ein Raum gesetzt wurde und evtl. von selbst anbieten das Beacon zu setzen
         // und vorher überprüfen ob für den Raum schon ein Beacon gesetzt wurde
         
@@ -251,7 +251,9 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         
         beaconRoomConnectorArray.removeAll(keepCapacity: false)
         
-        newPlistArray = NSArray(contentsOfFile: path) as! [NSDictionary]
+        if let content = NSArray(contentsOfFile: path) {
+            newPlistArray = content as! [NSDictionary]
+        }
         
         if !newPlistArray.isEmpty {
             let objects = newPlistArray.map{ BeaconRoomConnector(dict: $0) }
@@ -259,7 +261,14 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         } else {
             //TODO: 
             //keine Beacons verbunden
+            print("No Beacons connected")
         }
+    }
+    
+    func isBeaconConnected(home: String, room: String) -> (major: Int?, minor: Int?) {
+        loadSavedData()
+        let beacon = beaconRoomConnectorArray.filter{ $0.room == room && $0.home == home }.first
+        return (beacon?.major, beacon?.minor)
     }
     
     func saveData(object: BeaconRoomConnector) {

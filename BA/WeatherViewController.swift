@@ -83,7 +83,7 @@ class WeatherViewController: UIViewController {
         }
         
         
-        size = weatherView?.cView?.frame.size.height
+        size = weatherView!.cView!.frame.size.height
     }
     
     // MARK: - Set Values in LightView

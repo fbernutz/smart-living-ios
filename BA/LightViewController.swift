@@ -73,7 +73,7 @@ class LightViewController: UIViewController, AccViewDelegate {
             }
         }
         
-        size = lightView?.cView?.frame.size.height
+        size = lightView!.cView!.frame.size.height
     }
     
     // MARK: - Set Values in LightView

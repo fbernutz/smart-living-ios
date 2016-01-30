@@ -59,7 +59,7 @@ class DiverseViewController: UIViewController {
         }
         
         
-        size = diverseView?.cView?.frame.size.height
+        size = diverseView!.cView!.frame.size.height
     }
     
     // MARK: - Set Values in LightView
