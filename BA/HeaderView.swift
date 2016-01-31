@@ -42,11 +42,11 @@ class HeaderView: UIView {
     }
     
     func createActionSheet() -> UIAlertController {
-        let sheet = UIAlertController(title: "home > room", message: "Wähle einen anderen Raum aus, um dessen Accessories zu steuern.", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let sheet = UIAlertController(title: "Zuhause | Raum", message: "Wähle einen anderen Raum aus, um dessen zugehörige Geräte zu steuern.", preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         for home in parentTableView!.localHomes! {
             let roomsInHome = parentTableView!.localRooms!.filter{ $0.homeID == home.id }.map{ room in
-                sheet.addAction(UIAlertAction(title: "\(home.name!) > \(room.name!)", style: UIAlertActionStyle.Default)
+                sheet.addAction(UIAlertAction(title: "\(home.name!) | \(room.name!)", style: UIAlertActionStyle.Default)
                     { action in
                         if !self.parentTableView!.refreshControl!.refreshing {
                             self.parentTableView!.refreshControl!.beginRefreshing()

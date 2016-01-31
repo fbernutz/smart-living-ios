@@ -18,7 +18,7 @@
                BlueprintIdentifier = "3F073B3F1BE8972E00698BDC"
                BuildableName = "Smart Living Widget.appex"
                BlueprintName = "Smart Living Widget"
-               ReferencedContainer = "container:BA.xcodeproj">
+               ReferencedContainer = "container:SmartLiving.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,9 +30,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3F3DB8181BBE750800854DE5"
-               BuildableName = "BA.app"
-               BlueprintName = "BA"
-               ReferencedContainer = "container:BA.xcodeproj">
+               BuildableName = "Smart Living.app"
+               BlueprintName = "SmartLiving"
+               ReferencedContainer = "container:SmartLiving.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,7 +50,7 @@
             BlueprintIdentifier = "3F073B3F1BE8972E00698BDC"
             BuildableName = "Smart Living Widget.appex"
             BlueprintName = "Smart Living Widget"
-            ReferencedContainer = "container:BA.xcodeproj">
+            ReferencedContainer = "container:SmartLiving.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F3DB8181BBE750800854DE5"
-            BuildableName = "BA.app"
-            BlueprintName = "BA"
-            ReferencedContainer = "container:BA.xcodeproj">
+            BuildableName = "Smart Living.app"
+            BlueprintName = "SmartLiving"
+            ReferencedContainer = "container:SmartLiving.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -92,9 +92,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3F3DB8181BBE750800854DE5"
-            BuildableName = "BA.app"
-            BlueprintName = "BA"
-            ReferencedContainer = "container:BA.xcodeproj">
+            BuildableName = "Smart Living.app"
+            BlueprintName = "SmartLiving"
+            ReferencedContainer = "container:SmartLiving.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

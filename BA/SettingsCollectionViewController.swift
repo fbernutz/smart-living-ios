@@ -17,9 +17,9 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Mehr"
+        title = "Mehr Infos"
         
-        settings = ["Impressum", "FAQs", "Info-Galerie", "Einstellungen"]
+        settings = ["Impressum", "Über die App", "FAQs", "Info-Galerie", "Einstellungen"]
     }
 
     // MARK: UICollectionViewDataSource
@@ -49,10 +49,12 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
         case 0:
             performSegueWithIdentifier("Impressum", sender: self)
         case 1:
-            performSegueWithIdentifier("FAQ", sender: self)
+            performSegueWithIdentifier("App", sender: self)
         case 2:
-            performSegueWithIdentifier("Galerie", sender: self)
+            performSegueWithIdentifier("FAQ", sender: self)
         case 3:
+            performSegueWithIdentifier("Galerie", sender: self)
+        case 4:
             let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
                 UIApplication.sharedApplication().openURL(url)
@@ -66,6 +68,8 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "Impressum" {
             let _ = segue.destinationViewController as! ImprintViewController
+        } else if segue.identifier == "App" {
+            let _ = segue.destinationViewController
         } else if segue.identifier == "FAQ" {
             let _ = segue.destinationViewController as! FAQViewController
         } else if segue.identifier == "Galerie" {

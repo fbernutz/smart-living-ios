@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "3CF416DC51D80E2449A9D75371222B1DC66CF007",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "8F6C7C4390A0E9CCC222679DE645C1B0EE0B516A" : 0,
+    "3CF416DC51D80E2449A9D75371222B1DC66CF007" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "A40AFEA5-3C2A-44D1-B43D-57C1C78C641C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "8F6C7C4390A0E9CCC222679DE645C1B0EE0B516A" : "",
+    "3CF416DC51D80E2449A9D75371222B1DC66CF007" : "csi-smart-living\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SmartLiving",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SmartLiving.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/git.adorsys.de\/csi\/csi-smart-living-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "3CF416DC51D80E2449A9D75371222B1DC66CF007"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/stash.adorsys.de\/scm\/ergodirekt\/ed-unfallschutz-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "8F6C7C4390A0E9CCC222679DE645C1B0EE0B516A"
+    }
+  ]
+}

@@ -515,7 +515,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         if key != nil && iAccessory != nil {
             if value !== iAccessory!.characteristics[key!] {
             
-                //2 set new values for IAccessory, but NUR WENN DER WERT WIRKLCIH EIN ANDERER IST
+                //2 set new values for IAccessory
                 iAccessory!.characteristics[key!] = value
                 
                 //3 write changed IAccessory to pairedAccessories

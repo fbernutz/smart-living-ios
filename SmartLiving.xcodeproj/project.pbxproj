@@ -91,7 +91,7 @@
 		3F3B248D1C2348180037CD24 /* WeatherView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherView.swift; sourceTree = "<group>"; };
 		3F3B248F1C2348240037CD24 /* EnergyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyView.swift; sourceTree = "<group>"; };
 		3F3B24911C2348300037CD24 /* DoorWindowView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DoorWindowView.swift; sourceTree = "<group>"; };
-		3F3DB8191BBE750800854DE5 /* BA.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BA.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F3DB8191BBE750800854DE5 /* Smart Living.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Smart Living.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F3DB81C1BBE750800854DE5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3F3DB8211BBE750800854DE5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3F3DB8241BBE750800854DE5 /* BA.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BA.xcdatamodel; sourceTree = "<group>"; };
@@ -289,7 +289,7 @@
 		3F3DB81A1BBE750800854DE5 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3F3DB8191BBE750800854DE5 /* BA.app */,
+				3F3DB8191BBE750800854DE5 /* Smart Living.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -341,9 +341,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3F3DB8181BBE750800854DE5 /* BA */ = {
+		3F3DB8181BBE750800854DE5 /* SmartLiving */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 3F3DB82E1BBE750800854DE5 /* Build configuration list for PBXNativeTarget "BA" */;
+			buildConfigurationList = 3F3DB82E1BBE750800854DE5 /* Build configuration list for PBXNativeTarget "SmartLiving" */;
 			buildPhases = (
 				3F3DB8151BBE750800854DE5 /* Sources */,
 				3F3DB8161BBE750800854DE5 /* Frameworks */,
@@ -354,9 +354,9 @@
 			);
 			dependencies = (
 			);
-			name = BA;
+			name = SmartLiving;
 			productName = BA;
-			productReference = 3F3DB8191BBE750800854DE5 /* BA.app */;
+			productReference = 3F3DB8191BBE750800854DE5 /* Smart Living.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -384,7 +384,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 3F3DB8141BBE750800854DE5 /* Build configuration list for PBXProject "BA" */;
+			buildConfigurationList = 3F3DB8141BBE750800854DE5 /* Build configuration list for PBXProject "SmartLiving" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -397,7 +397,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				3F3DB8181BBE750800854DE5 /* BA */,
+				3F3DB8181BBE750800854DE5 /* SmartLiving */,
 			);
 		};
 /* End PBXProject section */
@@ -589,7 +589,7 @@
 				INFOPLIST_FILE = BA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = adorsys.BA;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Smart Living";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -604,7 +604,7 @@
 				INFOPLIST_FILE = BA/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = adorsys.BA;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Smart Living";
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -612,7 +612,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3F3DB8141BBE750800854DE5 /* Build configuration list for PBXProject "BA" */ = {
+		3F3DB8141BBE750800854DE5 /* Build configuration list for PBXProject "SmartLiving" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3F3DB82C1BBE750800854DE5 /* Debug */,
@@ -621,7 +621,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		3F3DB82E1BBE750800854DE5 /* Build configuration list for PBXNativeTarget "BA" */ = {
+		3F3DB82E1BBE750800854DE5 /* Build configuration list for PBXNativeTarget "SmartLiving" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				3F3DB82F1BBE750800854DE5 /* Debug */,

@@ -24,7 +24,7 @@ class FAQModel {
     
     private func homeKit() -> FAQ {
         let qString = "Was ist HomeKit?"
-        let aString = "HomeKit ist der von Apple entwickelte Heimautomationsstandard. Damit können Nutzer über ein iPhone, iPad oder iPod touch mit Geräten kommunizieren, die das Merkmal \"Works with Apple HomeKit\" von Apple tragen. Das können unter anderem Lampen, Schlösser oder Thermostate sein."
+        let aString = "HomeKit ist der von Apple entwickelte Home Automation-Standard. Damit können Nutzer über ein iPhone, iPad oder iPod touch mit Geräten kommunizieren, die das Merkmal \"Works with Apple HomeKit\" von Apple tragen. Das können unter anderem Lampen, Schlösser oder Thermostate sein."
         return FAQ(question: qString, answer: aString)
     }
     
@@ -54,7 +54,7 @@ class FAQModel {
     
     private func iBeacons() -> FAQ {
         let qString = "Was sind iBeacons und wie funktionieren sie? "
-        let aString = "iBeacons sind kleine Bluetooth-Sender. Diese senden Bluetooth-Low-Energy-Signale aus, welche von iPhones mit aktiviertem Bluetooth empfangen werden können. Dadurch wird erkannt, ob sich iPhones in der Nähe eines iBeacons befinden oder nicht. Diese Funktionalität kann gut in der Heimautomation angewendet werden, indem beispielsweise alle Geräte aussgeschalten werden, wenn das Haus und somit die Reichweite des iBeacons verlassen wird."
+        let aString = "iBeacons sind kleine Bluetooth-Sender. Diese senden Bluetooth-Low-Energy-Signale aus, welche von iPhones mit aktiviertem Bluetooth empfangen werden können. Dadurch wird erkannt, ob sich iPhones in der Nähe eines iBeacons befinden oder nicht. Diese Funktionalität kann gut in der Home Automation angewendet werden, indem beispielsweise alle Geräte aussgeschalten werden, wenn das Haus und somit die Reichweite des iBeacons verlassen wird."
         return FAQ(question: qString, answer: aString)
     }
     
