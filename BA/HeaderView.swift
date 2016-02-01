@@ -13,8 +13,6 @@ class HeaderView: UIView {
     @IBOutlet weak var homeName: UILabel?
     @IBOutlet weak var roomName: UILabel?
     
-    @IBOutlet weak var changeRoomButton: UIButton?
-    
     var parentTableView : DetailViewController?
     
     var home: String? {

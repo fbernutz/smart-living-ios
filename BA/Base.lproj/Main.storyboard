@@ -57,8 +57,13 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" reversesTitleShadowWhenHighlighted="YES" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C59-z9-Imj">
-                                    <rect key="frame" x="550" y="23" width="30" height="42"/>
+                                    <rect key="frame" x="540" y="19" width="60" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="50" id="Nog-5E-PIP"/>
+                                        <constraint firstAttribute="width" constant="60" id="wXt-fn-OxB"/>
+                                    </constraints>
                                     <fontDescription key="fontDescription" type="system" weight="black" pointSize="25"/>
+                                    <size key="titleShadowOffset" width="2.2250738585072014e-308" height="0.0"/>
                                     <state key="normal" title="﹀">
                                         <color key="titleColor" red="0.8862745098" green="0.75294117650000003" blue="0.2666666667" alpha="1" colorSpace="calibratedRGB"/>
                                     </state>
@@ -84,7 +89,7 @@
                                 <constraint firstItem="oxU-g5-vwx" firstAttribute="leading" secondItem="3oe-z7-2li" secondAttribute="trailing" constant="4" id="FBr-T4-fRG"/>
                                 <constraint firstItem="3oe-z7-2li" firstAttribute="centerY" secondItem="4qI-Fh-Cdk" secondAttribute="centerY" constant="-4" id="K7v-zx-niG"/>
                                 <constraint firstItem="3oe-z7-2li" firstAttribute="leading" secondItem="4qI-Fh-Cdk" secondAttribute="trailing" constant="4" id="QFr-l4-3MB"/>
-                                <constraint firstAttribute="trailing" secondItem="C59-z9-Imj" secondAttribute="trailing" constant="20" symbolic="YES" id="R33-3M-eeN"/>
+                                <constraint firstAttribute="trailing" secondItem="C59-z9-Imj" secondAttribute="trailing" id="R33-3M-eeN"/>
                                 <constraint firstItem="C59-z9-Imj" firstAttribute="centerY" secondItem="4qI-Fh-Cdk" secondAttribute="centerY" constant="10" id="VYn-Jf-qC1"/>
                                 <constraint firstAttribute="bottom" secondItem="4qI-Fh-Cdk" secondAttribute="bottom" constant="20" symbolic="YES" id="bQ2-rw-PxM"/>
                                 <constraint firstItem="oxU-g5-vwx" firstAttribute="baseline" secondItem="4qI-Fh-Cdk" secondAttribute="baseline" id="eF5-cd-cPJ"/>
@@ -100,7 +105,6 @@
                                 </mask>
                             </variation>
                             <connections>
-                                <outlet property="changeRoomButton" destination="C59-z9-Imj" id="YDn-2e-N3A"/>
                                 <outlet property="homeName" destination="4qI-Fh-Cdk" id="K7s-Ql-06Q"/>
                                 <outlet property="roomName" destination="oxU-g5-vwx" id="rkN-ez-kf2"/>
                             </connections>
