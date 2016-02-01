@@ -33,17 +33,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var beaconHome: HMHome?
     var beaconRoom: HMRoom?
     
-    var currentHomeID : NSUUID? {
-        didSet {
-            contextHandler?.homeID = currentHomeID
-        }
-    }
-    
-    var currentRoomID : NSUUID? {
-        didSet {
-            contextHandler?.roomID = currentRoomID
-        }
-    }
+    var currentHomeID : NSUUID?
+    var currentRoomID : NSUUID?
     
     var pairedAccessories : [IAccessory]? = [] {
         didSet {
@@ -92,60 +83,77 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     // MARK: - Retrieve IAccessory
     
-    func retrieveAccessoriesForRoom(inHome homeID: NSUUID, roomID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
+    func retrieveAccessoriesForRoom(inHome homeID: NSUUID, roomID: NSUUID, completionHandler: ()->()) {
+        var localPairedAccessories: [IAccessory] = []
+        var accessoryViews: [Bool] = []
+        
+        currentHomeID = homeID
+        currentRoomID = roomID
+        
         if !homes.isEmpty {
-            getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)
+            
+            getIAccessories(roomID, inHome: homeID) { accessory in
+                
+                if let acc = accessory {
+                    localPairedAccessories.append(acc)
+                    accessoryViews.append(self.completedAccessoryView(acc))
+                }
+                
+                if self.homeKitAccessories?.count == localPairedAccessories.count {
+                    self.pairedAccessories = localPairedAccessories
+                    
+                    if !accessoryViews.contains(false) {
+                        completionHandler()
+                    }
+                }
+            }
         } else {
-            accessoryBlock = { () in self.getIAccessories(roomID, inHome: homeID, completionHandler: completionHandler)}
+            accessoryBlock = { () in
+                self.getIAccessories(roomID, inHome: homeID) { accessory in
+                    
+                    if let acc = accessory {
+                        localPairedAccessories.append(acc)
+                        accessoryViews.append(self.completedAccessoryView(acc))
+                    }
+                    
+                    if self.homeKitAccessories?.count == localPairedAccessories.count {
+                        self.pairedAccessories = localPairedAccessories
+                        
+                        if !accessoryViews.contains(false) {
+                            completionHandler()
+                        }
+                    }
+                }
+            }
         }
     }
     
-    private func getIAccessories(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : ([IAccessory]) -> ()) {
+    private func getIAccessories(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : (IAccessory?) -> ()) {
+        var hmService : HMService?
         
         //1 find HMAccessories in this room
         homeKitAccessories = homes.filter{ $0.uniqueIdentifier == homeID }.first?.rooms.filter{ $0.uniqueIdentifier == roomID }.first?.accessories
         
         if homeKitAccessories != nil {
             //2 create IAccessories for found HMAccessories
-            let localPairedAccessories: [IAccessory]? = homeKitAccessories!.map{ createIAccessory($0) }
-            if let localPairedAccessories = localPairedAccessories {
-                if !localPairedAccessories.isEmpty {
-                    
-                    for var acc in localPairedAccessories {
-                        
-                        //3 for every IAccessory check if its characteristics is empty
-                        if acc.characteristics.isEmpty {
-                            acc.characteristicBlock = { () in
-                                
-                                //4 get and save loaded characteristics
-                                acc.characteristics = acc.getCharacteristics()!
-                                
-                                //5 save accessories with characteristics in pairedAccessories
-                                self.pairedAccessories = localPairedAccessories
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    completionHandler(self.pairedAccessories!)
-                                }
-                            }
-                        } else {
-                            //4 get and save loaded characteristics
-                            acc.characteristics = acc.getCharacteristics()!
-                            
-                            //5 save accessories with characteristics in pairedAccessories
-                            self.pairedAccessories = localPairedAccessories
-                            dispatch_async(dispatch_get_main_queue()) {
-                                completionHandler(self.pairedAccessories!)
-                            }
-                        }
-                    }
-                } else {
-                    self.pairedAccessories = []
-                    completionHandler(self.pairedAccessories!)
-                }
+            let localPairedAccessories: [IAccessory] = homeKitAccessories!.map{ createIAccessory($0) }
+            
+            for var acc in localPairedAccessories {
+                
+                //3 find HMService for IAccessory
+                let hmAcc = getHMAccessory(acc)
+                hmService = retrieveHMService(hmAcc)
+                
+                //4 the search for characteristics starts here
+                acc.retrieveCharacteristics(hmService!)
+                
+                loadCharacteristicForAccessory(acc, completionHandler: completionHandler)
             }
+            
         } else {
             homeKitAccessories = []
+            completionHandler(nil)
         }
-        
     }
     
     func createIAccessory(homeKitAccessory: HMAccessory) -> IAccessory {
@@ -160,9 +168,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         var newAcc = accessoryFactory.accessoryForServices(hmService!, name: hmName)!
         newAcc.name = hmName
         newAcc.uniqueID = homeKitAccessory.uniqueIdentifier
-        
-        //the search for characteristics starts here
-        newAcc.retrieveCharacteristics(hmService!)
+        newAcc.reachable = homeKitAccessory.reachable
         
         return newAcc
     }
@@ -185,8 +191,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         return pairedAccessories!.filter{ $0.uniqueID! == hmAccessory.uniqueIdentifier }.first
     }
     
-    private func getHMAccessory(iAccessory: IAccessory) -> HMAccessory? {
-        return homeKitAccessories!.filter{ $0.uniqueIdentifier == iAccessory.uniqueID }.first
+    private func getHMAccessory(iAccessory: IAccessory) -> HMAccessory {
+        return homeKitAccessories!.filter{ $0.uniqueIdentifier == iAccessory.uniqueID }.first!
     }
     
     // MARK: - Home Functions
@@ -254,6 +260,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             retrieveCurrentHomeAndRoom { homeID, roomID in
                 self.currentHomeID = homeID
                 self.currentRoomID = roomID
+                
+                self.contextHandler?.homeID = homeID
+                self.contextHandler?.roomID = roomID
             }
             
             delegate?.hasLoadedData(true)
@@ -455,53 +464,93 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     
+    //MARK: - Changed reachability
+    
+    func accessoryDidUpdateReachability(accessory: HMAccessory) {
+        let iAccessory = getIAccessory(accessory)
+        
+        if var acc = iAccessory {
+            if acc.reachable != accessory.reachable {
+                acc.reachable = accessory.reachable
+                
+                let hmService = retrieveHMService(accessory)
+                acc.retrieveCharacteristics(hmService)
+                
+                loadCharacteristicForAccessory(acc, completionHandler: { accessory in
+                    
+                    // save new loaded IAccessory in pairedAccessories
+                    let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
+                    self.pairedAccessories![index!] = acc
+                    
+                })
+            }
+        }
+    }
+    
     //MARK: - Changed characteristic values
+    
+    func loadCharacteristicForAccessory(var accessory: IAccessory, completionHandler: (IAccessory?) -> ()) {
+        
+        if accessory.reachable == false {
+            completionHandler(accessory)
+        } else {
+            // for every IAccessory check if its characteristics is empty
+            if accessory.characteristics.isEmpty {
+                accessory.characteristicBlock = { () in
+                    // get and save loaded characteristics
+                    accessory.characteristics = accessory.getCharacteristics()!
+                    
+                    // save accessories with characteristics in pairedAccessories
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completionHandler(accessory)
+                    }
+                }
+            } else {
+                // get and save loaded characteristics
+                accessory.characteristics = accessory.getCharacteristics()!
+                
+                // save accessories with characteristics in pairedAccessories
+                dispatch_async(dispatch_get_main_queue()) {
+                    completionHandler(accessory)
+                }
+            }
+        }
+    }
     
     func reloadAccessories(completionHandler: () -> ()) {
         var hmService: HMService?
-        var counter = 0
+        var localPairedAccessories: [IAccessory] = []
+        var accessoryViews: [Bool] = []
         
         for var acc in pairedAccessories! {
             //1 find HMService for IAccessory
             let hmAcc = getHMAccessory(acc)
-            if let hmAcc = hmAcc {
-                hmService = retrieveHMService(hmAcc)
+            hmService = retrieveHMService(hmAcc)
+            
+            //2 loading characteristic for IAccessory started
+            acc.retrieveCharacteristics(hmService!)
+            
+            loadCharacteristicForAccessory(acc, completionHandler: { accessory in
                 
-                //2 loading characteristic for IAccessory started
-                acc.retrieveCharacteristics(hmService!)
+                if let acc = accessory {
+                    localPairedAccessories.append(acc)
+                    accessoryViews.append(self.completedAccessoryView(acc))
+                }
                 
-                if acc.characteristics.isEmpty {
-                    acc.characteristicBlock = { () in
-                        
-                        //3 get and save loaded characteristics
-                        acc.characteristics = acc.getCharacteristics()!
-                        
-                        //4 save new loaded IAccessory with characteristics in pairedAccessories
-                        let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
-                        self.pairedAccessories![index!] = acc
-                        counter++
-                        
-                        if counter == self.pairedAccessories?.count {
-                            completionHandler()
-                        }
-                    }
-                } else {
-                    //3 get and save loaded characteristics
-                    acc.characteristics = acc.getCharacteristics()!
+                if self.homeKitAccessories?.count == localPairedAccessories.count {
+                    self.pairedAccessories = localPairedAccessories
                     
-                    //4 save new loaded IAccessory with characteristics in pairedAccessories
-                    let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
-                    self.pairedAccessories![index!] = acc
-                    counter++
-                    
-                    if counter == self.pairedAccessories?.count {
+                    if !accessoryViews.contains(false) {
                         completionHandler()
                     }
                 }
-            } else {
-                completionHandler()
-            }
+            })
+            
         }
+    }
+    
+    func completedAccessoryView(accessory: IAccessory) -> Bool {
+        return true
     }
     
     func accessory(accessory: HMAccessory, service: HMService, didUpdateValueForCharacteristic characteristic: HMCharacteristic) {
@@ -533,30 +582,26 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //1 find HMAccessory for IAccessory
         let hmAccessory = getHMAccessory(accessory)
         
-        if let hmAccessory = hmAccessory {
-            
-            //2 find HMCharacteristicType for CharacteristicKey
-            let homeKitType = dictKeyToHomeKitType!.filter{ $0.0 == characteristicKey }.first.map{ $0.1 }
-            
-            //3 change CharacteristicValue to correct type
-            if homeKitType == (HMCharacteristicTypeBrightness as String){
-                characteristicValue = characteristicValue as! Int
-            } else if homeKitType == (HMCharacteristicTypePowerState as String){
-                characteristicValue = characteristicValue as! Bool
-            }
-            
-            //4 find HMCharacteristic to write new value
-            let hmService = hmAccessory.services.filter{ ($0.serviceType == HMServiceTypeOutlet) || ($0.serviceType == HMServiceTypeLightbulb) }.first
-            let characteristic = hmService!.characteristics.filter{ $0.characteristicType == homeKitType }.first
-            
-            //5 write new value on HMCharacteristic
-            characteristic!.writeValue(characteristicValue, completionHandler: { error in
-                if let error = error {
-                    NSLog("Failed to update value \(error)")
-                }
-            })
+        //2 find HMCharacteristicType for CharacteristicKey
+        let homeKitType = dictKeyToHomeKitType!.filter{ $0.0 == characteristicKey }.first.map{ $0.1 }
+        
+        //3 change CharacteristicValue to correct type
+        if homeKitType == (HMCharacteristicTypeBrightness as String){
+            characteristicValue = characteristicValue as! Int
+        } else if homeKitType == (HMCharacteristicTypePowerState as String){
+            characteristicValue = characteristicValue as! Bool
         }
         
+        //4 find HMCharacteristic to write new value
+        let hmService = hmAccessory.services.filter{ ($0.serviceType == HMServiceTypeOutlet) || ($0.serviceType == HMServiceTypeLightbulb) }.first
+        let characteristic = hmService!.characteristics.filter{ $0.characteristicType == homeKitType }.first
+        
+        //5 write new value on HMCharacteristic
+        characteristic!.writeValue(characteristicValue, completionHandler: { error in
+            if let error = error {
+                NSLog("Failed to update value \(error)")
+            }
+        })
     }
     
     

@@ -18,6 +18,7 @@ let EveDoorWindow = "E863F003-079E-48FF-8F27-9C2605A29F52"
 protocol IAccessory {
     var name : String? { get set }
     var uniqueID : NSUUID? { get set }
+    var reachable : Bool? { get set }
     var characteristics : [CharacteristicKey : AnyObject] { get set }
     var characteristicBlock : (() -> ())? { get set }
     
@@ -31,6 +32,7 @@ class Lamp: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
@@ -94,6 +96,7 @@ class WeatherStation: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     var charCounter = 0
@@ -170,6 +173,7 @@ class EnergyController: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
@@ -211,6 +215,7 @@ class DoorWindowSensor: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
@@ -256,6 +261,7 @@ class Information: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
@@ -297,6 +303,7 @@ class Diverse: IAccessory {
     
     var name : String?
     var uniqueID : NSUUID?
+    var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     

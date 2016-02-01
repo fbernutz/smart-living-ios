@@ -12,11 +12,15 @@ class DiverseViewController: UIViewController {
     
     @IBOutlet var diverseView: DiverseView?
     
+    var contextHandler: ContextHandler?
+    
     var accessory : IAccessory? {
         didSet {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
             }
+            
+            reachable = accessory?.reachable
         }
     }
     
@@ -29,6 +33,8 @@ class DiverseViewController: UIViewController {
             }
         }
     }
+    
+    var reachable: Bool?
     
     var serviceName : String? {
         didSet {
@@ -48,16 +54,20 @@ class DiverseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        diverseView!.loadingIndicator!.startAnimating()
-        
-        if let chars = characteristics {
-            if !chars.isEmpty {
-                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
-                setCharacteristics()
-                diverseView!.loadingIndicator!.stopAnimating()
+        if let reachable = reachable {
+            if reachable {
+                if let chars = characteristics {
+                    if !chars.isEmpty {
+                        print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
+                        setCharacteristics()
+                    }
+                }
+            } else {
+                setName("Momentan nicht erreichbar")
             }
+            
+            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
-        
         
         size = diverseView!.cView!.frame.size.height
     }

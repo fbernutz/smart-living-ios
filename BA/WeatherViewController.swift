@@ -19,6 +19,8 @@ class WeatherViewController: UIViewController {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
             }
+            
+            reachable = accessory?.reachable
         }
     }
     
@@ -34,6 +36,8 @@ class WeatherViewController: UIViewController {
             }
         }
     }
+    
+    var reachable : Bool?
     
     var serviceName : String? {
         didSet {
@@ -72,16 +76,20 @@ class WeatherViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        weatherView!.loadingIndicator!.startAnimating()
-        
-        if let chars = characteristics {
-            if !chars.isEmpty {
-                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
-                setCharacteristics()
-                weatherView!.loadingIndicator!.stopAnimating()
+        if let reachable = reachable {
+            if reachable {
+                if let chars = characteristics {
+                    if !chars.isEmpty {
+                        print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
+                        setCharacteristics()
+                    }
+                }
+            } else {
+                setName("Momentan nicht erreichbar")
             }
+            
+            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
-        
         
         size = weatherView!.cView!.frame.size.height
     }

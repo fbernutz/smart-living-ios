@@ -43,20 +43,20 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         }
     }
     
-    var viewControllerArray : [UIViewController]? = [] {
+    var viewControllerArray : [UIViewController] = [] {
         didSet {
-            if viewControllerArray?.count == pairedAccessories?.count {
-                //register notification
-                let center = NSNotificationCenter.defaultCenter()
-                let notification = NSNotification(name: "vcArray", object: self, userInfo: ["VCArray":viewControllerArray!])
-                center.postNotification(notification)
-            }
+            //register notification
+            let center = NSNotificationCenter.defaultCenter()
+            let notification = NSNotification(name: "vcArray", object: self, userInfo: ["VCArray":viewControllerArray])
+            center.postNotification(notification)
         }
     }
     
-    var pairedAccessories : [IAccessory]? {
+    var pairedAccessories : [IAccessory] = [] {
         didSet {
-            viewControllerArray = retrieveViewControllerList()
+            if !pairedAccessories.isEmpty {
+                viewControllerArray = retrieveViewControllerList()
+            }
         }
     }
     
@@ -125,71 +125,58 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     
     // MARK: - Retrieve paired accessories for room
     
-    func retrieveAccessories() -> [IAccessory]? {
-        let accessoriesInRoom = searchAccessoriesForRoom(homeID, roomID: roomID)
-        
-        if !accessoriesInRoom.isEmpty {
-            return accessoriesInRoom
-        } else {
-            return nil
-        }
+    func retrieveAccessories(completionHandler: ()-> ()) {
+        searchAccessoriesForRoom(homeID, roomID: roomID, completionHandler: completionHandler)
     }
     
-    func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?) -> [IAccessory] {
-        var foundAccessoriesForRoom : [IAccessory]? = []
+    func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?, completionHandler: ()-> ()) {
         if (homeID != nil) && (roomID != nil) {
-            homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!) { (accessories) -> () in
-                foundAccessoriesForRoom = accessories
-            }
-        } else {
-            pairedAccessories = []
+            homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!, completionHandler: completionHandler)
         }
-        return foundAccessoriesForRoom!
     }
     
-    func retrieveViewControllerList() -> [UIViewController]? {
-        viewControllerArray?.removeAll()
+    func retrieveViewControllerList() -> [UIViewController] {
+        var localViewControllerArray : [UIViewController] = []
         
-        if let pairedAccessories = pairedAccessories {
-            for accessory in pairedAccessories {
-                assignAccessoryToViewController(accessory)
+        for accessory in pairedAccessories {
+            let controller = assignAccessoryToViewController(accessory)
+            if let controller = controller {
+                localViewControllerArray.append(controller)
             }
         }
         
-        return viewControllerArray
+        return localViewControllerArray
     }
     
-    func assignAccessoryToViewController (accessory: IAccessory) {
+    func assignAccessoryToViewController (accessory: IAccessory) -> UIViewController? {
         switch accessory {
         case is Lamp:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as? LightViewController
-            controller!.accessory = accessory
-            controller!.contextHandler = self
-            viewControllerArray?.append(controller!)
-            break
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as! LightViewController
+            controller.accessory = accessory
+            controller.contextHandler = self
+            return controller
         case is WeatherStation:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("WeatherViewController") as? WeatherViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("WeatherViewController") as! WeatherViewController
+            controller.accessory = accessory
+            controller.contextHandler = self
+            return controller
         case is EnergyController:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as? EnergyViewController
-            controller!.accessory = accessory
-            controller!.contextHandler = self
-            viewControllerArray?.append(controller!)
-            break
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as! EnergyViewController
+            controller.accessory = accessory
+            controller.contextHandler = self
+            return controller
         case is DoorWindowSensor:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DoorWindowViewController") as? DoorWindowViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DoorWindowViewController") as! DoorWindowViewController
+            controller.accessory = accessory
+            controller.contextHandler = self
+            return controller
         case is Diverse, is Information:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as? DiverseViewController
-            controller!.accessory = accessory
-            viewControllerArray?.append(controller!)
-            break
+            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as! DiverseViewController
+            controller.accessory = accessory
+            controller.contextHandler = self
+            return controller
         default:
-            break
+            return nil
         }
     }
     

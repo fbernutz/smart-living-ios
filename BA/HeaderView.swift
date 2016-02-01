@@ -52,8 +52,8 @@ class HeaderView: UIView {
                             self.parentTableView!.refreshControl!.beginRefreshing()
                             self.parentTableView!.tableView.reloadData()
                         }
-                        self.parentTableView!.controller!.currentHomeID = home.id
-                        self.parentTableView!.controller!.currentRoomID = room.id
+                        self.parentTableView!.contextHandler?.homeID = home.id
+                        self.parentTableView!.contextHandler?.roomID = room.id
                     }
                 )
             }

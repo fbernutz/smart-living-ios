@@ -17,8 +17,6 @@ class EnergyView: AccView {
     @IBOutlet weak var powerConsumptionText: UILabel?
     @IBOutlet weak var powerState: UISwitch?
     
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
-    
     @IBAction override func changedValueOfSwitch(sender: UISwitch) {
         delegate?.accViewSwitchTapped(sender.on)
     }

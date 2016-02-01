@@ -19,6 +19,8 @@ class EnergyViewController: UIViewController, AccViewDelegate {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
             }
+            
+            reachable = accessory?.reachable
         }
     }
     
@@ -32,6 +34,8 @@ class EnergyViewController: UIViewController, AccViewDelegate {
             }
         }
     }
+    
+    var reachable : Bool?
     
     var serviceName : String? {
         didSet {
@@ -61,14 +65,19 @@ class EnergyViewController: UIViewController, AccViewDelegate {
         
         energyView!.delegate = self
         
-        energyView!.loadingIndicator!.startAnimating()
-        
-        if let chars = characteristics {
-            if !chars.isEmpty {
-                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
-                setCharacteristics()
-                energyView!.loadingIndicator!.stopAnimating()
+        if let reachable = reachable {
+            if reachable {
+                if let chars = characteristics {
+                    if !chars.isEmpty {
+                        print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
+                        setCharacteristics()
+                    }
+                }
+            } else {
+                setName("Momentan nicht erreichbar")
             }
+            
+            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
         
         

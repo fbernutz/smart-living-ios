@@ -77,7 +77,8 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         // Pull to Refresh
         self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
         self.refreshControl!.beginRefreshing()
-        //    listen for notification
+        
+        // listen for notification
         let center = NSNotificationCenter.defaultCenter()
         let queue = NSOperationQueue.mainQueue()
         
@@ -124,26 +125,22 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         } else {
             print("loading failed")
         }
-        
-        if self.refreshControl!.refreshing {
-            self.refreshControl!.endRefreshing()
-        }
     }
     
     func loadData() {
         home = contextHandler!.retrieveHome()
         room = contextHandler!.retrieveRoom()
-        contextHandler!.retrieveAccessories()
+        contextHandler!.retrieveAccessories() {_ in
+            if self.refreshControl!.refreshing {
+                self.refreshControl!.endRefreshing()
+            }
+        }
         
         let beacon = contextHandler!.isBeaconConnected(home!, room: room!)
         if let major = beacon.major, let minor =  beacon.minor {
             beaconConnected = true
             self.major = major
             self.minor = minor
-        }
-        
-        if self.refreshControl!.refreshing {
-            self.refreshControl!.endRefreshing()
         }
     }
     
@@ -161,7 +158,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            if viewControllerArray.count != 0 {
+            if !viewControllerArray.isEmpty {
                 return viewControllerArray.count + 1
             } else {
                 return 1 + 1
@@ -180,7 +177,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         let section = indexPath.section
         
         if section == 0 {
-            if viewControllerArray.count != 0 {
+            if !viewControllerArray.isEmpty {
                 if row < viewControllerArray.count {
                     let vcInRow = viewControllerArray[row]
                     
@@ -239,16 +236,16 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         let section = indexPath.section
         
         if section == 0 {
-            if viewControllerArray.count == 0 {
-            if row == 0 {
-                let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
-                cell.textLabel!.text = "Keine Geräte verfügbar."
-                return cell
+            if viewControllerArray.isEmpty {
+                if row == 0 {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
+                    cell.textLabel!.text = "Keine Geräte verfügbar."
+                    return cell
+                } else {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    return cell
+                }
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
-                return cell
-            }
-        } else {
                 if row < viewControllerArray.count {
                     let vcInRow = viewControllerArray[row]
                     let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!

@@ -12,6 +12,8 @@ class DoorWindowViewController: UIViewController {
 
     @IBOutlet var doorWindowView: DoorWindowView?
     
+    var contextHandler: ContextHandler?
+    
     var dict: NSMutableDictionary?
     
     var accessory : IAccessory? {
@@ -19,6 +21,8 @@ class DoorWindowViewController: UIViewController {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
             }
+            
+            reachable = accessory?.reachable
         }
     }
     
@@ -34,6 +38,8 @@ class DoorWindowViewController: UIViewController {
             }
         }
     }
+    
+    var reachable : Bool?
     
     var serviceName : String? {
         didSet {
@@ -55,11 +61,13 @@ class DoorWindowViewController: UIViewController {
     
     var doorCounter : Int? {
         didSet {
-            if var counter = doorCounter, let state = state, let old = oldState {
-                if state != old {
-                    counter++
-                    setDoorCounter(counter)
-                    setDict(counter, state: state, dict: dict!)
+            if doorCounter != nil {
+                if let state = state, let old = oldState {
+                    if state != old {
+                        doorCounter = doorCounter! + 1
+                        setDoorCounter(doorCounter)
+                        setDict(doorCounter!, state: state, dict: dict!)
+                    }
                 }
             }
         }
@@ -83,8 +91,6 @@ class DoorWindowViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        doorWindowView!.loadingIndicator!.startAnimating()
-        
         if dict == nil {
             dict = getDict()
         }
@@ -92,12 +98,19 @@ class DoorWindowViewController: UIViewController {
         oldState = getOldValue(dict!)
         doorCounter = getCounter(dict!)
         
-        if let chars = characteristics {
-            if !chars.isEmpty {
-                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
-                setCharacteristics()
-                doorWindowView!.loadingIndicator!.stopAnimating()
+        if let reachable = reachable {
+            if reachable {
+                if let chars = characteristics {
+                    if !chars.isEmpty {
+                        print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
+                        setCharacteristics()
+                    }
+                }
+            } else {
+                setName("Momentan nicht erreichbar")
             }
+            
+            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
         
         

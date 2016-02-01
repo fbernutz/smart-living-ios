@@ -17,8 +17,6 @@ class LightView: AccView {
     @IBOutlet weak var stateSwitch: UISwitch?
     @IBOutlet weak var brightness: UILabel?
     
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
-    
     var delegate : AccViewDelegate?
     
     @IBAction override func changeValueOfSlider(sender: UISlider) {

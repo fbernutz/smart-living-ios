@@ -14,6 +14,4 @@ class DiverseView: UIView {
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var serviceName: UILabel?
     
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
-    
 }

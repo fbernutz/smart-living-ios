@@ -19,6 +19,8 @@ class LightViewController: UIViewController, AccViewDelegate {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
             }
+            
+            reachable = accessory?.reachable
         }
     }
     
@@ -33,6 +35,8 @@ class LightViewController: UIViewController, AccViewDelegate {
             }
         }
     }
+    
+    var reachable : Bool?
     
     var serviceName : String? {
         didSet {
@@ -63,14 +67,19 @@ class LightViewController: UIViewController, AccViewDelegate {
         
         lightView!.delegate = self
         
-        lightView!.loadingIndicator!.startAnimating()
-        
-        if let chars = characteristics {
-            if !chars.isEmpty {
-                print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
-                setCharacteristics()
-                lightView!.loadingIndicator!.stopAnimating()
+        if let reachable = reachable {
+            if reachable {
+                if let chars = characteristics {
+                    if !chars.isEmpty {
+                        print(">>>setCharacteristics: \(chars) for accessory: \((accessory!.name)!)")
+                        setCharacteristics()
+                    }
+                }
+            } else {
+                setName("Momentan nicht erreichbar")
             }
+            
+            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
         
         size = lightView!.cView!.frame.size.height

@@ -16,8 +16,6 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        title = "Mehr Infos"
         
         settings = ["Über die App", "Info-Galerie", "FAQs", "Einstellungen", "Impressum"]
     }

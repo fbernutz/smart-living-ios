@@ -16,6 +16,4 @@ class WeatherView: AccView {
     @IBOutlet weak var temperature: UILabel?
     @IBOutlet weak var name: UILabel?
     
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView?
-    
 }
