@@ -134,18 +134,37 @@ class LightViewController: UIViewController, AccViewDelegate {
     // MARK: - AccViewDelegate
 
     func accViewSliderChanged(value: Float) {
+        brightnessValue = value
+        
+        if value != 0 {
+            if state == false {
+                state = true
+            }
+        } else {
+            if state == true {
+                state = false
+            }
+        }
+        
         lightView!.brightness!.text = "Helligkeit: \(Int(value))%"
         contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.brightness:value])
     }
     
     func accViewSwitchTapped(state: Bool) {
+        self.state = state
+        
         if let brightness = brightnessValue {
             if state == true {
-                setBrightness(brightness)
+                if brightness == 0 {
+                    brightnessValue = 100
+                } else {
+                    brightnessValue = brightness
+                }
             } else {
                 setBrightness(0)
             }
         }
+        
         contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state])
     }
     

@@ -19,7 +19,7 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
 
         title = "Mehr Infos"
         
-        settings = ["Impressum", "Über die App", "FAQs", "Info-Galerie", "Einstellungen"]
+        settings = ["Über die App", "Info-Galerie", "FAQs", "Einstellungen", "Impressum"]
     }
 
     // MARK: UICollectionViewDataSource
@@ -47,18 +47,18 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         switch indexPath.row {
         case 0:
-            performSegueWithIdentifier("Impressum", sender: self)
-        case 1:
             performSegueWithIdentifier("App", sender: self)
+        case 1:
+            performSegueWithIdentifier("Galerie", sender: self)
         case 2:
             performSegueWithIdentifier("FAQ", sender: self)
         case 3:
-            performSegueWithIdentifier("Galerie", sender: self)
-        case 4:
             let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
                 UIApplication.sharedApplication().openURL(url)
             }
+        case 4:
+            performSegueWithIdentifier("Impressum", sender: self)
         default: break
         }
     }

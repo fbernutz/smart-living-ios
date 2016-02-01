@@ -21,7 +21,8 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     var beaconConnected : Bool = false {
         didSet {
-            tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+//            tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
+            tableView.reloadData()
         }
     }
     
@@ -62,6 +63,8 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         controller!.delegate = self
         
         contextHandler!.contextDelegate = self
+        
+        title = "Smart Living"
         
         //Editing Cells
 //        accessoriesTableView?.editing = true
