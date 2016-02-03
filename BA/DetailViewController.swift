@@ -391,7 +391,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
             controller!.findHMRoomForBeacon(plistHome, room: plistRoom) { success, homeID, roomID in
                 if success {
                     if self.room != plistRoom {
-                        self.alertShowBeaconRoom(homeID!, roomID: roomID!, message: "Bist du im >\(plistRoom)< in >\(plistHome)<? Willst du die dafür relevanten Accessories sehen?")
+                        self.alertShowBeaconRoom(homeID!, roomID: roomID!, message: "Bist du im >\(plistRoom)< in >\(plistHome)<? Willst du die dafür relevanten Geräte sehen?")
                     } else {
                         //TODO: 
                         //Beacon wurde aus aktuellem Raum gefunden
@@ -410,8 +410,9 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         let alert = UIAlertController(title: "Beacon gefunden", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Ja", style: UIAlertActionStyle.Default)
             { action in
-                self.controller!.currentHomeID = homeID
-                self.controller!.currentRoomID = roomID
+                self.refreshControl!.beginRefreshing()
+                self.contextHandler!.homeID = homeID
+                self.contextHandler!.roomID = roomID
             }
         )
         alert.addAction(UIAlertAction(title: "Nein", style: UIAlertActionStyle.Cancel, handler: nil))
