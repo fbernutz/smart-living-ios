@@ -46,7 +46,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var unpairedAccessories = [HMAccessory]()
     
     var accessoryBlock : (() -> ())?
-    var homesBlock : (() -> ())?
     
     
     // MARK: - Setup
@@ -234,11 +233,6 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             block()
             accessoryBlock = nil
         }
-        
-        if let block = homesBlock {
-            block()
-            homesBlock = nil
-        }
     }
     
     func homesAreSet() {
@@ -261,11 +255,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 self.currentHomeID = homeID
                 self.currentRoomID = roomID
                 
-                self.contextHandler?.homeID = homeID
-                self.contextHandler?.roomID = roomID
+                self.contextHandler!.homeID = homeID
+                self.contextHandler!.roomID = roomID
             }
-            
-            delegate?.hasLoadedData(true)
             
         } else {
             print ("Failed: Rooms are not set yet or set to nil")

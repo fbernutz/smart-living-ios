@@ -45,9 +45,9 @@ class BeaconCell: UITableViewCell {
         let alert = UIAlertController(title: "Beacon hinzufügen", message: "Verbinde das näheste Beacon mit \(parentTableView!.room!).", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Abbrechen", style: .Cancel, handler: nil))
         alert.addAction(UIAlertAction (title: "Hinzufügen", style: .Default) { action in
-            let beaconRoom = BeaconRoomConnector(major: self.major!, minor: self.minor!, home: self.parentTableView!.home!, room: self.parentTableView!.room!)
+            let newConnection = BeaconRoomConnector(major: self.major!, minor: self.minor!, home: self.parentTableView!.home!, room: self.parentTableView!.room!)
             
-            self.parentTableView!.contextHandler!.saveData(beaconRoom)
+            self.parentTableView!.contextHandler!.saveData(newConnection)
             
             print("AccessoryVC: beacon \(self.major!), \(self.minor!) connected to \(self.parentTableView!.room!)")
             

@@ -9,8 +9,6 @@
 import Foundation
 
 protocol HomeKitControllerDelegate {
-    
-    func hasLoadedData(status: Bool)
     func hasCreatedDefaultHomes(title: String, message: String)
 }
 

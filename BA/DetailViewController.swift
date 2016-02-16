@@ -26,8 +26,17 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         }
     }
     
-    var localHomes : [Home]?
-    var localRooms : [Room]?
+    var localHomes : [Home]? {
+        didSet {
+            headerView?.localHomes = localHomes
+        }
+    }
+    
+    var localRooms : [Room]? {
+        didSet {
+            headerView?.localRooms = localRooms
+        }
+    }
     
     var home : String? {
         didSet {
@@ -60,9 +69,9 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         if controller == nil {
             controller = contextHandler!.homeKitController
         }
-        controller!.delegate = self
         
         contextHandler!.contextDelegate = self
+        controller!.delegate = self
         
         title = "Smart Living"
         
@@ -117,16 +126,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         }
     }
     
-    // MARK: - HomeKitController Delegates
-    
-    func hasLoadedData(status: Bool) {
-        if status == true {
-            print("loading successfull")
-        } else {
-            print("loading failed")
-        }
-    }
-    
     func loadData() {
         home = contextHandler!.retrieveHome()
         room = contextHandler!.retrieveRoom()
@@ -143,6 +142,8 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
             self.minor = minor
         }
     }
+    
+    // MARK: - HomeKitController Delegates
     
     func hasCreatedDefaultHomes(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
@@ -392,10 +393,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
                 if success {
                     if self.room != plistRoom {
                         self.alertShowBeaconRoom(homeID!, roomID: roomID!, message: "Bist du im >\(plistRoom)< in >\(plistHome)<? Willst du die dafür relevanten Geräte sehen?")
-                    } else {
-                        //TODO: 
-                        //Beacon wurde aus aktuellem Raum gefunden
-                        //hier: evtl. Beacon-Button farbig anzeigen
                     }
                 }
             }

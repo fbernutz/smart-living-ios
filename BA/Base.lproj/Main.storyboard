@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xSb-pN-FvA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="xSb-pN-FvA">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -175,12 +175,6 @@
                                                     <color key="textColor" red="0.2156862745" green="0.2901960784" blue="0.4039215686" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="11111" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1n-yc-R7w">
-                                                    <rect key="frame" x="84" y="20" width="36" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Minor: " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gab-nk-xx0">
                                                     <rect key="frame" x="20" y="49" width="54.5" height="20"/>
                                                     <fontDescription key="fontDescription" name="Ikaros-Regular" family="Ikaros Sans" pointSize="20"/>
@@ -191,6 +185,12 @@
                                                     <rect key="frame" x="84" y="49" width="41.5" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="11111" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g1n-yc-R7w">
+                                                    <rect key="frame" x="84" y="20" width="36" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                                    <color key="textColor" red="0.054901960784313725" green="0.066666666666666666" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -302,7 +302,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GbS-zP-Cre" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="1097"/>
+            <point key="canvasLocation" x="1950" y="1105"/>
         </scene>
         <!--Imprint View Controller-->
         <scene sceneID="WS9-uL-56d">
@@ -499,7 +499,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SqW-1G-DFM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="266" y="2699"/>
+            <point key="canvasLocation" x="639" y="2699"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="dg4-K0-Ooh">
@@ -579,7 +579,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R7V-zr-3Js" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1108" y="2699"/>
+            <point key="canvasLocation" x="1291" y="2699"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="z9J-Hw-peJ">
@@ -722,7 +722,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 <pageViewController storyboardIdentifier="PageController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="3FC-2l-ogu" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OQU-U7-kIk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2766" y="3410"/>
+            <point key="canvasLocation" x="2606" y="3410"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="Iv6-gb-bv4">
@@ -754,7 +754,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rhC-8J-sPv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3436" y="3410"/>
+            <point key="canvasLocation" x="3276" y="3410"/>
         </scene>
         <!--Settings Collection View Controller-->
         <scene sceneID="2f5-8W-JDB">
@@ -829,7 +829,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vwa-Kr-6gQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1950" y="1889"/>
+            <point key="canvasLocation" x="1950" y="1857"/>
         </scene>
         <!--Gallery View Controller-->
         <scene sceneID="0RE-BD-7Ak">
@@ -847,7 +847,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xXp-W9-li3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2766" y="2699"/>
+            <point key="canvasLocation" x="2606" y="2699"/>
         </scene>
         <!--All Accessories-->
         <scene sceneID="XhK-1N-YaM">
@@ -882,7 +882,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Iak-QA-12T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2766" y="1097"/>
+            <point key="canvasLocation" x="2606" y="1105"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="bAE-1R-mQO">
@@ -900,7 +900,7 @@ E-Mail: felizia.bernutz@adorsys.de</string>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJj-Wq-3ne" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1138" y="1097"/>
+            <point key="canvasLocation" x="1291" y="1113"/>
         </scene>
     </scenes>
     <resources>
