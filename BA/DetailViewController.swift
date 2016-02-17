@@ -21,7 +21,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     var beaconConnected : Bool = false {
         didSet {
-//            tableView.reloadSections(NSIndexSet(index: 1), withRowAnimation: .Automatic)
             tableView.reloadData()
         }
     }
@@ -74,10 +73,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         controller!.delegate = self
         
         title = "Smart Living"
-        
-        //Editing Cells
-//        accessoriesTableView?.editing = true
-//        self.navigationItem.rightBarButtonItem = self.editButtonItem()
         
         //Setting HeaderView
         tableView.setAndLayoutTableHeaderView(headerView!)
@@ -337,40 +332,6 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         }
     }
     
-    //TableView Section  Footer
-    
-//    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-//        let cell = tableView.dequeueReusableCellWithIdentifier("footerCell")! as! FooterCell
-//        
-//        cell.backgroundColor = Colours.lightGray()
-//        
-//        cell.parentTableView = self
-//        
-//        return cell
-//    }
-//    
-//    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-//        return 50.0
-//    }
-    
-    
-    //Editing TableView
-    
-    override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-        return .None
-    }
-    
-    override func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return false
-    }
-    
-    override func tableView(tableView: UITableView, moveRowAtIndexPath sourceIndexPath: NSIndexPath, toIndexPath destinationIndexPath: NSIndexPath) {
-        let movedObject = self.viewControllerArray[sourceIndexPath.row]
-        viewControllerArray.removeAtIndex(sourceIndexPath.row)
-        viewControllerArray.insert(movedObject, atIndex: destinationIndexPath.row)
-        // To check for correctness enable: self.tableView.reloadData()
-    }
-    
     // MARK: - Segue
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -420,7 +381,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
 }
 
 extension UITableView {
-    //set the tableHeaderView so that the required height can be determined, update the header's frame and set it again
+    
     func setAndLayoutTableHeaderView(header: UIView) {
         let headerView = header as! HeaderView
         self.tableHeaderView = headerView
@@ -432,4 +393,5 @@ extension UITableView {
         headerView.frame = frame
         self.tableHeaderView = headerView
     }
+    
 }

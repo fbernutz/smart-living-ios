@@ -32,9 +32,6 @@ class HeaderView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-//        homeName!.preferredMaxLayoutWidth = homeName!.bounds.width
-//        roomName!.preferredMaxLayoutWidth = roomName!.bounds.width
     }
     
     @IBAction func changeRoom(sender: UIButton) {

@@ -34,9 +34,8 @@ class BeaconCell: UITableViewCell {
     // MARK: - Delete Beacon To Room
     
     @IBAction func deleteBeaconFromRoom(sender: UIButton) {
-        //TODO: delete beacon from room
-        
-//        self.parentTableView!.beaconConnected = false
+        // TODO: delete beacon from room
+        // self.parentTableView!.beaconConnected = false
     }
     
     // MARK: - Add Beacon To Room

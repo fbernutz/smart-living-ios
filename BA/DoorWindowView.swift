@@ -15,5 +15,4 @@ class DoorWindowView: AccView {
     @IBOutlet weak var stateChangedTime: UILabel?
     @IBOutlet weak var doorStateBtn: UIButton?
     
-    
 }

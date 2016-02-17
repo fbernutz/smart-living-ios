@@ -45,14 +45,6 @@ class AccessoryFactory {
         }
     }
     
-//    func serviceForAccessory(accessory: IAccessory) -> HMService? {
-//    // sucht nach verfügbaren Services für die Accessories
-//        for accessory in localAccessories! {
-//            
-//        }
-//        return nil
-//    }
-    
 }
 
 
