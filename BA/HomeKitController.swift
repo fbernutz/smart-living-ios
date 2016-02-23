@@ -190,8 +190,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         return pairedAccessories!.filter{ $0.uniqueID! == hmAccessory.uniqueIdentifier }.first
     }
     
-    private func getHMAccessory(AccessoryItem: AccessoryItem) -> HMAccessory {
-        return homeKitAccessories!.filter{ $0.uniqueIdentifier == AccessoryItem.uniqueID }.first!
+    private func getHMAccessory(accessoryItem: AccessoryItem) -> HMAccessory {
+        return homeKitAccessories!.filter{ $0.uniqueIdentifier == accessoryItem.uniqueID }.first!
     }
     
     // MARK: - Home Functions
