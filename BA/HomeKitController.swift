@@ -96,6 +96,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 if let acc = accessory {
                     localPairedAccessories.append(acc)
                     accessoryViews.append(self.completedAccessoryView(acc))
+                } else {
+                    completionHandler()
                 }
                 
                 if self.homeKitAccessories?.count == localPairedAccessories.count {
@@ -113,6 +115,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                     if let acc = accessory {
                         localPairedAccessories.append(acc)
                         accessoryViews.append(self.completedAccessoryView(acc))
+                    } else {
+                        completionHandler()
                     }
                     
                     if self.homeKitAccessories?.count == localPairedAccessories.count {
@@ -133,22 +137,25 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         //1 find HMAccessories in this room
         homeKitAccessories = homes.filter{ $0.uniqueIdentifier == homeID }.first?.rooms.filter{ $0.uniqueIdentifier == roomID }.first?.accessories
         
-        if homeKitAccessories != nil {
-            //2 create AccessoryItems for found HMAccessories
-            let localPairedAccessories: [AccessoryItem] = homeKitAccessories!.map{ createAccessoryItem($0) }
-            
-            for var acc in localPairedAccessories {
+        if let hmAccessories = homeKitAccessories {
+            if !hmAccessories.isEmpty {
+                //2 create AccessoryItems for found HMAccessories
+                let localPairedAccessories: [AccessoryItem] = hmAccessories.map{ createAccessoryItem($0) }
                 
-                //3 find HMService for AccessoryItem
-                let hmAcc = getHMAccessory(acc)
-                hmService = retrieveHMService(hmAcc)
-                
-                //4 the search for characteristics starts here
-                acc.retrieveCharacteristics(hmService!)
-                
-                loadCharacteristicForAccessory(acc, completionHandler: completionHandler)
+                for var acc in localPairedAccessories {
+                    
+                    //3 find HMService for AccessoryItem
+                    let hmAcc = getHMAccessory(acc)
+                    hmService = retrieveHMService(hmAcc)
+                    
+                    //4 the search for characteristics starts here
+                    acc.retrieveCharacteristics(hmService!)
+                    
+                    loadCharacteristicForAccessory(acc, completionHandler: completionHandler)
+                }
+            } else {
+                completionHandler(nil)
             }
-            
         } else {
             homeKitAccessories = []
             completionHandler(nil)
