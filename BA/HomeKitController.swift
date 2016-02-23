@@ -36,7 +36,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     var currentHomeID : NSUUID?
     var currentRoomID : NSUUID?
     
-    var pairedAccessories : [IAccessory]? = [] {
+    var pairedAccessories : [AccessoryItem]? = [] {
         didSet {
             print("HomeKitController: \(pairedAccessories!)")
             contextHandler?.pairedAccessories = pairedAccessories!
@@ -80,10 +80,10 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     
-    // MARK: - Retrieve IAccessory
+    // MARK: - Retrieve AccessoryItem
     
     func retrieveAccessoriesForRoom(inHome homeID: NSUUID, roomID: NSUUID, completionHandler: ()->()) {
-        var localPairedAccessories: [IAccessory] = []
+        var localPairedAccessories: [AccessoryItem] = []
         var accessoryViews: [Bool] = []
         
         currentHomeID = homeID
@@ -91,7 +91,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         
         if !homes.isEmpty {
             
-            getIAccessories(roomID, inHome: homeID) { accessory in
+            getAccessoryItems(roomID, inHome: homeID) { accessory in
                 
                 if let acc = accessory {
                     localPairedAccessories.append(acc)
@@ -108,7 +108,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
             }
         } else {
             accessoryBlock = { () in
-                self.getIAccessories(roomID, inHome: homeID) { accessory in
+                self.getAccessoryItems(roomID, inHome: homeID) { accessory in
                     
                     if let acc = accessory {
                         localPairedAccessories.append(acc)
@@ -127,19 +127,19 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    private func getIAccessories(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : (IAccessory?) -> ()) {
+    private func getAccessoryItems(roomID: NSUUID, inHome homeID: NSUUID, completionHandler : (AccessoryItem?) -> ()) {
         var hmService : HMService?
         
         //1 find HMAccessories in this room
         homeKitAccessories = homes.filter{ $0.uniqueIdentifier == homeID }.first?.rooms.filter{ $0.uniqueIdentifier == roomID }.first?.accessories
         
         if homeKitAccessories != nil {
-            //2 create IAccessories for found HMAccessories
-            let localPairedAccessories: [IAccessory] = homeKitAccessories!.map{ createIAccessory($0) }
+            //2 create AccessoryItems for found HMAccessories
+            let localPairedAccessories: [AccessoryItem] = homeKitAccessories!.map{ createAccessoryItem($0) }
             
             for var acc in localPairedAccessories {
                 
-                //3 find HMService for IAccessory
+                //3 find HMService for AccessoryItem
                 let hmAcc = getHMAccessory(acc)
                 hmService = retrieveHMService(hmAcc)
                 
@@ -155,7 +155,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func createIAccessory(homeKitAccessory: HMAccessory) -> IAccessory {
+    func createAccessoryItem(homeKitAccessory: HMAccessory) -> AccessoryItem {
         var hmService : HMService?
         let hmName = homeKitAccessory.name
         
@@ -186,12 +186,12 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     }
     
     
-    private func getIAccessory(hmAccessory: HMAccessory) -> IAccessory? {
+    private func getAccessoryItem(hmAccessory: HMAccessory) -> AccessoryItem? {
         return pairedAccessories!.filter{ $0.uniqueID! == hmAccessory.uniqueIdentifier }.first
     }
     
-    private func getHMAccessory(iAccessory: IAccessory) -> HMAccessory {
-        return homeKitAccessories!.filter{ $0.uniqueIdentifier == iAccessory.uniqueID }.first!
+    private func getHMAccessory(AccessoryItem: AccessoryItem) -> HMAccessory {
+        return homeKitAccessories!.filter{ $0.uniqueIdentifier == AccessoryItem.uniqueID }.first!
     }
     
     // MARK: - Home Functions
@@ -423,19 +423,19 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                         completionHandler(success: false, error: error)
                     } else {
                         
-                        //1 create a new IAccessories for paired HMAccessories
-                        var newAccessory = self.createIAccessory(homeKitAccessory)
+                        //1 create a new AccessoryItem for paired HMAccessories
+                        var newAccessory = self.createAccessoryItem(homeKitAccessory)
                         
                         self.homeKitAccessories?.append(homeKitAccessory)
                         
-                        //2 for new IAccessory check if its characteristics is empty
+                        //2 for new AccessoryItem check if its characteristics is empty
                         if newAccessory.characteristics.isEmpty {
                             newAccessory.characteristicBlock = { () in
                                 
                                 //3 get and save loaded characteristics
                                 newAccessory.characteristics = newAccessory.getCharacteristics()!
                                 
-                                //4 append new IAccessory with characteristics in pairedAccessories
+                                //4 append new AccessoryItem with characteristics in pairedAccessories
                                 self.pairedAccessories!.append(newAccessory)
                                 completionHandler(success: true, error: nil)
                             }
@@ -443,7 +443,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                             //3 get and save loaded characteristics
                             newAccessory.characteristics = newAccessory.getCharacteristics()!
                             
-                            //4 append new IAccessory with characteristics in pairedAccessories
+                            //4 append new AccessoryItem with characteristics in pairedAccessories
                             self.pairedAccessories!.append(newAccessory)
                             completionHandler(success: true, error: nil)
                         }
@@ -459,9 +459,9 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     //MARK: - Changed reachability
     
     func accessoryDidUpdateReachability(accessory: HMAccessory) {
-        let iAccessory = getIAccessory(accessory)
+        let accessoryItem = getAccessoryItem(accessory)
         
-        if var acc = iAccessory {
+        if var acc = accessoryItem {
             if acc.reachable != accessory.reachable {
                 acc.reachable = accessory.reachable
                 
@@ -470,7 +470,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                 
                 loadCharacteristicForAccessory(acc, completionHandler: { accessory in
                     
-                    // save new loaded IAccessory in pairedAccessories
+                    // save new loaded AccessoryItem in pairedAccessories
                     let index = self.pairedAccessories!.indexOf{ $0.uniqueID == acc.uniqueID }
                     self.pairedAccessories![index!] = acc
                     
@@ -481,12 +481,12 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     //MARK: - Changed characteristic values
     
-    func loadCharacteristicForAccessory(var accessory: IAccessory, completionHandler: (IAccessory?) -> ()) {
+    func loadCharacteristicForAccessory(var accessory: AccessoryItem, completionHandler: (AccessoryItem?) -> ()) {
         
         if accessory.reachable == false {
             completionHandler(accessory)
         } else {
-            // for every IAccessory check if its characteristics is empty
+            // for every AccessoryItem check if its characteristics is empty
             if accessory.characteristics.isEmpty {
                 accessory.characteristicBlock = { () in
                     // get and save loaded characteristics
@@ -511,15 +511,15 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     func reloadAccessories(completionHandler: () -> ()) {
         var hmService: HMService?
-        var localPairedAccessories: [IAccessory] = []
+        var localPairedAccessories: [AccessoryItem] = []
         var accessoryViews: [Bool] = []
         
         for var acc in pairedAccessories! {
-            //1 find HMService for IAccessory
+            //1 find HMService for AccessoryItem
             let hmAcc = getHMAccessory(acc)
             hmService = retrieveHMService(hmAcc)
             
-            //2 loading characteristic for IAccessory started
+            //2 loading characteristic for AccessoryItem started
             acc.retrieveCharacteristics(hmService!)
             
             loadCharacteristicForAccessory(acc, completionHandler: { accessory in
@@ -541,7 +541,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         }
     }
     
-    func completedAccessoryView(accessory: IAccessory) -> Bool {
+    func completedAccessoryView(accessory: AccessoryItem) -> Bool {
         return true
     }
     
@@ -550,28 +550,28 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
         let key = dictKeyToHomeKitType!.filter{ $0.1 == characteristic.characteristicType }.first.map{ $0.0 }
         let value = characteristic.value
         
-        //1 find IAccessory for HMAccessory
-        var iAccessory = getIAccessory(accessory)
+        //1 find AccessoryItem for HMAccessory
+        var accessoryItem = getAccessoryItem(accessory)
         
-        if key != nil && iAccessory != nil {
-            if value !== iAccessory!.characteristics[key!] {
+        if key != nil && accessoryItem != nil {
+            if value !== accessoryItem!.characteristics[key!] {
             
-                //2 set new values for IAccessory
-                iAccessory!.characteristics[key!] = value
+                //2 set new values for AccessoryItem
+                accessoryItem!.characteristics[key!] = value
                 
-                //3 write changed IAccessory to pairedAccessories
-                let index = pairedAccessories!.indexOf({ $0.uniqueID == iAccessory!.uniqueID })
-                pairedAccessories![index!] = iAccessory!
+                //3 write changed AccessoryItem to pairedAccessories
+                let index = pairedAccessories!.indexOf({ $0.uniqueID == accessoryItem!.uniqueID })
+                pairedAccessories![index!] = accessoryItem!
             }
         }
     }
     
-    func setNewValues(accessory: IAccessory, characteristic: [CharacteristicKey : AnyObject]) {
+    func setNewValues(accessory: AccessoryItem, characteristic: [CharacteristicKey : AnyObject]) {
         
         let characteristicKey = characteristic.map{ $0.0 }.first!
         var characteristicValue = characteristic.map{ $0.1 }.first!
         
-        //1 find HMAccessory for IAccessory
+        //1 find HMAccessory for AccessoryItem
         let hmAccessory = getHMAccessory(accessory)
         
         //2 find HMCharacteristicType for CharacteristicKey

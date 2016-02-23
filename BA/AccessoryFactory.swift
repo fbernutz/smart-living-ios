@@ -20,9 +20,9 @@ class AccessoryFactory {
     var informationService = Information()
     var diverseService = Diverse()
     
-    var arrayOfTypes: [IAccessory]?
+    var arrayOfTypes: [AccessoryItem]?
     
-    func accessoryForServices(service: HMService, name: String?) -> IAccessory? {
+    func accessoryForServices(service: HMService, name: String?) -> AccessoryItem? {
         arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, informationService, diverseService]
         
         let canHandleServiceAccessory = arrayOfTypes!.filter{ $0.canHandle(service, name: name) }.first

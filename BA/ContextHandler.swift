@@ -52,7 +52,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         }
     }
     
-    var pairedAccessories : [IAccessory] = [] {
+    var pairedAccessories : [AccessoryItem] = [] {
         didSet {
             if !pairedAccessories.isEmpty {
                 viewControllerArray = retrieveViewControllerList()
@@ -148,7 +148,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         return localViewControllerArray
     }
     
-    func assignAccessoryToViewController (accessory: IAccessory) -> UIViewController? {
+    func assignAccessoryToViewController (accessory: AccessoryItem) -> UIViewController? {
         switch accessory {
         case is Lamp:
             let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as! LightViewController
@@ -181,7 +181,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     }
     
     // TODO: fertig mit Characteristic darstellen
-//    func accessoryCharacteristicLoaded(accessory: IAccessory) {
+//    func accessoryCharacteristicLoaded(accessory: AccessoryItem) {
 //        var countAccessories = 0
 //        countAccessories++
 //        

@@ -14,7 +14,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     
     var contextHandler: ContextHandler?
     
-    var accessory : IAccessory? {
+    var accessory : AccessoryItem? {
         didSet {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics

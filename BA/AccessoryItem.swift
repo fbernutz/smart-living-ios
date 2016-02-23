@@ -1,5 +1,5 @@
 //
-//  IAccessory.swift
+//  AccessoryItem.swift
 //  BA
 //
 //  Created by Felizia Bernutz on 30.11.15.
@@ -15,7 +15,7 @@ let EveWeather = "E863F001-079E-48FF-8F27-9C2605A29F52"
 let EveDoorWindow = "E863F003-079E-48FF-8F27-9C2605A29F52"
 
 
-protocol IAccessory {
+protocol AccessoryItem {
     var name : String? { get set }
     var uniqueID : NSUUID? { get set }
     var reachable : Bool? { get set }
@@ -28,7 +28,7 @@ protocol IAccessory {
 
 // MARK: - Lamp
 
-class Lamp: IAccessory {
+class Lamp: AccessoryItem {
     
     var name : String?
     var uniqueID : NSUUID?
@@ -92,7 +92,7 @@ class Lamp: IAccessory {
 
 // MARK: - Eve Weather
 
-class WeatherStation: IAccessory {
+class WeatherStation: AccessoryItem {
     
     var name : String?
     var uniqueID : NSUUID?
@@ -169,7 +169,7 @@ class WeatherStation: IAccessory {
 
 // MARK: - Eve Energy
 
-class EnergyController: IAccessory {
+class EnergyController: AccessoryItem {
     
     var name : String?
     var uniqueID : NSUUID?
@@ -211,7 +211,7 @@ class EnergyController: IAccessory {
 
 // MARK: - Eve Door & Window
 
-class DoorWindowSensor: IAccessory {
+class DoorWindowSensor: AccessoryItem {
     
     var name : String?
     var uniqueID : NSUUID?
@@ -257,7 +257,7 @@ class DoorWindowSensor: IAccessory {
 
 // MARK: - Information
 
-class Information: IAccessory {
+class Information: AccessoryItem {
     
     var name : String?
     var uniqueID : NSUUID?
@@ -299,7 +299,7 @@ class Information: IAccessory {
 
 // MARK: - Diverse
 
-class Diverse: IAccessory {
+class Diverse: AccessoryItem {
     
     var name : String?
     var uniqueID : NSUUID?
@@ -352,7 +352,7 @@ extension HMCharacteristic {
     
 }
 
-extension IAccessory {
+extension AccessoryItem {
     
     func getCharacteristicValue(characteristic: HMCharacteristic, completion: (AnyObject?, NSError?) -> () ) {
         if !characteristic.isReadable() {

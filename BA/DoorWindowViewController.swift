@@ -16,7 +16,7 @@ class DoorWindowViewController: UIViewController {
     
     var dict: NSMutableDictionary?
     
-    var accessory : IAccessory? {
+    var accessory : AccessoryItem? {
         didSet {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
