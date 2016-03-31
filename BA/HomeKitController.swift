@@ -455,6 +455,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
                             completionHandler(success: true, error: nil)
                         }
                         
+                        completionHandler(success: true, error: nil)
                     }
                 })
                 

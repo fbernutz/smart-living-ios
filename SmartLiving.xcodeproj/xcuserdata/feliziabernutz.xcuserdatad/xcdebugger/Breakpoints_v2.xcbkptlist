@@ -106,12 +106,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/HomeKitController.swift"
-            timestampString = "476033264.90292"
+            timestampString = "477906006.351105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
-            landmarkName = "createIAccessory(_:)"
+            startingLineNumber = "171"
+            endingLineNumber = "171"
+            landmarkName = "createAccessoryItem(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/HomeKitController.swift"
-            timestampString = "476213445.628694"
+            timestampString = "478377427.202869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "535"
-            endingLineNumber = "535"
+            startingLineNumber = "543"
+            endingLineNumber = "543"
             landmarkName = "reloadAccessories(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -186,43 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/HomeKitController.swift"
-            timestampString = "476033474.947473"
+            timestampString = "478377427.202869"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "retrieveAccessoriesForRoom(inHome:roomID:completionHandler:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BA/HomeKitController.swift"
-            timestampString = "476033476.023058"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "retrieveAccessoriesForRoom(inHome:roomID:completionHandler:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BA/HomeKitController.swift"
-            timestampString = "476213445.628694"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "541"
-            endingLineNumber = "541"
+            startingLineNumber = "549"
+            endingLineNumber = "549"
             landmarkName = "reloadAccessories(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -250,11 +218,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/HomeKitController.swift"
-            timestampString = "477049038.154362"
+            timestampString = "477906006.351105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "334"
-            endingLineNumber = "334"
+            startingLineNumber = "341"
+            endingLineNumber = "341"
             landmarkName = "initialHomeSetup(_:roomName:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -266,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/HomeKitController.swift"
-            timestampString = "477049039.850209"
+            timestampString = "477906006.351105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "initialHomeSetup(_:roomName:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -282,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/HomeKitController.swift"
-            timestampString = "477050079.758123"
+            timestampString = "477906006.351105"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "351"
-            endingLineNumber = "351"
+            startingLineNumber = "358"
+            endingLineNumber = "358"
             landmarkName = "initialHomeSetup(_:roomName:)"
             landmarkType = "5">
             <Locations>
@@ -298,12 +266,12 @@
                   moduleName = "Smart Living"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feliziabernutz/develop/csi-smart-living/BA/HomeKitController.swift"
-                  timestampString = "477050473.767235"
+                  timestampString = "478377475.176689"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "351"
-                  endingLineNumber = "351"
-                  offsetFromSymbolStart = "1643">
+                  startingLineNumber = "358"
+                  endingLineNumber = "358"
+                  offsetFromSymbolStart = "1751">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -313,12 +281,12 @@
                   moduleName = "Smart Living"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/feliziabernutz/develop/csi-smart-living/BA/HomeKitController.swift"
-                  timestampString = "477050473.767358"
+                  timestampString = "478377475.176899"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "352"
-                  endingLineNumber = "352"
-                  offsetFromSymbolStart = "42">
+                  startingLineNumber = "359"
+                  endingLineNumber = "359"
+                  offsetFromSymbolStart = "27">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -330,12 +298,251 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "BA/DetailViewController.swift"
-            timestampString = "477050105.107735"
+            timestampString = "477387686.426713"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "149"
-            endingLineNumber = "149"
+            startingLineNumber = "144"
+            endingLineNumber = "144"
             landmarkName = "hasCreatedDefaultHomes(_:message:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377427.202869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "531"
+            endingLineNumber = "531"
+            landmarkName = "reloadAccessories(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "477908721.313252"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "140"
+            endingLineNumber = "140"
+            landmarkName = "getAccessoryItems(_:inHome:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "477908723.589477"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "getAccessoryItems(_:inHome:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "477908724.680927"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "getAccessoryItems(_:inHome:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377427.202869"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "558"
+            endingLineNumber = "558"
+            landmarkName = "accessory(_:service:didUpdateValueForCharacteristic:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smart_Living.HomeKitController.accessory (Smart_Living.HomeKitController)(__ObjC.HMAccessory, service : __ObjC.HMService, didUpdateValueForCharacteristic : __ObjC.HMCharacteristic) -&gt; ()"
+                  moduleName = "Smart Living"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/feliziabernutz/develop/csi-smart-living/BA/HomeKitController.swift"
+                  timestampString = "478377475.194993"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "558"
+                  endingLineNumber = "558"
+                  offsetFromSymbolStart = "54">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smart_Living.HomeKitController.(accessory (Smart_Living.HomeKitController) -&gt; (__ObjC.HMAccessory, service : __ObjC.HMService, didUpdateValueForCharacteristic : __ObjC.HMCharacteristic) -&gt; ()).(closure #1)"
+                  moduleName = "Smart Living"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/feliziabernutz/develop/csi-smart-living/BA/HomeKitController.swift"
+                  timestampString = "478377475.19512"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "558"
+                  endingLineNumber = "558"
+                  offsetFromSymbolStart = "32">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Smart_Living.HomeKitController.(accessory (Smart_Living.HomeKitController) -&gt; (__ObjC.HMAccessory, service : __ObjC.HMService, didUpdateValueForCharacteristic : __ObjC.HMCharacteristic) -&gt; ()).(closure #2)"
+                  moduleName = "Smart Living"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/feliziabernutz/develop/csi-smart-living/BA/HomeKitController.swift"
+                  timestampString = "478377475.195244"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "558"
+                  endingLineNumber = "558"
+                  offsetFromSymbolStart = "34">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/DiscoveryViewController.swift"
+            timestampString = "478376895.716307"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "75"
+            endingLineNumber = "75"
+            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377219.506759"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "425"
+            endingLineNumber = "425"
+            landmarkName = "addAccessory(_:activeHomeID:activeRoomID:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377212.834863"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "430"
+            endingLineNumber = "430"
+            landmarkName = "addAccessory(_:activeHomeID:activeRoomID:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377215.032818"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "447"
+            endingLineNumber = "447"
+            landmarkName = "addAccessory(_:activeHomeID:activeRoomID:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377216.447828"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "455"
+            endingLineNumber = "455"
+            landmarkName = "addAccessory(_:activeHomeID:activeRoomID:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377410.155032"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "439"
+            endingLineNumber = "439"
+            landmarkName = "addAccessory(_:activeHomeID:activeRoomID:completionHandler:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BA/HomeKitController.swift"
+            timestampString = "478377428.397849"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "458"
+            endingLineNumber = "458"
+            landmarkName = "addAccessory(_:activeHomeID:activeRoomID:completionHandler:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
