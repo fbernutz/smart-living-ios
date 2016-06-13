@@ -126,7 +126,7 @@ class WeatherStation: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypeCurrentTemperature as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.charCounter++
+                        self.charCounter += 1
                         
                         self.characteristics[CharacteristicKey.temperature] = value as! Float
                         if self.charCounter == 2 {
@@ -139,7 +139,7 @@ class WeatherStation: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypeCurrentRelativeHumidity as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.charCounter++
+                        self.charCounter += 1
                         
                         self.characteristics[CharacteristicKey.humidity] = value as! Float
                         if self.charCounter == 2 {

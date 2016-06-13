@@ -489,7 +489,8 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
     
     //MARK: - Changed characteristic values
     
-    func loadCharacteristicForAccessory(var accessory: AccessoryItem, completionHandler: (AccessoryItem?) -> ()) {
+    func loadCharacteristicForAccessory(accessory: AccessoryItem, completionHandler: (AccessoryItem?) -> ()) {
+        var accessory = accessory
         
         if accessory.reachable == false {
             completionHandler(accessory)

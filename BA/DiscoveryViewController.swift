@@ -33,7 +33,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
         title = searchingTitle
         accessoryList = controller!.discoveredAccessories()
         
-        self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(DiscoveryViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -93,7 +93,7 @@ class DiscoveryViewController: UITableViewController, HomeKitControllerNewAccess
             tableView?.reloadData()
         } else {
             if self.refreshControl!.refreshing {
-            self.refreshControl!.endRefreshing()
+                self.refreshControl!.endRefreshing()
             }
         }
     }

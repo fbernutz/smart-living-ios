@@ -79,7 +79,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         headerView!.parentTableView = self
         
         // Pull to Refresh
-        self.refreshControl!.addTarget(self, action: "refresh:", forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(DetailViewController.refresh(_:)), forControlEvents: .ValueChanged)
         self.refreshControl!.beginRefreshing()
         
         // listen for notification
