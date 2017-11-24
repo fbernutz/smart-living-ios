@@ -9,51 +9,51 @@
 import UIKit
 
 class DiverseViewController: UIViewController {
-    
+
     @IBOutlet var diverseView: DiverseView?
-    
+
     var contextHandler: ContextHandler?
-    
-    var accessory : AccessoryItem? {
+
+    var accessory: AccessoryItem? {
         didSet {
             if accessory?.characteristics != nil {
                 characteristics = accessory!.characteristics
             }
-            
+
             reachable = accessory?.reachable
         }
     }
-    
-    var characteristics : [CharacteristicKey:AnyObject]? {
+
+    var characteristics: [CharacteristicKey:AnyObject]? {
         didSet {
             if let chars = characteristics {
                 if !chars.isEmpty {
-                    serviceName = chars.filter{ $0.0 == CharacteristicKey.serviceName }.first.map{ $0.1 as! String }
+                    serviceName = chars.filter { $0.0 == CharacteristicKey.serviceName }.first.map { $0.1 as! String }
                 }
             }
         }
     }
-    
+
     var reachable: Bool?
-    
-    var serviceName : String? {
+
+    var serviceName: String? {
         didSet {
             if let _ = diverseView {
                 setName(serviceName)
             }
         }
     }
-    
-    var size : CGFloat?
-    
+
+    var size: CGFloat?
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let reachable = reachable {
             if reachable {
                 if let chars = characteristics {
@@ -65,20 +65,20 @@ class DiverseViewController: UIViewController {
             } else {
                 setName("Momentan nicht erreichbar")
             }
-            
+
             let _ = contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
-        
+
         size = diverseView!.cView!.frame.size.height
     }
-    
+
     // MARK: - Set Values in LightView
-    
+
     func setCharacteristics() {
         setService(serviceName)
         setName(accessory?.name)
     }
-    
+
     func setService(_ name: String?) {
         if let _ = serviceName {
             diverseView?.serviceName?.isHidden = false
@@ -87,7 +87,7 @@ class DiverseViewController: UIViewController {
             diverseView?.serviceName?.isHidden = true
         }
     }
-    
+
     func setName(_ name: String?) {
         if let name = name {
             diverseView?.infotext?.isHidden = false
@@ -96,5 +96,5 @@ class DiverseViewController: UIViewController {
             diverseView?.infotext?.isHidden = true
         }
     }
-    
+
 }

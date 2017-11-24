@@ -13,5 +13,5 @@ protocol AccViewDelegate {
     func accViewSliderChanged(_ value: Float)
     func accViewSwitchTapped(_ state: Bool)
     func accViewButtonTapped(_ state: String)
-    
+
 }

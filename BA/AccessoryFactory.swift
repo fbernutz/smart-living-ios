@@ -10,23 +10,23 @@ import Foundation
 import HomeKit
 
 class AccessoryFactory {
-    
-    var accessories : [HMAccessory]?
-    
+
+    var accessories: [HMAccessory]?
+
     var lampService = Lamp()
     var weatherStationService = WeatherStation()
     var energyControllerService = EnergyController()
     var doorWindowSensorService = DoorWindowSensor()
     var informationService = Information()
     var diverseService = Diverse()
-    
+
     var arrayOfTypes: [AccessoryItem]?
-    
+
     func accessoryForServices(_ service: HMService, name: String?) -> AccessoryItem? {
         arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, informationService, diverseService]
-        
-        let canHandleServiceAccessory = arrayOfTypes!.filter{ $0.canHandle(service, name: name) }.first
-        
+
+        let canHandleServiceAccessory = arrayOfTypes!.filter { $0.canHandle(service, name: name) }.first
+
         //create a new instance of this type
         switch canHandleServiceAccessory {
         case is Lamp:
@@ -44,7 +44,5 @@ class AccessoryFactory {
         default: return nil
         }
     }
-    
+
 }
-
-

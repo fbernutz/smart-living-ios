@@ -14,5 +14,5 @@ class ImprintViewController: UIViewController {
         super.viewDidLoad()
         title = "Impressum"
     }
-    
+
 }

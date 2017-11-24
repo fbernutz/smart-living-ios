@@ -9,9 +9,9 @@
 import UIKit
 
 class SettingsCollectionViewCell: UICollectionViewCell {
-    
+
     @IBOutlet weak var label: UILabel?
-    
+
     override var isHighlighted: Bool {
         didSet {
             if isHighlighted {
@@ -21,5 +21,5 @@ class SettingsCollectionViewCell: UICollectionViewCell {
             }
         }
     }
-    
+
 }

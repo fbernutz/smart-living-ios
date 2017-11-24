@@ -13,10 +13,10 @@ private let reuseIdentifier = "SettingsCell"
 class SettingsCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
     var settings = [String]()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         settings = ["Über die App", "Info-Galerie", "FAQs", "Einstellungen", "Impressum"]
     }
 
@@ -28,20 +28,20 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SettingsCollectionViewCell
-    
+
         cell.label!.text = settings[indexPath.row]
-        
+
         cell.label!.textColor = Colours.blue()
         cell.layer.borderColor = Colours.blue().cgColor
-        
+
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
-        
+
         return cell
     }
-    
+
     // MARK: - UICollectionViewDelegate protocol
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
@@ -60,9 +60,9 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
         default: break
         }
     }
-    
-    //MARK: - Prepare for Segue
-    
+
+    // MARK: - Prepare for Segue
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Impressum" {
             let _ = segue.destination as! ImprintViewController
@@ -74,5 +74,5 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
             let _ = segue.destination as! GalleryViewController
         }
     }
-    
+
 }

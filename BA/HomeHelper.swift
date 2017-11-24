@@ -10,18 +10,17 @@ import Foundation
 import HomeKit
 
 class HomeHelper: NSObject, HMHomeManagerDelegate {
-    
-    var localHomes : [Home]?
-    var localRooms : [Room]?
-    var homeKitController : HomeKitController?
-    
+
+    var localHomes: [Home]?
+    var localRooms: [Room]?
+    var homeKitController: HomeKitController?
+
     override init() {
         super.init()
     }
-    
-    
+
     // MARK: - Service To Local
-    
+
     func serviceToLocalHomes(_ homeKitHomes: [HMHome]) -> [Home]? {
         localHomes = []
         for home in homeKitHomes {
@@ -29,7 +28,7 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
         }
         return localHomes
     }
-    
+
     func serviceToLocalRooms(_ homeKitHomes: [HMHome]) -> [Room]? {
         localRooms = []
         for home in homeKitHomes {
@@ -39,17 +38,15 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
         }
         return localRooms
     }
-    
-    
+
     // MARK: - Local To Service
-    
+
     func localHomeToService(_ localHome: Home) {
         homeKitController?.addHome(localHome.name!)
     }
-    
+
     func localRoomToService(_ localRoom: Room) {
-        let _ = homeKitController?.homeManager.homes.filter{ $0.uniqueIdentifier == localRoom.homeID }.map{ homeKitController?.addRoom(localRoom.name!, toHome: $0) }
+        let _ = homeKitController?.homeManager.homes.filter { $0.uniqueIdentifier == localRoom.homeID }.map { homeKitController?.addRoom(localRoom.name!, toHome: $0) }
     }
-    
-    
+
 }

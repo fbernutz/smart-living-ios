@@ -9,10 +9,10 @@
 import UIKit
 
 open class Home: NSObject {
-    var id : UUID?
-    var name : String?
-    var primary : Bool?
-    
+    var id: UUID?
+    var name: String?
+    var primary: Bool?
+
     init(id: UUID?, name: String?, primary: Bool?) {
         self.id = id
         self.name = name
@@ -21,17 +21,16 @@ open class Home: NSObject {
 }
 
 open class Room: NSObject {
-    var homeID : UUID?
-    var id : UUID?
-    var name : String?
-    
+    var homeID: UUID?
+    var id: UUID?
+    var name: String?
+
     init(homeID: UUID?, id: UUID?, name: String?) {
         self.homeID = homeID
         self.id = id
         self.name = name
     }
 }
-
 
 //public class ActionSet : NSObject {
 //    

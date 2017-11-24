@@ -9,11 +9,11 @@
 import UIKit
 
 class PageViewController: UIViewController {
-    
+
     @IBOutlet weak var imageView: UIImageView?
-    
+
     var itemIndex: Int = 0
-    
+
     var imageName: String = "" {
         didSet {
             if let imageView = imageView {
@@ -21,10 +21,10 @@ class PageViewController: UIViewController {
             }
         }
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         imageView!.image = UIImage(named: imageName)
     }
 }

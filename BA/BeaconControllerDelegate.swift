@@ -7,7 +7,7 @@
 //
 
 protocol BeaconControllerDelegate {
-    
+
     func beaconFound(_ manager: BeaconController, major: Int, minor: Int)
-    
+
 }

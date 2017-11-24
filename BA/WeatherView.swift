@@ -9,11 +9,11 @@
 import UIKit
 
 class WeatherView: AccView {
-    
+
     @IBOutlet weak var cView: UIView?
     @IBOutlet weak var humidity: UILabel?
     @IBOutlet weak var pressure: UILabel?
     @IBOutlet weak var temperature: UILabel?
     @IBOutlet weak var name: UILabel?
-    
+
 }

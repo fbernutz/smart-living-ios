@@ -12,9 +12,9 @@ class FAQCell: UITableViewCell {
 
     @IBOutlet weak var questionLabel: UILabel?
     @IBOutlet weak var answerLabel: UILabel?
-    
+
     @IBOutlet weak var bottomConstraint: NSLayoutConstraint?
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
     }
@@ -26,7 +26,7 @@ class FAQCell: UITableViewCell {
     func setCollapsed(_ isCollapsed: Bool) {
 //        showInformation(isCollapsed)
     }
-    
+
 //    func showInformation(show: Bool) {
 //        if show {
 //            answerLabel?.hidden = false
@@ -40,5 +40,5 @@ class FAQCell: UITableViewCell {
 //            }
 //        }
 //    }
-    
+
 }

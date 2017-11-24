@@ -9,10 +9,10 @@
 import UIKit
 
 class DoorWindowView: AccView {
-    
+
     @IBOutlet weak var cView: UIView?
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var stateChangedTime: UILabel?
     @IBOutlet weak var doorStateBtn: UIButton?
-    
+
 }

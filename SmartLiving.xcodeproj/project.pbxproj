@@ -33,7 +33,6 @@
 		3F6AFBCF1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */; };
 		3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */; };
 		3F6AFBD31C0C6C4300AC1766 /* AccessoryItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6AFBD21C0C6C4300AC1766 /* AccessoryItem.swift */; };
-		3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */; };
 		3F7232A01C206526004E7503 /* LightView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F72329F1C206526004E7503 /* LightView.swift */; };
 		3F7797721C36E96700F3C550 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F7797711C36E96700F3C550 /* Constants.swift */; };
 		3F786BEC1C5688DE000C3DF4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F786BEB1C5688DE000C3DF4 /* Assets.xcassets */; };
@@ -102,7 +101,6 @@
 		3F6AFBCE1C0C3F8800AC1766 /* HomeKitControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeKitControllerDelegate.swift; sourceTree = "<group>"; };
 		3F6AFBD01C0C6C3000AC1766 /* AccessoryFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AccessoryFactory.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		3F6AFBD21C0C6C4300AC1766 /* AccessoryItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = AccessoryItem.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationButton.swift; sourceTree = "<group>"; };
 		3F72329F1C206526004E7503 /* LightView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LightView.swift; sourceTree = "<group>"; };
 		3F7797711C36E96700F3C550 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		3F786BEB1C5688DE000C3DF4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -222,7 +220,6 @@
 			isa = PBXGroup;
 			children = (
 				3F0547E01BFF55690061B3F0 /* Font */,
-				3F6DDC141BD8BB6700F38491 /* NavigationButton.swift */,
 				3FE105B91BE2B5A000E381F6 /* CustomButton.swift */,
 				3FE105BB1BE2B77300E381F6 /* Colours.swift */,
 			);
@@ -346,6 +343,7 @@
 				3F3DB8161BBE750800854DE5 /* Frameworks */,
 				3F3DB8171BBE750800854DE5 /* Resources */,
 				3F073B511BE8972E00698BDC /* Embed App Extensions */,
+				3F29E1111FC8BF9C00DA51CC /* swiftlint */,
 			);
 			buildRules = (
 			);
@@ -418,6 +416,23 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		3F29E1111FC8BF9C00DA51CC /* swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = swiftlint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint autocorrect\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		3F3DB8151BBE750800854DE5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -449,7 +464,6 @@
 				3F0547DC1BFF31E30061B3F0 /* LocalStructure.swift in Sources */,
 				3FD2ACA21C53782600EB07EA /* BeaconRoomConnector.swift in Sources */,
 				3F6AFBD31C0C6C4300AC1766 /* AccessoryItem.swift in Sources */,
-				3F6DDC151BD8BB6700F38491 /* NavigationButton.swift in Sources */,
 				3F6AFBD11C0C6C3000AC1766 /* AccessoryFactory.swift in Sources */,
 				3F0BACEC1BF0804800AF65A5 /* HomeKitController.swift in Sources */,
 				3F8D91761C3546BB00DCCED3 /* AccViewDelegate.swift in Sources */,

@@ -13,5 +13,5 @@ class DiverseView: UIView {
     @IBOutlet weak var cView: UIView?
     @IBOutlet weak var infotext: UILabel?
     @IBOutlet weak var serviceName: UILabel?
-    
+
 }
