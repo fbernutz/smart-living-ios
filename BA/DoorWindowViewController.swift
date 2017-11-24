@@ -129,8 +129,8 @@ class DoorWindowViewController: UIViewController {
         if(!fileManager.fileExists(atPath: path)) {
             // If it doesn't, copy it from the default file in the Resources folder
             if let bundlePath = Bundle.main.path(forResource: "AccessoryChars", ofType: "plist") {
-                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
-                print("Bundle Accessories.plist file is --> \(resultDictionary?.description)")
+//                let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
+//                print("Bundle Accessories.plist file is --> \(resultDictionary?.description)")
                 do {
                     try fileManager.copyItem(atPath: bundlePath, toPath: path)
                 } catch _ {

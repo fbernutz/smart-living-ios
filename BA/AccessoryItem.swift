@@ -9,9 +9,9 @@
 import UIKit
 import HomeKit
 
-let EveEnergy = HMServiceTypeOutlet
-let EveWeather = "E863F001-079E-48FF-8F27-9C2605A29F52"
-let EveDoorWindow = "E863F003-079E-48FF-8F27-9C2605A29F52"
+let eveEnergy = HMServiceTypeOutlet
+let eveWeather = "E863F001-079E-48FF-8F27-9C2605A29F52"
+let eveDoorAndWindow = "E863F003-079E-48FF-8F27-9C2605A29F52"
 
 protocol AccessoryItem {
     var name: String? { get set }
@@ -102,7 +102,7 @@ class WeatherStation: AccessoryItem {
     func canHandle(_ service: HMService, name: String?) -> Bool {
 
         switch service.serviceType {
-        case EveWeather:
+        case eveWeather:
             if name == "Eve Weather" {
                 return true
             } else {
@@ -177,7 +177,7 @@ class EnergyController: AccessoryItem {
 
     func canHandle(_ service: HMService, name: String?) -> Bool {
         switch service.serviceType {
-        case EveEnergy:
+        case eveEnergy:
             if name == "Eve Energy" {
                 return true
             } else {
@@ -221,7 +221,7 @@ class DoorWindowSensor: AccessoryItem {
 
         switch service.serviceType {
 
-        case EveDoorWindow:
+        case eveDoorAndWindow:
             if name == "Eve Door" {
                 return true
             } else {
@@ -378,16 +378,17 @@ extension AccessoryItem {
 
     mutating func retrieveCharacteristics(_ service: HMService) {
 
-        characteristicsForService(service, completionHandler: { characteristics in
-            print("\(self.name!): \(characteristics.count) von \(service.characteristics.count) Chars")
+        characteristicsForService(service, completionHandler: { _ in
+//            print("\(self.name!): \(characteristics.count) von \(service.characteristics.count) Chars")
 
+            //FIXME: 
 //            if characteristics.count == service.characteristics.count {
-                self.characteristics = characteristics
-
-                if let block = self.characteristicBlock {
-                    block()
-                    self.characteristicBlock = nil
-                }
+//                self.characteristics = characteristics
+//
+//                if let block = self.characteristicBlock {
+//                    block()
+//                    self.characteristicBlock = nil
+//                }
 //            }
         })
     }

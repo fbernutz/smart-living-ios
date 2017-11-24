@@ -53,7 +53,7 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
         case 3:
             let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
-                UIApplication.shared.openURL(url)
+                UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
         case 4:
             performSegue(withIdentifier: "Impressum", sender: self)

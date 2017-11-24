@@ -32,7 +32,7 @@ class GalleryViewController: UIViewController, UIPageViewControllerDataSource {
         let pageController = self.storyboard!.instantiateViewController(withIdentifier: "PageController") as! UIPageViewController
         pageController.dataSource = self
 
-        if contentImages.count > 0 {
+        if !contentImages.isEmpty {
             let firstController = getItemController(0)!
             let startingViewControllers: NSArray = [firstController]
             pageController.setViewControllers(startingViewControllers as? [UIViewController], direction: UIPageViewControllerNavigationDirection.forward, animated: false, completion: nil)

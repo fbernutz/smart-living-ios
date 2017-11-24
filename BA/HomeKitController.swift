@@ -80,7 +80,7 @@ class HomeKitController: NSObject, HMHomeManagerDelegate, HMAccessoryBrowserDele
 
     // MARK: - Retrieve AccessoryItem
 
-    func retrieveAccessoriesForRoom(inHome homeID: UUID, roomID: UUID, completionHandler: @escaping ()->Void) {
+    func retrieveAccessoriesForRoom(inHome homeID: UUID, roomID: UUID, completionHandler: @escaping () -> Void) {
         var localPairedAccessories: [AccessoryItem] = []
         var accessoryViews: [Bool] = []
 

@@ -31,19 +31,3 @@ open class Room: NSObject {
         self.name = name
     }
 }
-
-//public class ActionSet : NSObject {
-//    
-//}
-//
-//public class Zones : NSObject {
-//    
-//}
-//
-//public class Trigger : NSObject {
-//    
-//}
-//
-//public class Beacon : NSObject {
-//    
-//}

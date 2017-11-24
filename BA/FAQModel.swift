@@ -9,17 +9,16 @@
 import UIKit
 
 class FAQModel {
-
-    func provideFAQs() -> [ FAQ ] {
-        return [ homeKit(),
-            controlWhenAway(),
-            accessoryTypes(),
-            availableAccessories(),
-            iBeacons(),
-            iBeaconConnection(),
-            creatingActionSet(),
-            communicationWithPhone(),
-            futureFeatures() ]
+    func provideFAQs() -> [FAQ] {
+        return [ FAQModel.homeKit(),
+            FAQModel.controlWhenAway(),
+            FAQModel.accessoryTypes(),
+            FAQModel.availableAccessories(),
+            FAQModel.iBeacons(),
+            FAQModel.iBeaconConnection(),
+            FAQModel.creatingActionSet(),
+            FAQModel.communicationWithPhone(),
+            FAQModel.futureFeatures() ]
     }
 
     class func homeKit() -> FAQ {
@@ -77,7 +76,7 @@ class FAQModel {
     }
 }
 
-struct FAQ {
+class FAQ {
     let question: String
     let answer: String
 
