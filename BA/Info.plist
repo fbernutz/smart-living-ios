@@ -24,6 +24,8 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Diese Erlaubnis wird benötigt, um iBeacons verwenden zu können.</string>
+	<key>NSHomeKitUsageDescription</key>
+	<string>Diese Erlaubnis wird benötigt, um auf die HomeKit Daten zugreifen zu können.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>bluetooth-central</string>
