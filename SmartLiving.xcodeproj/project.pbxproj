@@ -52,7 +52,7 @@
 		3FD2ACA31C53782600EB07EA /* ContextHandlerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FD2ACA01C53782600EB07EA /* ContextHandlerDelegate.swift */; };
 		3FD2ACA51C537C5900EB07EA /* HomeKitData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FD2ACA41C537C5900EB07EA /* HomeKitData.plist */; };
 		3FE105BA1BE2B5A000E381F6 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105B91BE2B5A000E381F6 /* CustomButton.swift */; };
-		3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BB1BE2B77300E381F6 /* Colours.swift */; };
+		3FE105BC1BE2B77300E381F6 /* UIColor+Custom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BB1BE2B77300E381F6 /* UIColor+Custom.swift */; };
 		3FE105BE1BE2C45500E381F6 /* BeaconController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE105BD1BE2C45500E381F6 /* BeaconController.swift */; };
 		3FE9E5321C5B6E1A007925B0 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9E5311C5B6E1A007925B0 /* HeaderView.swift */; };
 		3FEB51CD1C07345D00715FDD /* DiscoveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FEB51CC1C07345D00715FDD /* DiscoveryViewController.swift */; };
@@ -120,7 +120,7 @@
 		3FD2ACA01C53782600EB07EA /* ContextHandlerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContextHandlerDelegate.swift; sourceTree = "<group>"; };
 		3FD2ACA41C537C5900EB07EA /* HomeKitData.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HomeKitData.plist; sourceTree = "<group>"; };
 		3FE105B91BE2B5A000E381F6 /* CustomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
-		3FE105BB1BE2B77300E381F6 /* Colours.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		3FE105BB1BE2B77300E381F6 /* UIColor+Custom.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Custom.swift"; sourceTree = "<group>"; };
 		3FE105BD1BE2C45500E381F6 /* BeaconController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeaconController.swift; sourceTree = "<group>"; };
 		3FE9E5311C5B6E1A007925B0 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		3FEB51CC1C07345D00715FDD /* DiscoveryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoveryViewController.swift; sourceTree = "<group>"; };
@@ -221,7 +221,7 @@
 			children = (
 				3F0547E01BFF55690061B3F0 /* Font */,
 				3FE105B91BE2B5A000E381F6 /* CustomButton.swift */,
-				3FE105BB1BE2B77300E381F6 /* Colours.swift */,
+				3FE105BB1BE2B77300E381F6 /* UIColor+Custom.swift */,
 			);
 			name = Design;
 			sourceTree = "<group>";
@@ -454,7 +454,7 @@
 				3F7797721C36E96700F3C550 /* Constants.swift in Sources */,
 				3F096E171C4CE61B0015729A /* AccView.swift in Sources */,
 				3F3B24921C2348300037CD24 /* DoorWindowView.swift in Sources */,
-				3FE105BC1BE2B77300E381F6 /* Colours.swift in Sources */,
+				3FE105BC1BE2B77300E381F6 /* UIColor+Custom.swift in Sources */,
 				3F3B248E1C2348180037CD24 /* WeatherView.swift in Sources */,
 				3F97E6431C567DC9004DD9D3 /* GalleryViewController.swift in Sources */,
 				3F0254B51C29904D002F6B3E /* ImprintViewController.swift in Sources */,

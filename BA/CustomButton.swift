@@ -13,9 +13,9 @@ class CustomButton: UIButton {
     override func awakeFromNib() {
         super.awakeFromNib()
 
-        backgroundColor = Colours.lightBlue()
+        backgroundColor = UIColor.Custom.lightBlue
 
-        setTitleColor(Colours.white(), for: UIControlState())
+        setTitleColor(UIColor.Custom.white, for: UIControlState())
 
         titleLabel?.numberOfLines = 0
 

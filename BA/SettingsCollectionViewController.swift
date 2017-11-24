@@ -31,8 +31,8 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
 
         cell.label!.text = settings[indexPath.row]
 
-        cell.label!.textColor = Colours.blue()
-        cell.layer.borderColor = Colours.blue().cgColor
+        cell.label!.textColor = UIColor.Custom.blue
+        cell.layer.borderColor = UIColor.Custom.blue.cgColor
 
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
