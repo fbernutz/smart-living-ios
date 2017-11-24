@@ -34,19 +34,19 @@ class HeaderView: UIView {
         super.layoutSubviews()
     }
     
-    @IBAction func changeRoom(sender: UIButton) {
+    @IBAction func changeRoom(_ sender: UIButton) {
         let sheet = self.createActionSheet()
-        parentTableView!.presentViewController(sheet, animated: true, completion: nil)
+        parentTableView!.present(sheet, animated: true, completion: nil)
     }
     
     func createActionSheet() -> UIAlertController {
-        let sheet = UIAlertController(title: "Zuhause | Raum", message: "Wähle einen anderen Raum aus, um dessen zugehörige Geräte zu steuern.", preferredStyle: UIAlertControllerStyle.ActionSheet)
+        let sheet = UIAlertController(title: "Zuhause | Raum", message: "Wähle einen anderen Raum aus, um dessen zugehörige Geräte zu steuern.", preferredStyle: UIAlertControllerStyle.actionSheet)
         
         for home in localHomes! {
             _ = localRooms!.filter{ $0.homeID == home.id }.map{ room in
-                sheet.addAction(UIAlertAction(title: "\(home.name!) | \(room.name!)", style: UIAlertActionStyle.Default)
+                sheet.addAction(UIAlertAction(title: "\(home.name!) | \(room.name!)", style: UIAlertActionStyle.default)
                     { action in
-                        if !self.parentTableView!.refreshControl!.refreshing {
+                        if !self.parentTableView!.refreshControl!.isRefreshing {
                             self.parentTableView!.refreshControl!.beginRefreshing()
                             self.parentTableView!.tableView.reloadData()
                         }
@@ -57,8 +57,8 @@ class HeaderView: UIView {
             }
         }
         
-        sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) { action in
-            if self.parentTableView!.refreshControl!.refreshing {
+        sheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel) { action in
+            if self.parentTableView!.refreshControl!.isRefreshing {
                 self.parentTableView!.refreshControl!.endRefreshing()
                 self.parentTableView!.tableView.reloadData()
             }

@@ -33,7 +33,7 @@ class BeaconCell: UITableViewCell {
     
     // MARK: - Delete Beacon To Room
     
-    @IBAction func deleteBeaconFromRoom(sender: UIButton) {
+    @IBAction func deleteBeaconFromRoom(_ sender: UIButton) {
         // TODO: delete beacon from room
         // self.parentTableView!.beaconConnected = false
     }
@@ -41,9 +41,9 @@ class BeaconCell: UITableViewCell {
     // MARK: - Add Beacon To Room
     
     func addBeacon() {
-        let alert = UIAlertController(title: "Beacon hinzufügen", message: "Verbinde das näheste Beacon mit \(parentTableView!.room!).", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Abbrechen", style: .Cancel, handler: nil))
-        alert.addAction(UIAlertAction (title: "Hinzufügen", style: .Default) { action in
+        let alert = UIAlertController(title: "Beacon hinzufügen", message: "Verbinde das näheste Beacon mit \(parentTableView!.room!).", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Abbrechen", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction (title: "Hinzufügen", style: .default) { action in
             let newConnection = BeaconRoomConnector(major: self.major!, minor: self.minor!, home: self.parentTableView!.home!, room: self.parentTableView!.room!)
             
             self.parentTableView!.contextHandler!.saveData(newConnection)
@@ -53,18 +53,18 @@ class BeaconCell: UITableViewCell {
             self.alertBeaconAdded()
             })
         
-        parentTableView!.presentViewController(alert, animated: true, completion: nil)
+        parentTableView!.present(alert, animated: true, completion: nil)
     }
     
     func alertBeaconAdded() {
-        let alert = UIAlertController(title: "Beacon hinzugefügt", message: "Das Beacon \(parentTableView!.major!), \(parentTableView!.minor!) wurde erfolgreich zu \(parentTableView!.home!), \(parentTableView!.room!) hinzugefügt.", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Ok", style: .Cancel)
+        let alert = UIAlertController(title: "Beacon hinzugefügt", message: "Das Beacon \(parentTableView!.major!), \(parentTableView!.minor!) wurde erfolgreich zu \(parentTableView!.home!), \(parentTableView!.room!) hinzugefügt.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .cancel)
             { action in
                 self.parentTableView!.beaconConnected = true
             }
         )
         
-        parentTableView!.presentViewController(alert, animated: true, completion: nil)
+        parentTableView!.present(alert, animated: true, completion: nil)
     }
     
 }

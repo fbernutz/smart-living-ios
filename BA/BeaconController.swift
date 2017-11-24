@@ -11,7 +11,7 @@ import CoreLocation
 
 class BeaconController: NSObject, CLLocationManagerDelegate {
     
-    let beaconRegion = CLBeaconRegion(proximityUUID: NSUUID(UUIDString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, identifier: "Estimote")
+    let beaconRegion = CLBeaconRegion(proximityUUID: UUID(uuidString: "B9407F30-F5F8-466E-AFF9-25556B57FE6D")!, identifier: "Estimote")
     
     let locationManager = CLLocationManager()
     var monitoringStarted: Bool = false
@@ -30,12 +30,12 @@ class BeaconController: NSObject, CLLocationManagerDelegate {
         
         // 1 check AuthorizationStatus
         switch CLLocationManager.authorizationStatus() {
-        case .AuthorizedAlways, .AuthorizedWhenInUse:
+        case .authorizedAlways, .authorizedWhenInUse:
             monitoringStarted = true
             checkMonitoringAvailability()
-        case .NotDetermined:
+        case .notDetermined:
             locationManager.requestAlwaysAuthorization()
-        case .Restricted, .Denied:
+        case .restricted, .denied:
             return
         }
     }
@@ -43,33 +43,33 @@ class BeaconController: NSObject, CLLocationManagerDelegate {
     func checkMonitoringAvailability () {
         
         // 2 check if monitoring is available
-        if CLLocationManager.isMonitoringAvailableForClass(CLBeaconRegion){
+        if CLLocationManager.isMonitoringAvailable(for: CLBeaconRegion.classForCoder()){
             startMonitoringInRegion(beaconRegion)
         } else {
             monitoringStarted = false
         }
     }
     
-    func startMonitoringInRegion (region: CLBeaconRegion) {
+    func startMonitoringInRegion (_ region: CLBeaconRegion) {
         
         // 3 Start monitoring for region
-        locationManager.startMonitoringForRegion(region)
+        locationManager.startMonitoring(for: region)
         
         // 4 Start ranging beacons in region
-        locationManager.startRangingBeaconsInRegion(region)
+        locationManager.startRangingBeacons(in: region)
         
         monitoringStarted = true
     }
     
     // MARK: - Location Manager Delegates
     
-    func locationManager(manager: CLLocationManager, didStartMonitoringForRegion region: CLRegion) {
-        locationManager.requestStateForRegion(region)
+    func locationManager(_ manager: CLLocationManager, didStartMonitoringFor region: CLRegion) {
+        locationManager.requestState(for: region)
     }
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         switch status {
-        case .NotDetermined, .AuthorizedAlways, .AuthorizedWhenInUse:
+        case .notDetermined, .authorizedAlways, .authorizedWhenInUse:
             if monitoringStarted == false {
                 checkMonitoringAvailability()
             }
@@ -77,10 +77,10 @@ class BeaconController: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func locationManager(manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], inRegion region: CLBeaconRegion) {
+    func locationManager(_ manager: CLLocationManager, didRangeBeacons beacons: [CLBeacon], in region: CLBeaconRegion) {
         
         //1 filter ranged beacons
-        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.Unknown }
+        let knownBeacons = beacons.filter{ $0.proximity != CLProximity.unknown }
         
         if !knownBeacons.isEmpty {
             //2 set closest beacon
@@ -90,7 +90,7 @@ class BeaconController: NSObject, CLLocationManagerDelegate {
             if closestBeacon.major != lastBeacon?.major && closestBeacon.minor != lastBeacon?.minor {
                 
                 //4 delegate with information which beacon was found
-                delegate?.beaconFound(self, major: closestBeacon.major.integerValue, minor: closestBeacon.minor.integerValue)
+                delegate?.beaconFound(self, major: closestBeacon.major.intValue, minor: closestBeacon.minor.intValue)
                 
                 //5 set closestBeacon as last found beacon
                 lastBeacon = closestBeacon
@@ -98,20 +98,20 @@ class BeaconController: NSObject, CLLocationManagerDelegate {
         }
     }
 
-    func locationManager(manager: CLLocationManager, didDetermineState state: CLRegionState, forRegion region: CLRegion) {
+    func locationManager(_ manager: CLLocationManager, didDetermineState state: CLRegionState, for region: CLRegion) {
         switch state {
-        case .Inside:
-            locationManager.startRangingBeaconsInRegion(region as! CLBeaconRegion)
-        case .Outside, .Unknown:
-            locationManager.stopRangingBeaconsInRegion(region as! CLBeaconRegion)
+        case .inside:
+            locationManager.startRangingBeacons(in: region as! CLBeaconRegion)
+        case .outside, .unknown:
+            locationManager.stopRangingBeacons(in: region as! CLBeaconRegion)
         }
     }
     
-    func locationManager(manager: CLLocationManager, monitoringDidFailForRegion region: CLRegion?, withError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, monitoringDidFailFor region: CLRegion?, withError error: Error) {
         print("Error monitoring for region: \(error)")
     }
     
-    func locationManager(manager: CLLocationManager, rangingBeaconsDidFailForRegion region: CLBeaconRegion, withError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, rangingBeaconsDidFailFor region: CLBeaconRegion, withError error: Error) {
         print("Error ranging beacon for region: \(error)")
     }
     

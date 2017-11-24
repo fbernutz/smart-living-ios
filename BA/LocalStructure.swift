@@ -8,24 +8,24 @@
 
 import UIKit
 
-public class Home: NSObject {
-    var id : NSUUID?
+open class Home: NSObject {
+    var id : UUID?
     var name : String?
     var primary : Bool?
     
-    init(id: NSUUID?, name: String?, primary: Bool?) {
+    init(id: UUID?, name: String?, primary: Bool?) {
         self.id = id
         self.name = name
         self.primary = primary
     }
 }
 
-public class Room: NSObject {
-    var homeID : NSUUID?
-    var id : NSUUID?
+open class Room: NSObject {
+    var homeID : UUID?
+    var id : UUID?
     var name : String?
     
-    init(homeID: NSUUID?, id: NSUUID?, name: String?) {
+    init(homeID: UUID?, id: UUID?, name: String?) {
         self.homeID = homeID
         self.id = id
         self.name = name

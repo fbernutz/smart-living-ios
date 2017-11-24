@@ -12,9 +12,9 @@ class SettingsCollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var label: UILabel?
     
-    override var highlighted: Bool {
+    override var isHighlighted: Bool {
         didSet {
-            if highlighted {
+            if isHighlighted {
                 self.layer.opacity = 0.5
             } else {
                 self.layer.opacity = 1.0

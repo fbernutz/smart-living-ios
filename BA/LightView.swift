@@ -19,12 +19,12 @@ class LightView: AccView {
     
     var delegate : AccViewDelegate?
     
-    @IBAction override func changeValueOfSlider(sender: UISlider) {
+    @IBAction override func changeValueOfSlider(_ sender: UISlider) {
         delegate?.accViewSliderChanged(sender.value)
     }
     
-    @IBAction override func changedValueOfSwitch(sender: UISwitch) {
-        delegate?.accViewSwitchTapped(sender.on)
+    @IBAction override func changedValueOfSwitch(_ sender: UISwitch) {
+        delegate?.accViewSwitchTapped(sender.isOn)
     }
     
 }

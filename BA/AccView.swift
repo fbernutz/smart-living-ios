@@ -11,15 +11,15 @@ import UIKit
 
 class AccView: UIView {
     
-    @IBAction func changedValueOfSwitch(sender: UISwitch) {
+    @IBAction func changedValueOfSwitch(_ sender: UISwitch) {
         
     }
     
-    @IBAction func changeValueOfSlider(sender: UISlider) {
+    @IBAction func changeValueOfSlider(_ sender: UISlider) {
         
     }
     
-    @IBAction func changeValueOfButton(sender: UIButton) {
+    @IBAction func changeValueOfButton(_ sender: UIButton) {
         
     }
 }

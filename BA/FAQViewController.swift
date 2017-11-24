@@ -17,7 +17,7 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
     lazy var resultSearchController = UISearchController(searchResultsController: nil)
     lazy var faq = FAQModel().provideFAQs()
     
-    private var showAnswers : [Bool] = [false, false, false, false, false, false, false, false, false]
+    fileprivate var showAnswers : [Bool] = [false, false, false, false, false, false, false, false, false]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,8 +36,8 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
         tableView.reloadData()
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if resultSearchController.active {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if resultSearchController.isActive {
             return self.filteredTableData.count
         }
         else {
@@ -45,11 +45,11 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
         }
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! FAQCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! FAQCell
         
-        if resultSearchController.active {
+        if resultSearchController.isActive {
             cell.questionLabel?.text = filteredTableData[row].question
             cell.answerLabel?.text = filteredTableData[row].answer
             return cell
@@ -63,7 +63,7 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         /*
         //TODO: show answers and hide answers
@@ -90,7 +90,7 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
         
         */
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     //TODO: SectionHeader
@@ -102,11 +102,11 @@ class FAQViewController: UITableViewController, UISearchResultsUpdating {
     
     //MARK: - Search Controller
     
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filteredTableData.removeAll(keepCapacity: false)
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredTableData.removeAll(keepingCapacity: false)
         
         filteredTableData = faq.filter{
-            let stringMatch = (($0.question.lowercaseString.rangeOfString(searchController.searchBar.text!.lowercaseString) != nil) || ($0.answer.lowercaseString.rangeOfString(searchController.searchBar.text!.lowercaseString)) != nil)
+            let stringMatch = (($0.question.lowercased().range(of: searchController.searchBar.text!.lowercased()) != nil) || ($0.answer.lowercased().range(of: searchController.searchBar.text!.lowercased())) != nil)
             return stringMatch ? true: false
         }
         

@@ -8,6 +8,6 @@
 
 protocol ContextHandlerDelegate {
     
-    func roomForBeacon(manager: ContextHandler, connectorArray: [BeaconRoomConnector], major: Int, minor: Int)
+    func roomForBeacon(_ manager: ContextHandler, connectorArray: [BeaconRoomConnector], major: Int, minor: Int)
     
 }

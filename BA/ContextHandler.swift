@@ -14,41 +14,41 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     var accessoryStoryboard : UIStoryboard?
     var homeKitController : HomeKitController?
     
-    var homeID : NSUUID?
+    var homeID : UUID?
     
-    var roomID : NSUUID? {
+    var roomID : UUID? {
         didSet {
             //register notification
-            let center = NSNotificationCenter.defaultCenter()
-            let notification = NSNotification(name: "roomID", object: self, userInfo: ["roomID":roomID!])
-            center.postNotification(notification)
+            let center = NotificationCenter.default
+            let notification = Notification(name: Notification.Name(rawValue: "roomID"), object: self, userInfo: ["roomID":roomID!])
+            center.post(notification)
         }
     }
     
     var localHomes : [Home]? {
         didSet {
             //register notification
-            let center = NSNotificationCenter.defaultCenter()
-            let notification = NSNotification(name: "localHomes", object: self, userInfo: ["localHomes":localHomes!])
-            center.postNotification(notification)
+            let center = NotificationCenter.default
+            let notification = Notification(name: Notification.Name(rawValue: "localHomes"), object: self, userInfo: ["localHomes":localHomes!])
+            center.post(notification)
         }
     }
     
     var localRooms : [Room]? {
         didSet {
             //register notification
-            let center = NSNotificationCenter.defaultCenter()
-            let notification = NSNotification(name: "localRooms", object: self, userInfo: ["localRooms":localRooms!])
-            center.postNotification(notification)
+            let center = NotificationCenter.default
+            let notification = Notification(name: Notification.Name(rawValue: "localRooms"), object: self, userInfo: ["localRooms":localRooms!])
+            center.post(notification)
         }
     }
     
     var viewControllerArray : [UIViewController] = [] {
         didSet {
             //register notification
-            let center = NSNotificationCenter.defaultCenter()
-            let notification = NSNotification(name: "vcArray", object: self, userInfo: ["VCArray":viewControllerArray])
-            center.postNotification(notification)
+            let center = NotificationCenter.default
+            let notification = Notification(name: Notification.Name(rawValue: "vcArray"), object: self, userInfo: ["VCArray":viewControllerArray])
+            center.post(notification)
         }
     }
     
@@ -95,7 +95,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         return searchHome(forID: homeID!)
     }
     
-    func searchHome(forID id: NSUUID) -> String {
+    func searchHome(forID id: UUID) -> String {
         
         if let localHomes = localHomes {
             let homeName = localHomes.filter{ $0.id == id }.first!.name
@@ -112,7 +112,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         return searchRoom(forID: roomID) ?? "No room found"
     }
     
-    func searchRoom(forID id: NSUUID?) -> String? {
+    func searchRoom(forID id: UUID?) -> String? {
         
         if let localRooms = localRooms {
             let roomName = localRooms.filter{ $0.id == id }.first!.name
@@ -125,11 +125,11 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     
     // MARK: - Retrieve paired accessories for room
     
-    func retrieveAccessories(completionHandler: ()-> ()) {
+    func retrieveAccessories(_ completionHandler: @escaping () -> ()) {
         searchAccessoriesForRoom(homeID, roomID: roomID, completionHandler: completionHandler)
     }
     
-    func searchAccessoriesForRoom(homeID: NSUUID?, roomID: NSUUID?, completionHandler: ()-> ()) {
+    func searchAccessoriesForRoom(_ homeID: UUID?, roomID: UUID?, completionHandler: @escaping () -> ()) {
         if (homeID != nil) && (roomID != nil) {
             homeKitController!.retrieveAccessoriesForRoom(inHome: homeID!, roomID: roomID!, completionHandler: completionHandler)
         }
@@ -148,30 +148,30 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         return localViewControllerArray
     }
     
-    func assignAccessoryToViewController (accessory: AccessoryItem) -> UIViewController? {
+    func assignAccessoryToViewController (_ accessory: AccessoryItem) -> UIViewController? {
         switch accessory {
         case is Lamp:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("LightViewController") as! LightViewController
+            let controller = accessoryStoryboard?.instantiateViewController(withIdentifier: "LightViewController") as! LightViewController
             controller.accessory = accessory
             controller.contextHandler = self
             return controller
         case is WeatherStation:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("WeatherViewController") as! WeatherViewController
+            let controller = accessoryStoryboard?.instantiateViewController(withIdentifier: "WeatherViewController") as! WeatherViewController
             controller.accessory = accessory
             controller.contextHandler = self
             return controller
         case is EnergyController:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("EnergyViewController") as! EnergyViewController
+            let controller = accessoryStoryboard?.instantiateViewController(withIdentifier: "EnergyViewController") as! EnergyViewController
             controller.accessory = accessory
             controller.contextHandler = self
             return controller
         case is DoorWindowSensor:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DoorWindowViewController") as! DoorWindowViewController
+            let controller = accessoryStoryboard?.instantiateViewController(withIdentifier: "DoorWindowViewController") as! DoorWindowViewController
             controller.accessory = accessory
             controller.contextHandler = self
             return controller
         case is Diverse, is Information:
-            let controller = accessoryStoryboard?.instantiateViewControllerWithIdentifier("DiverseViewController") as! DiverseViewController
+            let controller = accessoryStoryboard?.instantiateViewController(withIdentifier: "DiverseViewController") as! DiverseViewController
             controller.accessory = accessory
             controller.contextHandler = self
             return controller
@@ -193,13 +193,13 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     
     // MARK: - Adding a new accessory
     
-    func addNewAccessory(accessory: String, completionHandler: (success: Bool, error: NSError?) -> () ) {
+    func addNewAccessory(_ accessory: String, completionHandler: @escaping (_ success: Bool, _ error: NSError?) -> () ) {
         homeKitController!.addAccessory(accessory, activeHomeID: homeID!, activeRoomID: roomID!, completionHandler: completionHandler)
     }
     
     // MARK: - Beacon functions
     
-    func beaconFound(manager: BeaconController, major: Int, minor: Int){
+    func beaconFound(_ manager: BeaconController, major: Int, minor: Int){
         isBeaconFound = true
         
         majorBeacon = major
@@ -211,28 +211,28 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
     // MARK: - Read and write beacon&room plist
     
     func loadSavedData() {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
-        let documentsDirectory = paths.objectAtIndex(0) as! NSString
-        let path = documentsDirectory.stringByAppendingPathComponent("HomeKitData.plist")
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+        let documentsDirectory = paths.object(at: 0) as! NSString
+        let path = documentsDirectory.appendingPathComponent("HomeKitData.plist")
         
-        let fileManager = NSFileManager.defaultManager()
+        let fileManager = FileManager.default
         
         // Check if file exists
-        if !fileManager.fileExistsAtPath(path)
+        if !fileManager.fileExists(atPath: path)
         {
             // If it doesn't, copy it from the default file in the Resources folder
-            if let bundlePath = NSBundle.mainBundle().pathForResource("HomeKitData", ofType: "plist") {
+            if let bundlePath = Bundle.main.path(forResource: "HomeKitData", ofType: "plist") {
                 let resultDictionary = NSMutableDictionary(contentsOfFile: bundlePath)
                 print("Bundle HomeKitData.plist file is --> \(resultDictionary?.description)")
                 do {
-                    try fileManager.copyItemAtPath(bundlePath, toPath: path)
+                    try fileManager.copyItem(atPath: bundlePath, toPath: path)
                 } catch _ {
                 }
                 print("copy")
             }
         }
         
-        beaconRoomConnectorArray.removeAll(keepCapacity: false)
+        beaconRoomConnectorArray.removeAll(keepingCapacity: false)
         
         if let content = NSArray(contentsOfFile: path) {
             newPlistArray = content as! [NSDictionary]
@@ -248,16 +248,16 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         }
     }
     
-    func isBeaconConnected(home: String, room: String) -> (major: Int?, minor: Int?) {
+    func isBeaconConnected(_ home: String, room: String) -> (major: Int?, minor: Int?) {
         loadSavedData()
         let beacon = beaconRoomConnectorArray.filter{ $0.room == room && $0.home == home }.first
         return (beacon?.major, beacon?.minor)
     }
     
-    func saveData(object: BeaconRoomConnector) {
-        let paths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true) as NSArray
-        let documentsDirectory = paths.objectAtIndex(0) as! NSString
-        let path = documentsDirectory.stringByAppendingPathComponent("HomeKitData.plist")
+    func saveData(_ object: BeaconRoomConnector) {
+        let paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true) as NSArray
+        let documentsDirectory = paths.object(at: 0) as! NSString
+        let path = documentsDirectory.appendingPathComponent("HomeKitData.plist")
         
         newDict = object.dictionaryForEntity()
         
@@ -288,7 +288,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
             if !newPlistArray.contains(dict) {
                 newPlistArray.append(dict)
             } else {
-                let index = newPlistArray.indexOf(dict)
+                let index = newPlistArray.index(of: dict)
                 newPlistArray[index!] = dict
             }
             
@@ -297,7 +297,7 @@ class ContextHandler: NSObject, HMHomeManagerDelegate, BeaconControllerDelegate 
         
         print(beaconRoomConnectorArray)
         print(newPlistArray)
-        (newPlistArray as NSArray).writeToFile(path, atomically: true)
+        (newPlistArray as NSArray).write(toFile: path, atomically: true)
     }
     
 }

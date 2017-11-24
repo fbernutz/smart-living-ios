@@ -10,8 +10,8 @@ import Foundation
 
 protocol AccViewDelegate {
 
-    func accViewSliderChanged(value: Float)
-    func accViewSwitchTapped(state: Bool)
-    func accViewButtonTapped(state: String)
+    func accViewSliderChanged(_ value: Float)
+    func accViewSwitchTapped(_ state: Bool)
+    func accViewButtonTapped(_ state: String)
     
 }

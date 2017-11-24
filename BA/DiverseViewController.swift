@@ -46,7 +46,7 @@ class DiverseViewController: UIViewController {
     
     var size : CGFloat?
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
@@ -66,7 +66,7 @@ class DiverseViewController: UIViewController {
                 setName("Momentan nicht erreichbar")
             }
             
-            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
+            let _ = contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
         
         size = diverseView!.cView!.frame.size.height
@@ -79,21 +79,21 @@ class DiverseViewController: UIViewController {
         setName(accessory?.name)
     }
     
-    func setService(name: String?) {
+    func setService(_ name: String?) {
         if let _ = serviceName {
-            diverseView?.serviceName?.hidden = false
+            diverseView?.serviceName?.isHidden = false
             diverseView?.serviceName?.text = name
         } else {
-            diverseView?.serviceName?.hidden = true
+            diverseView?.serviceName?.isHidden = true
         }
     }
     
-    func setName(name: String?) {
+    func setName(_ name: String?) {
         if let name = name {
-            diverseView?.infotext?.hidden = false
+            diverseView?.infotext?.isHidden = false
             diverseView?.infotext?.text = name
         } else {
-            diverseView?.infotext?.hidden = true
+            diverseView?.infotext?.isHidden = true
         }
     }
     

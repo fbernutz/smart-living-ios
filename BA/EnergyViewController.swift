@@ -55,7 +55,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
     
     var size : CGFloat?
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
     }
@@ -77,7 +77,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
                 setName("Momentan nicht erreichbar")
             }
             
-            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
+            let _ = contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
         
         
@@ -92,7 +92,7 @@ class EnergyViewController: UIViewController, AccViewDelegate {
         setPowerState(state)
     }
     
-    func setService(name: String?) {
+    func setService(_ name: String?) {
         if let _ = serviceName {
             //            lightView!.infotext!.text = name
         } else {
@@ -100,34 +100,34 @@ class EnergyViewController: UIViewController, AccViewDelegate {
         }
     }
     
-    func setName(name: String?) {
+    func setName(_ name: String?) {
         if let name = name {
-            energyView?.infotext?.hidden = false
+            energyView?.infotext?.isHidden = false
             energyView?.infotext?.text = name
         } else {
-            energyView?.infotext?.hidden = true
+            energyView?.infotext?.isHidden = true
         }
     }
     
-    func setPowerState(state: Bool?) {
+    func setPowerState(_ state: Bool?) {
         if let state = state {
-            energyView!.powerState!.hidden = false
+            energyView!.powerState!.isHidden = false
             energyView!.powerState!.setOn(state, animated: false)
         } else {
-            energyView!.powerState!.hidden = true
+            energyView!.powerState!.isHidden = true
         }
     }
     
     // MARK: - AccViewDelegate
     
-    func accViewSwitchTapped(state: Bool) {
-        contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state])
+    func accViewSwitchTapped(_ state: Bool) {
+        contextHandler!.homeKitController!.setNewValues(accessory!, characteristic: [.powerState:state as AnyObject])
     }
     
-    func accViewSliderChanged(value: Float) {
+    func accViewSliderChanged(_ value: Float) {
     }
     
-    func accViewButtonTapped(state: String) {
+    func accViewButtonTapped(_ state: String) {
     }
 
 }

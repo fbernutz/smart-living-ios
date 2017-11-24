@@ -22,17 +22,17 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
 
     // MARK: UICollectionViewDataSource
 
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return settings.count
     }
 
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! SettingsCollectionViewCell
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! SettingsCollectionViewCell
     
         cell.label!.text = settings[indexPath.row]
         
         cell.label!.textColor = Colours.blue()
-        cell.layer.borderColor = Colours.blue().CGColor
+        cell.layer.borderColor = Colours.blue().cgColor
         
         cell.layer.borderWidth = 1
         cell.layer.cornerRadius = 8
@@ -42,36 +42,36 @@ class SettingsCollectionViewController: UIViewController, UICollectionViewDataSo
     
     // MARK: - UICollectionViewDelegate protocol
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         switch indexPath.row {
         case 0:
-            performSegueWithIdentifier("App", sender: self)
+            performSegue(withIdentifier: "App", sender: self)
         case 1:
-            performSegueWithIdentifier("Galerie", sender: self)
+            performSegue(withIdentifier: "Galerie", sender: self)
         case 2:
-            performSegueWithIdentifier("FAQ", sender: self)
+            performSegue(withIdentifier: "FAQ", sender: self)
         case 3:
-            let settingsUrl = NSURL(string: UIApplicationOpenSettingsURLString)
+            let settingsUrl = URL(string: UIApplicationOpenSettingsURLString)
             if let url = settingsUrl {
-                UIApplication.sharedApplication().openURL(url)
+                UIApplication.shared.openURL(url)
             }
         case 4:
-            performSegueWithIdentifier("Impressum", sender: self)
+            performSegue(withIdentifier: "Impressum", sender: self)
         default: break
         }
     }
     
     //MARK: - Prepare for Segue
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "Impressum" {
-            let _ = segue.destinationViewController as! ImprintViewController
+            let _ = segue.destination as! ImprintViewController
         } else if segue.identifier == "App" {
-            let _ = segue.destinationViewController
+            let _ = segue.destination
         } else if segue.identifier == "FAQ" {
-            let _ = segue.destinationViewController as! FAQViewController
+            let _ = segue.destination as! FAQViewController
         } else if segue.identifier == "Galerie" {
-            let _ = segue.destinationViewController as! GalleryViewController
+            let _ = segue.destination as! GalleryViewController
         }
     }
     

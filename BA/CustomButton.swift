@@ -15,7 +15,7 @@ class CustomButton: UIButton {
         
         backgroundColor = Colours.lightBlue()
         
-        setTitleColor(Colours.white(), forState: .Normal)
+        setTitleColor(Colours.white(), for: UIControlState())
         
 //        titleLabel?.font = UIFont.systemFontOfSize(14)
         titleLabel?.numberOfLines = 0
@@ -25,7 +25,7 @@ class CustomButton: UIButton {
 //        layer.borderColor = Colours.lightBlue().CGColor
 //        layer.borderWidth = 1.0
         
-        contentHorizontalAlignment = .Center
+        contentHorizontalAlignment = .center
         contentEdgeInsets = UIEdgeInsetsMake(8, 20, 8, 20)
         
         

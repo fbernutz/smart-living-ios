@@ -12,7 +12,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     @IBOutlet var headerView: HeaderView?
     
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     var contextHandler : ContextHandler?
     var controller : HomeKitController?
     
@@ -51,7 +51,7 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     var viewControllerArray : [UIViewController] = [] {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 self.tableView.reloadData()
             }
         }
@@ -79,32 +79,32 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         headerView!.parentTableView = self
         
         // Pull to Refresh
-        self.refreshControl!.addTarget(self, action: #selector(DetailViewController.refresh(_:)), forControlEvents: .ValueChanged)
+        self.refreshControl!.addTarget(self, action: #selector(DetailViewController.refresh(_:)), for: .valueChanged)
         self.refreshControl!.beginRefreshing()
         
         // listen for notification
-        let center = NSNotificationCenter.defaultCenter()
-        let queue = NSOperationQueue.mainQueue()
+        let center = NotificationCenter.default
+        let queue = OperationQueue.main
         
-        center.addObserverForName("vcArray", object: contextHandler, queue: queue) { notification in
+        center.addObserver(forName: NSNotification.Name(rawValue: "vcArray"), object: contextHandler, queue: queue) { notification in
             if let vcArray = notification.userInfo!["VCArray"] as? [UIViewController] {
                 self.viewControllerArray = vcArray
             }
         }
         
-        center.addObserverForName("localHomes", object: contextHandler, queue: queue) { notification in
+        center.addObserver(forName: NSNotification.Name(rawValue: "localHomes"), object: contextHandler, queue: queue) { notification in
             if let localHomes = notification.userInfo!["localHomes"] as? [Home]? {
                 self.localHomes = localHomes
             }
         }
         
-        center.addObserverForName("localRooms", object: contextHandler, queue: queue) { notification in
+        center.addObserver(forName: NSNotification.Name(rawValue: "localRooms"), object: contextHandler, queue: queue) { notification in
             if let localRooms = notification.userInfo!["localRooms"] as? [Room]? {
                 self.localRooms = localRooms
             }
         }
         
-        center.addObserverForName("roomID", object: contextHandler, queue: queue) { notification in
+        center.addObserver(forName: NSNotification.Name(rawValue: "roomID"), object: contextHandler, queue: queue) { notification in
             self.loadData()
         }
     }
@@ -113,9 +113,9 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         super.viewDidLayoutSubviews()
     }
     
-    func refresh(sender: AnyObject) {
-        controller!.reloadAccessories { _ in
-            if self.refreshControl!.refreshing {
+    @objc func refresh(_ sender: AnyObject) {
+        controller!.reloadAccessories { 
+            if self.refreshControl!.isRefreshing {
                 self.refreshControl!.endRefreshing()
             }
         }
@@ -124,8 +124,8 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     func loadData() {
         home = contextHandler!.retrieveHome()
         room = contextHandler!.retrieveRoom()
-        contextHandler!.retrieveAccessories() {_ in
-            if self.refreshControl!.refreshing {
+        contextHandler!.retrieveAccessories() {
+            if self.refreshControl!.isRefreshing {
                 self.refreshControl!.endRefreshing()
             }
         }
@@ -140,19 +140,19 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     // MARK: - HomeKitController Delegates
     
-    func hasCreatedDefaultHomes(title: String, message: String) {
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
+    func hasCreatedDefaultHomes(_ title: String, message: String) {
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alertController.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     // MARK: - TableView Delegates
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
             if !viewControllerArray.isEmpty {
                 return viewControllerArray.count + 1
@@ -164,11 +164,11 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         return 1
     }
     
-    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableViewAutomaticDimension
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let row = indexPath.row
         let section = indexPath.section
         
@@ -180,45 +180,45 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
                     switch vcInRow {
                     case is LightViewController:
                         let vc = vcInRow as! LightViewController
-                        if let size = vc.size { return size } else { 100 }
+                        return vc.size ?? 100
                     case is WeatherViewController:
                         let vc = vcInRow as! WeatherViewController
-                        if let size = vc.size { return size } else { 100 }
+                        return vc.size ?? 100
                     case is EnergyViewController:
                         let vc = vcInRow as! EnergyViewController
-                        if let size = vc.size { return size } else { 100 }
+                        return vc.size ?? 100
                     case is DoorWindowViewController:
                         let vc = vcInRow as! DoorWindowViewController
-                        if let size = vc.size { return size } else { 100 }
+                        return vc.size ?? 100
                     case is DiverseViewController:
                         let vc = vcInRow as! DiverseViewController
-                        if let size = vc.size { return size } else { 100 }
+                        return vc.size ?? 100
                     default:
                         break
                     }
                 } else {
-                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "addAccessoryCell")!
                     let size = cell.contentView.frame.size.height
                     return size
                 }
             } else {
                 if row == 0 {
-                    let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell")!
                     let size = cell.contentView.frame.size.height
                     return size
                 } else if row == 1 {
-                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "addAccessoryCell")!
                     let size = cell.contentView.frame.size.height
                     return size
                 }
             }
         } else if section == 1 {
             if beaconConnected {
-                let cell = tableView.dequeueReusableCellWithIdentifier("beaconCell")! as! BeaconCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "beaconCell")! as! BeaconCell
                 let size = cell.contentView.frame.size.height
                 return size
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("addBeaconCell")! as! BeaconCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "addBeaconCell")! as! BeaconCell
                 let size = cell.contentView.frame.size.height
                 return size
             }
@@ -227,24 +227,24 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         return 100
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let row = indexPath.row
         let section = indexPath.section
         
         if section == 0 {
             if viewControllerArray.isEmpty {
                 if row == 0 {
-                    let cell = tableView.dequeueReusableCellWithIdentifier("emptyCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "emptyCell")!
                     cell.textLabel!.text = "Keine Geräte verfügbar."
                     return cell
                 } else {
-                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "addAccessoryCell")!
                     return cell
                 }
             } else {
                 if row < viewControllerArray.count {
                     let vcInRow = viewControllerArray[row]
-                    let cell = tableView.dequeueReusableCellWithIdentifier("accessoryCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "accessoryCell")!
                     var view: UIView?
                     
                     switch vcInRow {
@@ -279,52 +279,52 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
                     
                     return cell
                 } else {
-                    let cell = tableView.dequeueReusableCellWithIdentifier("addAccessoryCell")!
+                    let cell = tableView.dequeueReusableCell(withIdentifier: "addAccessoryCell")!
                     return cell
                 }
             }
         } else {
             if beaconConnected {
-                let cell = tableView.dequeueReusableCellWithIdentifier("beaconCell")! as! BeaconCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "beaconCell")! as! BeaconCell
                 cell.parentTableView = self
                 cell.major = major
                 cell.minor = minor
                 return cell
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("addBeaconCell")! as! BeaconCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "addBeaconCell")! as! BeaconCell
                 return cell
             }
         }
         
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let section = indexPath.section
         
         if section == 0 {
             if indexPath.row >= viewControllerArray.count {
-                performSegueWithIdentifier("showAllAccessoriesSegue", sender: self)
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                performSegue(withIdentifier: "showAllAccessoriesSegue", sender: self)
+                tableView.deselectRow(at: indexPath, animated: true)
             } else {
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         } else {
             if beaconConnected {
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
             } else {
-                let cell = tableView.dequeueReusableCellWithIdentifier("beaconCell")! as! BeaconCell
+                let cell = tableView.dequeueReusableCell(withIdentifier: "beaconCell")! as! BeaconCell
                 cell.parentTableView = self
                 cell.major = major
                 cell.minor = minor
                 cell.addBeacon()
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                tableView.deselectRow(at: indexPath, animated: true)
             }
         }
     }
     
     //TableView Section Header
     
-    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return "Verbundene Geräte"
         } else {
@@ -334,16 +334,16 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
     
     // MARK: - Segue
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showAllAccessoriesSegue" {
-            let vc = segue.destinationViewController as! DiscoveryViewController
+            let vc = segue.destination as! DiscoveryViewController
             vc.contextHandler = contextHandler
         }
     }
     
     //MARK: - Beacon Functions
     
-    func roomForBeacon(manager: ContextHandler, connectorArray: [BeaconRoomConnector], major: Int, minor: Int) {
+    func roomForBeacon(_ manager: ContextHandler, connectorArray: [BeaconRoomConnector], major: Int, minor: Int) {
         let plistResult = connectorArray.filter{ $0.major == major && $0.minor == minor }.first
         
         self.major = major
@@ -364,30 +364,30 @@ class DetailViewController: UITableViewController, HomeKitControllerDelegate, Co
         }
     }
     
-    func alertShowBeaconRoom (homeID: NSUUID, roomID: NSUUID, message : String) {
-        let alert = UIAlertController(title: "Beacon gefunden", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Ja", style: UIAlertActionStyle.Default)
+    func alertShowBeaconRoom (_ homeID: UUID, roomID: UUID, message : String) {
+        let alert = UIAlertController(title: "Beacon gefunden", message: message, preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Ja", style: UIAlertActionStyle.default)
             { action in
                 self.refreshControl!.beginRefreshing()
                 self.contextHandler!.homeID = homeID
                 self.contextHandler!.roomID = roomID
             }
         )
-        alert.addAction(UIAlertAction(title: "Nein", style: UIAlertActionStyle.Cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Nein", style: UIAlertActionStyle.cancel, handler: nil))
         
-        self.presentViewController(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 
 }
 
 extension UITableView {
     
-    func setAndLayoutTableHeaderView(header: UIView) {
+    func setAndLayoutTableHeaderView(_ header: UIView) {
         let headerView = header as! HeaderView
         self.tableHeaderView = headerView
         headerView.setNeedsLayout()
         headerView.layoutIfNeeded()
-        let height = headerView.systemLayoutSizeFittingSize(UILayoutFittingCompressedSize).height
+        let height = headerView.systemLayoutSizeFitting(UILayoutFittingCompressedSize).height
         var frame = headerView.frame
         frame.size.height = height
         headerView.frame = frame

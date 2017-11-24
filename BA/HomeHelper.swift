@@ -22,15 +22,15 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Service To Local
     
-    func serviceToLocalHomes(homeKitHomes: [HMHome]) -> [Home]? {
+    func serviceToLocalHomes(_ homeKitHomes: [HMHome]) -> [Home]? {
         localHomes = []
         for home in homeKitHomes {
-            localHomes?.append(Home(id: home.uniqueIdentifier, name: home.name, primary: home.primary))
+            localHomes?.append(Home(id: home.uniqueIdentifier, name: home.name, primary: home.isPrimary))
         }
         return localHomes
     }
     
-    func serviceToLocalRooms(homeKitHomes: [HMHome]) -> [Room]? {
+    func serviceToLocalRooms(_ homeKitHomes: [HMHome]) -> [Room]? {
         localRooms = []
         for home in homeKitHomes {
             for room in home.rooms {
@@ -43,11 +43,11 @@ class HomeHelper: NSObject, HMHomeManagerDelegate {
     
     // MARK: - Local To Service
     
-    func localHomeToService(localHome: Home) {
+    func localHomeToService(_ localHome: Home) {
         homeKitController?.addHome(localHome.name!)
     }
     
-    func localRoomToService(localRoom: Room) {
+    func localRoomToService(_ localRoom: Room) {
         let _ = homeKitController?.homeManager.homes.filter{ $0.uniqueIdentifier == localRoom.homeID }.map{ homeKitController?.addRoom(localRoom.name!, toHome: $0) }
     }
     

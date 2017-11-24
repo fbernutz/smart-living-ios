@@ -22,7 +22,7 @@ class AccessoryFactory {
     
     var arrayOfTypes: [AccessoryItem]?
     
-    func accessoryForServices(service: HMService, name: String?) -> AccessoryItem? {
+    func accessoryForServices(_ service: HMService, name: String?) -> AccessoryItem? {
         arrayOfTypes = [lampService, weatherStationService, energyControllerService, doorWindowSensorService, informationService, diverseService]
         
         let canHandleServiceAccessory = arrayOfTypes!.filter{ $0.canHandle(service, name: name) }.first

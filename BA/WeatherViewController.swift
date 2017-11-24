@@ -88,7 +88,7 @@ class WeatherViewController: UIViewController {
                 setName("Momentan nicht erreichbar")
             }
             
-            contextHandler!.homeKitController!.completedAccessoryView(accessory!)
+            let _ = contextHandler!.homeKitController!.completedAccessoryView(accessory!)
         }
         
         size = weatherView!.cView!.frame.size.height
@@ -105,7 +105,7 @@ class WeatherViewController: UIViewController {
 //        setPressure(pressure)
     }
     
-    func setService(name: String?) {
+    func setService(_ name: String?) {
         if let _ = serviceName {
             //            lightView!.infotext!.text = name
         } else {
@@ -113,46 +113,46 @@ class WeatherViewController: UIViewController {
         }
     }
     
-    func setName(name: String?) {
+    func setName(_ name: String?) {
         if let name = name {
-            weatherView?.name?.hidden = false
+            weatherView?.name?.isHidden = false
             weatherView?.name?.text = name
         } else {
-            weatherView?.name?.hidden = true
+            weatherView?.name?.isHidden = true
         }
     }
     
-    func setTemperature(value: Float?) {
+    func setTemperature(_ value: Float?) {
         if let value = value {
-            weatherView?.temperature?.hidden = false
+            weatherView?.temperature?.isHidden = false
             let roundedValue = roundToPlaces(Double(value), places: 1)
             weatherView?.temperature?.text = "\(roundedValue) °C"
         } else {
-            weatherView?.temperature?.hidden = true
+            weatherView?.temperature?.isHidden = true
         }
     }
     
-    func setHumidity(value: Float?) {
+    func setHumidity(_ value: Float?) {
         if let value = value {
-            weatherView?.humidity?.hidden = false
+            weatherView?.humidity?.isHidden = false
             weatherView?.humidity?.text = "Luftfeuchtigkeit: \(value) %"
         } else {
-            weatherView?.humidity?.hidden = true
+            weatherView?.humidity?.isHidden = true
         }
     }
     
-    func setPressure(value: Float?) {
+    func setPressure(_ value: Float?) {
         if let value = value {
-            weatherView?.pressure?.hidden = false
+            weatherView?.pressure?.isHidden = false
             weatherView?.pressure?.text = "Luftdruck: \(value) hPa"
         } else {
-            weatherView?.pressure?.hidden = true
+            weatherView?.pressure?.isHidden = true
         }
     }
 
     // MARK: - RoundToPlaces func
     
-    func roundToPlaces(value:Double, places:Int) -> Double {
+    func roundToPlaces(_ value:Double, places:Int) -> Double {
         let divisor = pow(10.0, Double(places))
         return round(value * divisor) / divisor
     }

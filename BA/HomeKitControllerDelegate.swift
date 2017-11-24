@@ -9,9 +9,9 @@
 import Foundation
 
 protocol HomeKitControllerDelegate {
-    func hasCreatedDefaultHomes(title: String, message: String)
+    func hasCreatedDefaultHomes(_ title: String, message: String)
 }
 
 protocol HomeKitControllerNewAccessoriesDelegate {
-    func hasLoadedNewAccessory(name: String, stillLoading: Bool)
+    func hasLoadedNewAccessory(_ name: String, stillLoading: Bool)
 }

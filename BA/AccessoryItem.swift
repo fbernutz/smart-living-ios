@@ -17,26 +17,26 @@ let EveDoorWindow = "E863F003-079E-48FF-8F27-9C2605A29F52"
 
 protocol AccessoryItem {
     var name : String? { get set }
-    var uniqueID : NSUUID? { get set }
+    var uniqueID : UUID? { get set }
     var reachable : Bool? { get set }
     var characteristics : [CharacteristicKey : AnyObject] { get set }
     var characteristicBlock : (() -> ())? { get set }
     
-    func canHandle(service: HMService, name: String?) -> Bool
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () )
+    func canHandle(_ service: HMService, name: String?) -> Bool
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () )
 }
 
 // MARK: - Lamp
 
 class Lamp: AccessoryItem {
-    
+
     var name : String?
-    var uniqueID : NSUUID?
+    var uniqueID : UUID?
     var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService, name: String?) -> Bool {
+    func canHandle(_ service: HMService, name: String?) -> Bool {
         if service.serviceType == HMServiceTypeLightbulb {
             return true
         } else {
@@ -44,7 +44,7 @@ class Lamp: AccessoryItem {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () ) {
         
         characteristics.removeAll()
         
@@ -53,7 +53,7 @@ class Lamp: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypeName as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics[CharacteristicKey.serviceName] = value as! String
+                        self.characteristics[CharacteristicKey.serviceName] = value as! String as AnyObject?
                         
                         if self.characteristics.count == service.characteristics.count {
                             completionHandler(self.characteristics)
@@ -65,7 +65,7 @@ class Lamp: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypeBrightness as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics[CharacteristicKey.brightness] = value as! Float
+                        self.characteristics[CharacteristicKey.brightness] = value as! Float as AnyObject?
                         
                         if self.characteristics.count == service.characteristics.count {
                             completionHandler(self.characteristics)
@@ -95,13 +95,13 @@ class Lamp: AccessoryItem {
 class WeatherStation: AccessoryItem {
     
     var name : String?
-    var uniqueID : NSUUID?
+    var uniqueID : UUID?
     var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     var charCounter = 0
     
-    func canHandle(service: HMService, name: String?) -> Bool {
+    func canHandle(_ service: HMService, name: String?) -> Bool {
         
         switch service.serviceType {
         case EveWeather:
@@ -116,7 +116,7 @@ class WeatherStation: AccessoryItem {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () ) {
         
         characteristics.removeAll()
         charCounter = 0
@@ -128,7 +128,7 @@ class WeatherStation: AccessoryItem {
                     if let value = value {
                         self.charCounter += 1
                         
-                        self.characteristics[CharacteristicKey.temperature] = value as! Float
+                        self.characteristics[CharacteristicKey.temperature] = value as! Float as AnyObject?
                         if self.charCounter == 2 {
                             completionHandler(self.characteristics)
                         }
@@ -141,7 +141,7 @@ class WeatherStation: AccessoryItem {
                     if let value = value {
                         self.charCounter += 1
                         
-                        self.characteristics[CharacteristicKey.humidity] = value as! Float
+                        self.characteristics[CharacteristicKey.humidity] = value as! Float as AnyObject?
                         if self.charCounter == 2 {
                             completionHandler(self.characteristics)
                         }
@@ -172,12 +172,12 @@ class WeatherStation: AccessoryItem {
 class EnergyController: AccessoryItem {
     
     var name : String?
-    var uniqueID : NSUUID?
+    var uniqueID : UUID?
     var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService, name: String?) -> Bool {
+    func canHandle(_ service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case EveEnergy:
             if name == "Eve Energy" {
@@ -190,7 +190,7 @@ class EnergyController: AccessoryItem {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () ) {
         
         characteristics.removeAll()
         
@@ -199,7 +199,7 @@ class EnergyController: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypePowerState as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics[CharacteristicKey.powerState] = value as! Bool
+                        self.characteristics[CharacteristicKey.powerState] = value as! Bool as AnyObject?
                         completionHandler(self.characteristics)
                     }
                 })
@@ -214,12 +214,12 @@ class EnergyController: AccessoryItem {
 class DoorWindowSensor: AccessoryItem {
     
     var name : String?
-    var uniqueID : NSUUID?
+    var uniqueID : UUID?
     var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService, name: String?) -> Bool {
+    func canHandle(_ service: HMService, name: String?) -> Bool {
         
         switch service.serviceType {
             
@@ -235,7 +235,7 @@ class DoorWindowSensor: AccessoryItem {
         
     }
     
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () ) {
         
         characteristics.removeAll()
         
@@ -244,7 +244,7 @@ class DoorWindowSensor: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypeCurrentDoorState as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics[CharacteristicKey.doorState] = value as! Bool
+                        self.characteristics[CharacteristicKey.doorState] = value as! Bool as AnyObject?
                         completionHandler(self.characteristics)
                     }
                 })
@@ -260,12 +260,12 @@ class DoorWindowSensor: AccessoryItem {
 class Information: AccessoryItem {
     
     var name : String?
-    var uniqueID : NSUUID?
+    var uniqueID : UUID?
     var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService, name: String?) -> Bool {
+    func canHandle(_ service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation:
             return true
@@ -274,7 +274,7 @@ class Information: AccessoryItem {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () ) {
         
         characteristics.removeAll()
         
@@ -283,7 +283,7 @@ class Information: AccessoryItem {
             if characteristic.characteristicType == (HMCharacteristicTypeName as String) {
                 getCharacteristicValue(characteristic, completion: { value, error in
                     if let value = value {
-                        self.characteristics[CharacteristicKey.serviceName] = value as! String
+                        self.characteristics[CharacteristicKey.serviceName] = value as! String as AnyObject?
                         
                         if self.characteristics.count == service.characteristics.count {
                             completionHandler(self.characteristics)
@@ -302,12 +302,12 @@ class Information: AccessoryItem {
 class Diverse: AccessoryItem {
     
     var name : String?
-    var uniqueID : NSUUID?
+    var uniqueID : UUID?
     var reachable : Bool?
     var characteristics = [CharacteristicKey : AnyObject]()
     var characteristicBlock : (() -> ())?
     
-    func canHandle(service: HMService, name: String?) -> Bool {
+    func canHandle(_ service: HMService, name: String?) -> Bool {
         switch service.serviceType {
         case HMServiceTypeAccessoryInformation, HMServiceTypeHumiditySensor, HMServiceTypeLightbulb, HMServiceTypeSwitch, HMServiceTypeTemperatureSensor, HMServiceTypeOutlet:
             return false
@@ -316,9 +316,9 @@ class Diverse: AccessoryItem {
         }
     }
     
-    func characteristicsForService(service: HMService, completionHandler: [CharacteristicKey : AnyObject] -> () ) {
+    func characteristicsForService(_ service: HMService, completionHandler: @escaping ([CharacteristicKey : AnyObject]) -> () ) {
         characteristics.removeAll()
-        characteristics[CharacteristicKey.serviceName] = service.name
+        characteristics[CharacteristicKey.serviceName] = service.name as AnyObject?
         completionHandler(self.characteristics)
     }
     
@@ -329,7 +329,7 @@ class Diverse: AccessoryItem {
 
 extension HMCharacteristic {
     
-    func containsProperty(paramProperty: String) -> Bool {
+    func containsProperty(_ paramProperty: String) -> Bool {
         for property in self.properties {
             if property == paramProperty {
                 return true
@@ -347,29 +347,29 @@ extension HMCharacteristic {
     }
     
     func supportsEventNotification() -> Bool {
-        return containsProperty(HMCharacteristicPropertySupportsEventNotification)
+        return containsProperty(NSNotification.Name.HMCharacteristicPropertySupportsEvent.rawValue)
     }
     
 }
 
 extension AccessoryItem {
     
-    func getCharacteristicValue(characteristic: HMCharacteristic, completion: (AnyObject?, NSError?) -> () ) {
+    func getCharacteristicValue(_ characteristic: HMCharacteristic, completion: @escaping (AnyObject?, NSError?) -> () ) {
         if !characteristic.isReadable() {
             completion(nil, NSError(domain: "not readable", code: 1, userInfo: nil))
         } else {
-            characteristic.readValueWithCompletionHandler { error in
+            characteristic.readValue { error in
                 if error != nil {
-                    completion(nil, error)
+                    completion(nil, error as NSError?)
                 } else {
                     if !characteristic.isWritable() {
-                        completion(characteristic.value, NSError(domain: "not writable", code: 2, userInfo: nil))
+                        completion(characteristic.value as AnyObject?, NSError(domain: "not writable", code: 2, userInfo: nil))
                     } else {
                         characteristic.writeValue(characteristic.value, completionHandler: { error in
                             if error != nil {
-                                completion(characteristic.value, error)
+                                completion(characteristic.value as AnyObject?, error as NSError?)
                             } else {
-                                completion(characteristic.value, nil)
+                                completion(characteristic.value as AnyObject?, nil)
                             }
                             }
                         )
@@ -379,7 +379,7 @@ extension AccessoryItem {
         }
     }
     
-    mutating func retrieveCharacteristics(service: HMService) {
+    mutating func retrieveCharacteristics(_ service: HMService) {
         
         characteristicsForService(service, completionHandler: { characteristics in
             print("\(self.name!): \(characteristics.count) von \(service.characteristics.count) Chars")
